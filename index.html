@@ -1,0 +1,550 @@
+
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Naming convension</title>
+    <style>
+         :root {
+            --bg: #f9f9fb;
+            --text: #222;
+            --input-bg: #fff;
+            --input-border: #ccc;
+            --highlight: #4a90e2;
+        }
+        body {
+            background-color: #f9f9f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+    
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+    
+        h2, h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    
+        .form-group {
+            margin-bottom: 20px;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+    
+        input,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+    
+        input:focus,
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+        }
+    
+        button {
+            display: block;
+            /* width: 100%; */
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #0056b3;
+        }
+    
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 14px;
+            background: #f1f1f1;
+            border-radius: 6px;
+        }
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+    
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+            color: #333;
+        }
+    
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+    
+        tr:hover {
+            background-color: #f0f8ff;
+        }
+    
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+    
+            h2, h3 {
+                font-size: 20px;
+            }
+    
+            input, select, button {
+                font-size: 14px;
+            }
+    
+            table {
+                font-size: 12px;
+            }
+        }
+        .generated-item {
+    position: relative;
+    padding: 12px 15px;
+    background: #f7f9fc;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-family: monospace;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.generated-text {
+    word-break: break-all;
+    flex: 1;
+    padding-right: 60px;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.copy-btn:hover {
+    background-color: #0056b3;
+    opacity: 1;
+}
+textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            background: var(--input-bg);
+            resize: vertical;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+            transition: border 0.3s;
+        }
+
+        textarea:focus {
+            border-color: var(--highlight);
+            outline: none;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div class="container">
+        <h2>Naming convension</h2>
+        <div class="form-group">
+            <label for="programCode">Program Code</label>
+            <select id="programCode">
+                <option value="ES">ES - Email Send</option>
+                <option value="LE">LE - Live Event</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="vendor">Vendor</label>
+            <input list="vendor-list" id="vendor" placeholder="Chọn vendor..." />
+            <datalist id="vendor-list"></datalist>
+        </div>
+        <div class="form-group">
+            <label for="language">Language</label>
+            <select id="language">
+                <option value="" selected disabled>Please select</option>
+                <option value="DE">DE</option>
+                <option value="FR">FR</option>
+                <option value="NL">NL</option>
+                <option value="UK">UK</option>
+                <option value="ES">ES</option>
+                <option value="IT">IT</option>
+                <option value="DK">DK</option>
+                <option value="NO">NO</option>
+                <option value="SE">SE</option>
+                <option value="EE">EE</option>
+                <option value="LV">LV</option>
+                <option value="LT">LT</option>
+                <option value="PL">PL</option>
+                <option value="FI">FI</option>
+                <option value="SI">SI</option>
+                <option value="HR">HR</option>
+                <option value="SK">SK</option>
+                <option value="CZ">CZ</option>
+                <option value="HU">HU</option>
+                <option value="RO">RO</option>
+                <option value="BG">BG</option>
+                <option value="RS">RS</option>
+                <option value="ME">ME</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="campaignName">Campaign Name</label>
+            <input type="text" id="campaignName" placeholder="e.g. AMDServer" />
+        </div>
+        <div class="form-group">
+            <label for="campaignID">Project ID</label>
+            <input type="text" id="campaignID" placeholder="e.g. 2800DK259014" />
+        </div>
+        <button onclick="generateNames()" id="submitBtn">Generate Email Names</button>
+
+        <div class="output" id="output"></div>
+
+        <h3>Email Table</h3>
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Text 1</th>
+                    <th>Text 2</th>
+                    <th>Text 3</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+        <h3>Unicode to HTML</h3>
+        <label for="inputHTML">Enter or paste icon / Unicode character:</label>
+        <textarea id="inputHTML" placeholder=""></textarea>
+
+        <label for="outputHTML">Result (HTML Entity):</label>
+        <textarea id="outputHTML" readonly placeholder="The result will appear here..."></textarea>
+
+    </div>
+
+    <script>
+        const salesOrgMap = {
+            DE: ["1010", "2200", "6110"],
+            FR: ["2000", "2320", "6110"],
+            NL: ["2320", "2420"],
+            UK: ["2510"],
+            ES: ["2610"],
+            IT: ["2710"],
+            DK: ["2800"],
+            NO: ["2900"],
+            SE: ["3100"],
+            EE: ["5110"],
+            LV: ["5210"],
+            LT: ["5310"],
+            PL: ["5410"],
+            FI: ["5710"],
+            SI: ["5820"],
+            HR: ["5830"],
+            SK: ["5840"],
+            CZ: ["5845"],
+            HU: ["5850"],
+            RO: ["5860"],
+            BG: ["5870"],
+            RS: ["5881"],
+            ME: ["5895"]
+        };
+
+        const vendorList = [
+            "Euronic", "Club-3D-BV", "VIEWSONIC", "ADERIAN", "SAMSUNG GSM", "NEOMOUNTS", "FRACTAL DESIGN",
+            "SEAMCOM", "MICROSOFT", "GoTo", "HP", "REFURB", "MICROSOFT-CSP", "MICROSOFT-SURFACE",
+            "MICROSOFT-SURFACEHUB", "MICROSOFT-OEM", "XIAOMI-ECO", "XIAOMI", "LENOVO", "LENOVO-IDG",
+            "LENOVO-ISG", "BRIDGE", "HP-SUPPLIES", "HP-PRINTING", "HP-COMPUTING", "HPE", "ARUBA",
+            "DELL", "DELL-COMPUTERS", "CISCO", "TELEKOM-DEUTSCHLAND", "INTEL", "SEAGATE", "SAMSUNG",
+            "SAMSUNG-MOBILE", "SAMSUNG-STORAGE", "ELECTRONIC-ARTS", "APPLE", "APC", "LOGITECH",
+            "WESTERN-DIGITAL", "HUAWEI", "SOPHOS", "AMD", "CANON", "CANON-SCANNER", "CANON-SUPPLIES",
+            "CANON-LFP", "FUJITSU", "FUJITSU-SCANNER", "FUJITSU-CCD", "FORTINET", "EATON", "BROTHER",
+            "ASUS", "N-ABLE", "EPSON", "UNIFY", "ACER", "ACER-MONITOR", "ADOBE", "ZOTAC", "PATRONICS",
+            "LG-DISPLAYS", "LG-SMART-SIGNAGE", "ACRONIS", "IIYAMA", "MOTORLA", "CONTOUR-DESIGN",
+            "DEMANT-SOUND", "VMWARE", "LISTAN", "GN-NETCOM", "ERGOTRON", "ALCATEL-LUCENT",
+            "AOC-INTERNATIONAL", "CONGSTAR", "IBM-CLOUD", "IBM-HARDWARE", "IBM-SOFTWARE",
+            "KASPERKY-LAB", "ZYXEL", "POLYCOM", "NORTONLIFELOCK", "LEXMARK", "ESET", "WATCHGUARD",
+            "RAZER", "VEEAM", "DATTO", "MMD-MONITORS-DISPLAYS", "BOSE", "DICTOTA", "MITEL",
+            "KINGSTON", "KYOCERA", "XEROX", "LINDY", "LEXWARE", "INNOVISION", "TRANSCEND", "EMC",
+            "NEWSTAR", "QNAP-SYSTEMS", "CHERRY", "ROOMZ", "CIRTRIX", "TARGUS", "NETGEAR",
+            "REALWEAR", "SK-HYNIX-NAND-PRODUCT-SOLUTIONS", "TP-LINK", "BARCO", "ARCSERVE",
+            "PROMETHEAN", "AVERPOINT", "ALLIED-TELESIS", "LANCOM", "URBAN-FACTORY",
+            "ASSMANN-ELECTRONIC", "GIGASET", "GIGASET-PRO", "GIGASET-CONSUMER", "ALSO",
+            "MULTIVENDOR", "CAMBIUM-NETWORKS", "3M", "NEC-DISPLAY-SOLUTIONS", "ESR", "NETAPP",
+            "CROWDSTRIKE", "BLUEWALKER", "QUANTUM", "DELOCK", "OCTOGATE", "YEALINK",
+            "TANDBERG-DATA", "MSI", "INSYS", "NCP", "SANDBERG", "DYNABOOK", "MICROFOCUS",
+            "SUPER-MICRO-COMPUTER", "VERTIV", "PHILIPS", "D-LINK", "GIGABYTE", "I-TEC",
+            "AUREA-SOFTWARE", "SNOM-TECHNOLOGY", "SONY", "SILICON-POWER-COMPUTER-COMMUNICATION",
+            "KONFTEL-AB", "FANVIL", "BELKIN", "GEMBIRD", "AVM", "PNY", "NET-AT-WORK",
+            "BENQ", "AGFEO", "BINTEC-ELMEG", "MATERIALISE", "STATIC-CONTROL", "KFA2",
+            "MGE-USV-SYSTEME", "SENNHEISER", "LACIE", "C4B", "UBIQUITI-NETWORKS", "FELLOWES",
+            "AUERSWALD", "SEH", "VADE-SECURE", "BARRACUDA", "NUTANIX", "OKI", "SYNOLOGY",
+            "OPTOMA", "SANDISK", "INTRA2NET", "ESTOS", "IC-INTRACOM", "EVER", "LANBERG",
+            "DROPBOX", "SILEX-TECHNOLOGY-EUROPE", "LEITZ-ACCO-BRANDS", "PALIT", "SAPPHIRE",
+            "RAIDSONIC", "XFX", "CHIEFTEC", "WACOM", "TOSHIBA-EUROPE", "EFB", "3DCONNEXION",
+            "PANASONIC", "CORSAIR", "AV-STUMPFL", "PIXMINDS", "CINETIX", "MEINBERG",
+            "BACKBLAZE", "PROMAX-ELECTRONIC", "WILEX", "BRAINSTORM-MULTIMEDIA",
+            "QSC-AUDIO-PRODUCTS", "LOGILINK", "LINKSYS", "TELTONIKA", "PHANTEKS",
+            "GIGACOMM", "FRITZ!BOX", "PC-TREFF-24", "TTC-SOFTWARE", "VIVITEK", "CISCO-COMP",
+            "DURACELL", "KONICA-MINOLTA", "CAMEO", "WILOSOPHY", "PRIMACOM", "BEHRINGER",
+            "PLANTRONICS", "FENWICK", "TEAMGROUP", "DRAYTEK", "JABRA", "GENERIC", "VZWEI",
+            "MORGAN", "SIEMENS-HEALTHCARE", "NVIDIA", "ELO", "SAGEMCOM", "TROX",
+            "SIGNIFY", "AEG", "TRIPP-LITE", "LINKS"
+        ];
+
+        // Thêm vendor vào datalist
+        const datalist = document.getElementById('vendor-list');
+        vendorList.forEach(vendor => {
+            const option = document.createElement('option');
+            option.value = vendor;
+            datalist.appendChild(option);
+        });
+
+        const dataMap = {
+            DE: {
+                "1010": { text1: "Hello", text2: "World", text3: "Text 3 EN", email: "hello@domain.de" },
+                "2200": { text1: "Good", text2: "Morning", text3: "Text 3 EN", email: "good@domain.de" },
+                "6110": { text1: "How", text2: "Are you?", text3: "Text 3 EN", email: "how@domain.de" },
+            },
+            FR: {
+                "2000": { text1: "Hallo", text2: "Welt", text3: "Text 3 DE", email: "hallo@domain.de" },
+                "6110": { text1: "Wie", text2: "Geht's?", text3: "Text 3 DE", email: "wie@domain.de" },
+            }
+        };
+
+        const languageSelect = document.getElementById("language");
+        const codeInput = document.getElementById("codeInput");
+        const submitBtn = document.getElementById("submitBtn");
+        const resultTable = document.getElementById("resultTable");
+        const tableBody = document.getElementById("tableBody");
+
+        function renderTableByLanguage(lang) {
+  const codes = salesOrgMap[lang] || [];
+  const dataForLang = dataMap[lang] || {};
+  let rows = "";
+
+  let hasData = false;
+
+  codes.forEach(code => {
+    const data = dataForLang[code];
+    if (data) {
+      hasData = true;
+      rows += `
+        <tr>
+          <td>${code}</td>
+          <td>${data.text1}</td>
+          <td>${data.text2}</td>
+          <td>${data.text3}</td>
+          <td>${data.email}</td>
+        </tr>
+      `;
+    }
+  });
+
+  if (hasData) {
+    tableBody.innerHTML = rows;
+    resultTable.style.display = "table";
+  } else {
+    tableBody.innerHTML = "";
+    resultTable.style.display = "none";
+    alert(`Không có dữ liệu nào cho ngôn ngữ "${lang}"`);
+  }
+}
+
+// Render khi thay đổi language
+languageSelect.addEventListener("change", () => {
+  const lang = languageSelect.value;
+  renderTableByLanguage(lang);
+});
+
+        // function renderTable(code, lang) {
+        //   const data = (dataMap[lang] && dataMap[lang][code]) || null;
+        //   if (!data) {
+        //     alert("Không tìm thấy dữ liệu cho code này ở ngôn ngữ " + lang);
+        //     resultTable.style.display = "none";
+        //     return;
+        //   }
+        //   tableBody.innerHTML = `
+        //     <tr>
+        //       <td>${code}</td>
+        //       <td>${data.text1}</td>
+        //       <td>${data.text2}</td>
+        //       <td>${data.text3}</td>
+        //       <td>${data.email}</td>
+        //     </tr>
+        //   `;
+        //   resultTable.style.display = "table";
+        // }
+
+        // submitBtn.addEventListener("click", () => {
+        //   const code = codeInput.value.trim();
+        //   if (!code) {
+        //     alert("Vui lòng nhập mã code");
+        //     return;
+        //   }
+        //   currentCode = code;
+        //   renderTable(currentCode, langSelect.value);
+        // });
+
+        // langSelect.addEventListener("change", () => {
+        //   if (currentCode) {
+        //     renderTable(currentCode, langSelect.value);
+        //   }
+        // });
+
+        function getCurrentWeek() {
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 0, 1);
+            const diff = (now - start + (start.getTimezoneOffset() - now.getTimezoneOffset()) * 60000);
+            const oneWeek = 604800000;
+            return String(Math.ceil(diff / oneWeek)).padStart(2, '0');
+        }
+
+        function getMMDD() {
+            const now = new Date();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            return mm + dd;
+        }
+
+        function generateNames() {
+            const lang = document.getElementById("language").value;
+            const vendor = document.getElementById("vendor").value.toLowerCase();
+            const campaign = document.getElementById("campaignName").value.trim();
+            const project = document.getElementById("campaignID").value.trim();
+            const programCode = document.getElementById("programCode").value;
+
+            if (!salesOrgMap[lang] || !vendor || !campaign || !project) {
+                alert("Vui lòng điền đầy đủ thông tin.");
+                return;
+            }
+
+            const week = getCurrentWeek();
+            const year = new Date().getFullYear().toString().slice(-2);
+            const mmdd = getMMDD();
+            const yycw = `${year}CW${week}`;
+
+            const output = document.getElementById("output");
+            output.innerHTML = "";
+
+            salesOrgMap[lang].forEach(code => {
+                const fullName = `${code}-${programCode}-${yycw}-${mmdd}-${vendor}-${lang}${campaign}-${project}`;
+                const item = document.createElement("div");
+                item.className = "generated-item";
+                item.innerHTML = `<span class='generated-text'>${fullName}</span> <button class='copy-btn' onclick='copyToClipboard(this, "${fullName}")'>Copy</button>`;
+                output.appendChild(item);
+            });
+        }
+
+        function copyToClipboard(button, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const original = button.innerText;
+                button.innerText = "Copied";
+                button.disabled = true;
+                setTimeout(() => {
+                    button.innerText = original;
+                    button.disabled = false;
+                }, 3000);
+            });
+        }
+
+        // // Khi thay đổi language, render lại table nếu đã submit trước đó
+        // languageSelect.addEventListener("change", () => {
+        //   if (currentCode) {
+        //     renderTable(currentCode, languageSelect.value);
+        //   }
+        // });
+
+        // // Hàm render table theo code và language
+        // function renderTable(code, lang) {
+        //   const data = dataMap[lang] && dataMap[lang][code];
+        //   if (!data) {
+        //     alert(`Không tìm thấy dữ liệu cho code ${code} ở ngôn ngữ ${lang}`);
+        //     resultTable.style.display = "none";
+        //     tableBody.innerHTML = "";
+        //     return;
+        //   }
+        //   tableBody.innerHTML = `
+        //     <tr>
+        //       <td>${code}</td>
+        //       <td>${data.text1}</td>
+        //       <td>${data.text2}</td>
+        //       <td>${data.text3}</td>
+        //       <td>${data.email}</td>
+        //     </tr>
+        //   `;
+        //   resultTable.style.display = "table";
+        // }
+
+        const inputEl = document.getElementById("inputHTML");
+        const outputEl = document.getElementById("outputHTML");
+
+        function convertUnicodeToHTMLEntities(text) {
+            const cleanText = text.replace(/[\n\r]/g, '');
+            let result = '';
+            for (let char of cleanText) {
+                result += `&#${char.codePointAt(0)};`;
+            }
+            return result;
+        }
+
+        inputEl.addEventListener("input", () => {
+            outputEl.value = convertUnicodeToHTMLEntities(inputEl.value);
+        });
+    </script>
+</body>
+
+</html>
