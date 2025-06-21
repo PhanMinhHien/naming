@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -8,46 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Naming Convention</title>
     <style>
-         :root {
+        :root {
             --bg: #f9f9fb;
             --text: #222;
             --input-bg: #fff;
             --input-border: #ccc;
             --highlight: #4a90e2;
         }
+
         body {
-            background-color: #f9f9f9;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
+    background: #f4f7f8;
+    color: #333;
+    margin: 20px;
+    line-height: 1.5;
         }
-    
-        .container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 30px;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+        h2 {
+            border-bottom: 3px solid #2980b9;
+            padding-bottom: 6px;
+            margin-top: 40px;
+            color: #2980b9;
         }
-    
-        h2, h3 {
+
+        h3 {
             text-align: center;
             color: #333;
             margin-bottom: 20px;
         }
-    
+
         .form-group {
             margin-bottom: 20px;
         }
-    
+
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #444;
         }
-    
+
         input,
         select {
             width: 100%;
@@ -58,14 +56,14 @@
             box-sizing: border-box;
             transition: all 0.3s ease;
         }
-    
+
         input:focus,
         select:focus {
             border-color: #007bff;
             outline: none;
             box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
         }
-    
+
         button {
             display: block;
             /* width: 100%; */
@@ -79,11 +77,11 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-    
+
         button:hover {
             background-color: #0056b3;
         }
-    
+
         #output {
             margin-top: 20px;
             padding: 10px;
@@ -91,92 +89,94 @@
             background: #f1f1f1;
             border-radius: 6px;
         }
-    
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
             font-size: 14px;
         }
-    
+
         th,
         td {
             border: 1px solid #ddd;
             padding: 10px;
             text-align: center;
         }
-    
+
         th {
             background-color: #f5f5f5;
             font-weight: bold;
             color: #333;
         }
-    
+
         tr:nth-child(even) {
             background-color: #fafafa;
         }
-    
+
         tr:hover {
             background-color: #f0f8ff;
         }
-    
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
             }
-    
-            h2, h3 {
+
+            h2,
+            h3 {
                 font-size: 20px;
             }
-    
-            input, select, button {
+
+            input,
+            select,
+            button {
                 font-size: 14px;
             }
-    
+
             table {
                 font-size: 12px;
             }
         }
+
         .generated-item {
-    position: relative;
-    padding: 12px 15px;
-    background: #f7f9fc;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 12px;
-    font-family: monospace;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+            position: relative;
+            padding: 12px 15px;
+            background: #f7f9fc;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-family: monospace;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-.generated-text {
-    word-break: break-all;
-    flex: 1;
-    padding-right: 60px;
-}
+        .generated-text {
+            word-break: break-all;
+            flex: 1;
+            padding-right: 60px;
+        }
 
-.copy-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px 10px;
-    font-size: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    opacity: 0.9;
-    transition: background-color 0.3s ease, opacity 0.3s ease;
-}
+        .copy-btn {
+            padding: 5px 10px;
+            font-size: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 0.9;
+            transition: background-color 0.3s ease, opacity 0.3s ease;
+        }
 
-.copy-btn:hover {
-    background-color: #0056b3;
-    opacity: 1;
-}
-textarea {
+        .copy-btn:hover {
+            background-color: #0056b3;
+            opacity: 1;
+        }
+
+        textarea {
             width: 100%;
             height: 100px;
             padding: 12px;
@@ -194,88 +194,124 @@ textarea {
             border-color: var(--highlight);
             outline: none;
         }
+
+        .center-copy {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        #Naming,
+        #TableEmail,
+        #Unicode {
+            max-width: 80%;
+            margin: auto;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            background: #fff;
+            padding: 20px 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgb(0 0 0 / 0.1);
+        }
     </style>
-    
+
 </head>
 
 <body>
     <div class="container">
-        <h2>Naming Convention</h2>
-        <div class="form-group">
-            <label for="programCode">Program Code</label>
-            <select id="programCode">
-                <option value="ES">ES - Email Send</option>
-                <option value="LE">LE - Live Event</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="vendor">Vendor</label>
-            <input list="vendor-list" id="vendor" placeholder="Chọn vendor..." />
-            <datalist id="vendor-list"></datalist>
-        </div>
-        <div class="form-group">
-            <label for="language">Language</label>
-            <select id="language">
-                <option value="" selected disabled>Please select</option>
-                <option value="DE">DE</option>
-                <option value="FR">FR</option>
-                <option value="NL">NL</option>
-                <option value="UK">UK</option>
-                <option value="ES">ES</option>
-                <option value="IT">IT</option>
-                <option value="DK">DK</option>
-                <option value="NO">NO</option>
-                <option value="SE">SE</option>
-                <option value="EE">EE</option>
-                <option value="LV">LV</option>
-                <option value="LT">LT</option>
-                <option value="PL">PL</option>
-                <option value="FI">FI</option>
-                <option value="SI">SI</option>
-                <option value="HR">HR</option>
-                <option value="SK">SK</option>
-                <option value="CZ">CZ</option>
-                <option value="HU">HU</option>
-                <option value="RO">RO</option>
-                <option value="BG">BG</option>
-                <option value="RS">RS</option>
-                <option value="ME">ME</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="campaignName">Campaign Name</label>
-            <input type="text" id="campaignName" placeholder="e.g. AMDServer" />
-        </div>
-        <div class="form-group">
-            <label for="campaignID">Project ID</label>
-            <input type="text" id="campaignID" placeholder="e.g. 2800DK259014" />
-        </div>
-        <button onclick="generateNames()" id="submitBtn">Generate Email Names</button>
+        <div id="Naming" class="section">
+            <h2>Naming Convention</h2>
+            <div class="form-group">
+                <label for="programCode">Program Code</label>
+                <select id="programCode">
+                    <option value="ES">ES - Email Send</option>
+                    <option value="LE">LE - Live Event</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="vendor">Vendor</label>
+                <input list="vendor-list" id="vendor" placeholder="Chọn vendor..." />
+                <datalist id="vendor-list"></datalist>
+            </div>
+            <div class="form-group">
+                <label for="language">Language</label>
+                <select id="language">
+                    <option value="" selected disabled>Please select</option>
+                    <option value="DE">DE</option>
+                    <option value="FR">FR</option>
+                    <option value="NL">NL</option>
+                    <option value="UK">UK</option>
+                    <option value="ES">ES</option>
+                    <option value="IT">IT</option>
+                    <option value="DK">DK</option>
+                    <option value="NO">NO</option>
+                    <option value="SE">SE</option>
+                    <option value="EE">EE</option>
+                    <option value="LV">LV</option>
+                    <option value="LT">LT</option>
+                    <option value="PL">PL</option>
+                    <option value="FI">FI</option>
+                    <option value="SI">SI</option>
+                    <option value="HR">HR</option>
+                    <option value="SK">SK</option>
+                    <option value="CZ">CZ</option>
+                    <option value="HU">HU</option>
+                    <option value="RO">RO</option>
+                    <option value="BG">BG</option>
+                    <option value="RS">RS</option>
+                    <option value="ME">ME</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="campaignName">Campaign Name</label>
+                <input type="text" id="campaignName" placeholder="e.g. AMDServer" />
+            </div>
+            <div class="form-group">
+                <label for="campaignID">Project ID</label>
+                <input type="text" id="campaignID" placeholder="e.g. 2800DK259014" />
+            </div>
+            <button onclick="generateNames()" id="submitBtn">Generate Email Names</button>
 
-        <div class="output" id="output"></div>
+            <table id="resultTableName">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="tableBodyName"></tbody>
+            </table>
+        </div>
+        <div id="TableEmail" class="section">
+            <h2>Email Table</h2>
+            <table id="resultTable">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Field 1</th>
+                        <th>Field 2</th>
+                        <th>Field 3</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+        <div id="Unicode" class="section">
+            <h2>Unicode to HTML</h2>
+            <label for="inputHTML">Enter or paste icon / Unicode character:</label>
+            <textarea id="inputHTML" placeholder=""></textarea>
 
-        <h3>Email Table</h3>
-        <table id="resultTable">
-            <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Text 1</th>
-                    <th>Text 2</th>
-                    <th>Text 3</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-        <h3>Unicode to HTML</h3>
-        <label for="inputHTML">Enter or paste icon / Unicode character:</label>
-        <textarea id="inputHTML" placeholder=""></textarea>
+            <label for="outputHTML">Result (HTML Entity):</label>
+            <textarea id="outputHTML" readonly placeholder="The result will appear here..."></textarea>
 
-        <label for="outputHTML">Result (HTML Entity):</label>
-        <textarea id="outputHTML" readonly placeholder="The result will appear here..."></textarea>
+        </div>
 
     </div>
-
     <script>
         const salesOrgMap = {
             DE: ["1010", "2200", "6110"],
@@ -355,15 +391,81 @@ textarea {
 
         const dataMap = {
             DE: {
-                "1010": { text1: "Hello", text2: "World", text3: "Text 3 EN", email: "hello@domain.de" },
-                "2200": { text1: "Good", text2: "Morning", text3: "Text 3 EN", email: "good@domain.de" },
-                "6110": { text1: "How", text2: "Are you?", text3: "Text 3 EN", email: "how@domain.de" },
+                "1010": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" },
+                "2200": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "oedataadminreturns-at@also.com", email: "oedataadminreturns-at@also.com" },
+                "6110": { text1: "ALSO News", text2: "alsonews-ch@email.also.com", text3: "alsonews-ch@news.also.com", email: "alsonews-ch@news.also.com" }
             },
             FR: {
-                "2000": { text1: "Hallo", text2: "Welt", text3: "Text 3 DE", email: "hallo@domain.de" },
-                "6110": { text1: "Wie", text2: "Geht's?", text3: "Text 3 DE", email: "wie@domain.de" },
+                "2000": { text1: "ALSO France", text2: "marketing-fr@email.also.com", text3: "noreply-fr@also.com", email: "noreply-fr@also.com" },
+                "2320": { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "newsletter.be@also.com" },
+                "6110": { text1: "ALSO News", text2: "alsonews-ch@email.also.com", text3: "alsonews-ch@news.also.com", email: "alsonews-ch@news.also.com" }
+            },
+            NL: {
+                "2320": { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "newsletter.be@also.com" },
+                "2420": { text1: "ALSO Nederland B.V.", text2: "nieuwsbrief@email.also.com", text3: "info.nl@also.com", email: "info.nl@also.com" }
+            },
+            UK: {
+                "2510": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" }
+            },
+            ES: {
+                "2610": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info.es@also.com", email: "info.es@also.com" }
+            },
+            IT: {
+                "2710": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "no-reply@also.com", email: "no-reply@also.com" }
+            },
+            DK: {
+                "2800": { text1: "ALSO A/S", text2: "info@email.also.com", text3: "marketing.danmark@also.com", email: "marketing.danmark@also.com" }
+            },
+            NO: {
+                "2900": { text1: "ALSO Nyhetsbrev", text2: "info@email.also.com", text3: "marketing.norge@also.com", email: "marketing.norge@also.com" }
+            },
+            SE: {
+                "3100": { text1: "ALSO Nyhetsbrev", text2: "info@email.also.com", text3: "Marketing.Sverige@also.com", email: "Marketing.Sverige@also.com" }
+            },
+            EE: {
+                "5110": { text1: "ALSO Eesti", text2: "info@email.also.com", text3: "ee-mailserver@also.com", email: "ee-mailserver@also.com" }
+            },
+            LV: {
+                "5210": { text1: "ALSO Jaunumi", text2: "info@email.also.com", text3: "LV-marketing@also.com", email: "LV-marketing@also.com" }
+            },
+            LT: {
+                "5310": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" }
+            },
+            PL: {
+                "5410": { text1: "ALSO Newsletter", text2: "newsletter@email.also.com", text3: "newsletter@alsopolska.pl", email: "newsletter@alsopolska.pl" }
+            },
+            FI: {
+                "5710": { text1: "ALSO Finland Oy", text2: "FI-mailserver@email.also.com", text3: "FI-mailserver@also.com", email: "FI-mailserver@also.com" }
+            },
+            SI: {
+                "5820": { text1: "ALSO Slovenija", text2: "info@email.also.com", text3: "Info.si@also.com", email: "Info.si@also.com" }
+            },
+            HR: {
+                "5830": { text1: "ALSO Croatia", text2: "marketing.hr@email.also.com", text3: "Info.ALSOCroatia@also.com", email: "Info.ALSOCroatia@also.com" }
+            },
+            SK: {
+                "5840": { text1: "ALSO Newsletter", text2: "info-sk@email.also.com", text3: "info-sk@also.com", email: "info-sk@also.com" }
+            },
+            CZ: {
+                "5845": { text1: "ALSO Newsletter", text2: "info-cz@email.also.com", text3: "info-cz@also.com", email: "info-cz@also.com" }
+            },
+            HU: {
+                "5850": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" }
+            },
+            RO: {
+                "5860": { text1: "ALSO Technology Romania", text2: "info@email.also.com", text3: "info@email.also.com", email: "info@email.also.com" }
+            },
+            BG: {
+                "5870": { text1: "ALSO Bulgaria Ltd.", text2: "office.bg@email.also.com", text3: "office.bg@also.com", email: "office.bg@also.com" }
+            },
+            RS: {
+                "5881": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" }
+            },
+            ME: {
+                "5895": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" }
             }
         };
+
 
         const languageSelect = document.getElementById("language");
         const codeInput = document.getElementById("codeInput");
@@ -372,17 +474,17 @@ textarea {
         const tableBody = document.getElementById("tableBody");
 
         function renderTableByLanguage(lang) {
-  const codes = salesOrgMap[lang] || [];
-  const dataForLang = dataMap[lang] || {};
-  let rows = "";
+            const codes = salesOrgMap[lang] || [];
+            const dataForLang = dataMap[lang] || {};
+            let rows = "";
 
-  let hasData = false;
+            let hasData = false;
 
-  codes.forEach(code => {
-    const data = dataForLang[code];
-    if (data) {
-      hasData = true;
-      rows += `
+            codes.forEach(code => {
+                const data = dataForLang[code];
+                if (data) {
+                    hasData = true;
+                    rows += `
         <tr>
           <td>${code}</td>
           <td>${data.text1}</td>
@@ -391,59 +493,23 @@ textarea {
           <td>${data.email}</td>
         </tr>
       `;
-    }
-  });
+                }
+            });
 
-  if (hasData) {
-    tableBody.innerHTML = rows;
-    resultTable.style.display = "table";
-  } else {
-    tableBody.innerHTML = "";
-    resultTable.style.display = "none";
-    alert(`Không có dữ liệu nào cho ngôn ngữ "${lang}"`);
-  }
-}
+            if (hasData) {
+                tableBody.innerHTML = rows;
+                resultTable.style.display = "table";
+            } else {
+                tableBody.innerHTML = "";
+                resultTable.style.display = "none";
+                alert(`No data available for the selected language "${lang}"`);
+            }
+        }
 
-// Render khi thay đổi language
-languageSelect.addEventListener("change", () => {
-  const lang = languageSelect.value;
-  renderTableByLanguage(lang);
-});
-
-        // function renderTable(code, lang) {
-        //   const data = (dataMap[lang] && dataMap[lang][code]) || null;
-        //   if (!data) {
-        //     alert("Không tìm thấy dữ liệu cho code này ở ngôn ngữ " + lang);
-        //     resultTable.style.display = "none";
-        //     return;
-        //   }
-        //   tableBody.innerHTML = `
-        //     <tr>
-        //       <td>${code}</td>
-        //       <td>${data.text1}</td>
-        //       <td>${data.text2}</td>
-        //       <td>${data.text3}</td>
-        //       <td>${data.email}</td>
-        //     </tr>
-        //   `;
-        //   resultTable.style.display = "table";
-        // }
-
-        // submitBtn.addEventListener("click", () => {
-        //   const code = codeInput.value.trim();
-        //   if (!code) {
-        //     alert("Vui lòng nhập mã code");
-        //     return;
-        //   }
-        //   currentCode = code;
-        //   renderTable(currentCode, langSelect.value);
-        // });
-
-        // langSelect.addEventListener("change", () => {
-        //   if (currentCode) {
-        //     renderTable(currentCode, langSelect.value);
-        //   }
-        // });
+        languageSelect.addEventListener("change", () => {
+            const lang = languageSelect.value;
+            renderTableByLanguage(lang);
+        });
 
         function getCurrentWeek() {
             const now = new Date();
@@ -468,7 +534,7 @@ languageSelect.addEventListener("change", () => {
             const programCode = document.getElementById("programCode").value;
 
             if (!salesOrgMap[lang] || !vendor || !campaign || !project) {
-                alert("Vui lòng điền đầy đủ thông tin.");
+                alert("Please fill in all the required information.");
                 return;
             }
 
@@ -477,57 +543,39 @@ languageSelect.addEventListener("change", () => {
             const mmdd = getMMDD();
             const yycw = `${year}CW${week}`;
 
-            const output = document.getElementById("output");
-            output.innerHTML = "";
+            const tableBodyName = document.getElementById("tableBodyName");
+            tableBodyName.innerHTML = ""; 
 
             salesOrgMap[lang].forEach(code => {
                 const fullName = `${code}-${programCode}-${yycw}-${mmdd}-${vendor}-${lang}${campaign}-${project}`;
-                const item = document.createElement("div");
-                item.className = "generated-item";
-                item.innerHTML = `<span class='generated-text'>${fullName}</span> <button class='copy-btn' onclick='copyToClipboard(this, "${fullName}")'>Copy</button>`;
-                output.appendChild(item);
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+        <td>${code}_${lang}</td>
+        <td><span class="email-name">${fullName}</span></td>
+        <td class="copy-col"><div class="center-copy"><button class="copy-btn" data-name="${fullName}">Copy</button></div></td>
+
+    `;
+
+                tableBodyName.appendChild(row);
+                // Gán sự kiện sau khi append vào DOM
+                const btn = row.querySelector(".copy-btn");
+                btn.addEventListener("click", () => {
+                    copyToClipboard(fullName, btn);
+                });
             });
+
         }
 
-        function copyToClipboard(button, text) {
+
+        function copyToClipboard(text, btn) {
             navigator.clipboard.writeText(text).then(() => {
-                const original = button.innerText;
-                button.innerText = "Copied";
-                button.disabled = true;
-                setTimeout(() => {
-                    button.innerText = original;
-                    button.disabled = false;
-                }, 3000);
+                btn.textContent = "Copied!";
+                setTimeout(() => btn.textContent = "Copy", 1500);
+            }).catch(err => {
+                console.error("Copy failed", err);
             });
         }
-
-        // // Khi thay đổi language, render lại table nếu đã submit trước đó
-        // languageSelect.addEventListener("change", () => {
-        //   if (currentCode) {
-        //     renderTable(currentCode, languageSelect.value);
-        //   }
-        // });
-
-        // // Hàm render table theo code và language
-        // function renderTable(code, lang) {
-        //   const data = dataMap[lang] && dataMap[lang][code];
-        //   if (!data) {
-        //     alert(`Không tìm thấy dữ liệu cho code ${code} ở ngôn ngữ ${lang}`);
-        //     resultTable.style.display = "none";
-        //     tableBody.innerHTML = "";
-        //     return;
-        //   }
-        //   tableBody.innerHTML = `
-        //     <tr>
-        //       <td>${code}</td>
-        //       <td>${data.text1}</td>
-        //       <td>${data.text2}</td>
-        //       <td>${data.text3}</td>
-        //       <td>${data.email}</td>
-        //     </tr>
-        //   `;
-        //   resultTable.style.display = "table";
-        // }
 
         const inputEl = document.getElementById("inputHTML");
         const outputEl = document.getElementById("outputHTML");
