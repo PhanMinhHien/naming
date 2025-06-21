@@ -283,8 +283,9 @@
                 <thead>
                     <tr>
                         <th>Code</th>
+                        <th>Country Name</th>
                         <th>Email</th>
-                        <th></th>
+                        <th>Copy</th>
                     </tr>
                 </thead>
                 <tbody id="tableBodyName"></tbody>
@@ -345,6 +346,37 @@
             ME: ["5895"]
         };
 
+        const salesOrgs = [
+            { code: "1010", countryCode: "DE", countryName: "Germany" },
+            { code: "1550", countryCode: "EN", countryName: "International" },
+            { code: "2000", countryCode: "FR", countryName: "France" },
+            { code: "2200", countryCode: "AT", countryName: "Austria" },
+            { code: "2320", countryCode: "BE", countryName: "Belgium" },
+            { code: "2420", countryCode: "NL", countryName: "Netherlands" },
+            { code: "2510", countryCode: "UK", countryName: "United Kingdom" },
+            { code: "2610", countryCode: "ES", countryName: "Spain" },
+            { code: "2640", countryCode: "PT", countryName: "Portugal" },
+            { code: "2710", countryCode: "IT", countryName: "Italy" },
+            { code: "2800", countryCode: "DK", countryName: "Denmark" },
+            { code: "2900", countryCode: "NO", countryName: "Norway" },
+            { code: "3100", countryCode: "SE", countryName: "Sweden" },
+            { code: "5110", countryCode: "EE", countryName: "Estonia" },
+            { code: "5210", countryCode: "LV", countryName: "Latvia" },
+            { code: "5310", countryCode: "LT", countryName: "Lithuania" },
+            { code: "5410", countryCode: "PL", countryName: "Poland" },
+            { code: "5710", countryCode: "FI", countryName: "Finland" },
+            { code: "5820", countryCode: "SI", countryName: "Slovenia" },
+            { code: "5830", countryCode: "HR", countryName: "Croatia" },
+            { code: "5840", countryCode: "SK", countryName: "Slovakia" },
+            { code: "5845", countryCode: "CZ", countryName: "Czech Republic" },
+            { code: "5850", countryCode: "HU", countryName: "Hungary" },
+            { code: "5860", countryCode: "RO", countryName: "Romania" },
+            { code: "5870", countryCode: "BG", countryName: "Bulgaria" },
+            { code: "5881", countryCode: "RS", countryName: "Serbia" },
+            { code: "5895", countryCode: "ME", countryName: "Montenegro" },
+            { code: "6000", countryCode: "EN", countryName: "International" },
+            { code: "6110", countryCode: "CH", countryName: "Switzerland" },
+        ];
         const vendorList = [
             "Euronic", "Club-3D BV", "VIEWSONIC", "ADERIAN", "SAMSUNG-GSM", "NEOMOUNTS", "FRACTAL DESIGN", "SEAMCOM", "MICROSOFT", "GoTo", "HP", "REFURB", "MICROSOFT-CSP", "MICROSOFT-SURFACE", "MICROSOFT-SURFACEHUB", "MICROSOFT-OEM", "XIAOMI-ECO", "XIAOMI", "LENOVO", "LENOVO-IDG", "LENOVO-ISG", "BRIDGE", "HP-SUPPLIES", "HP-PRINTING", "HP-COMPUTING", "HPE", "ARUBA", "DELL", "DELL-COMPUTERS", "CISCO", "TELEKOM-DEUTSCHLAND", "INTEL", "SEAGATE", "SAMSUNG", "SAMSUNG-MOBILE", "SAMSUNG-STORAGE", "ELECTRONIC ARTS", "APPLE", "APC", "LOGITECH", "WESTERN DIGITAL", "HUAWEI", "SOPHOS", "AMD", "CANON", "CANON-SCANNER", "CANON-SUPPLIES", "CANON-LFP", "FUJITSU", "FUJITSU-SCANNER", "FUJITSU-CCD", "FORTINET", "EATON", "BROTHER", "ASUS", "N-ABLE", "EPSON", "UNIFY", "ACER", "ACER-MONITOR", "ADOBE", "ZOTAC", "PATRONICS", "LG-DISPLAYS", "LG-SMART SIGNAGE", "ACRONIS", "IIYAMA", "MOTORLA", "CONTOUR DESIGN", "DEMANT SOUND", "VMWARE", "LISTAN", "GN-NETCOM", "ERGOTRON", "ALCATEL-LUCENT", "AOC INTERNATIONAL", "CONGSTAR", "IBM-CLOUD", "IBM-HARDWARE", "IBM-SOFTWARE", "KASPERKY LAB", "ZYXEL", "POLYCOM", "NORTONLIFELOCK", "LEXMARK", "ESET", "WATCHGUARD", "RAZER", "VEEAM", "DATTO", "MMD-MONITORS & DISPLAYS", "BOSE", "DICTOTA", "MITEL", "KINGSTON", "KYOCERA", "XEROX", "LINDY", "LEXWARE", "INNOVISION", "TRANSCEND", "EMC", "NEWSTAR", "QNAP SYSTEMS", "CHERRY", "ROOMZ", "CIRTRIX", "TARGUS", "NETGEAR", "REALWEAR", "SK HYNIX NAND PRODUCT SOLUTIONS", "TP-LINK", "BARCO", "ARCSERVE", "PROMETHEAN", "AVERPOINT", "ALLIED TELESIS", "LANCOM", "URBAN FACTORY", "ASSMANN ELECTRONIC", "GIGASET", "GIGASET-PRO", "GIGASET-CONSUMER", "ALSO", "MULTIVENDOR", "CAMBIUM NETWORKS", "3M", "NEC DISPLAY SOLUTIONS", "ESR", "NETAPP", "CROWDSTRIKE", "BLUEWALKER", "QUANTUM", "DELOCK", "OCTOGATE", "YEALINK", "TANDBERG DATA", "MSI", "INSYS", "NCP", "SANDBERG", "DYNABOOK", "MICROFOCUS", "SUPER MICRO COMPUTER", "VERTIV", "PHILIPS", "D-LINK", "GIGABYTE", "I-TEC", "AUREA SOFTWARE", "SNOM TECHNOLOGY", "SONY", "SILICON POWER COMPUTER & COMMUNICATION", "KONFTEL AB", "FANVIL", "BELKIN", "GEMBIRD", "AVM", "PNY", "NET-AT-WORK", "BENQ", "AGFEO", "BINTEC-ELMEG", "MATERIALISE", "STATIC CONTROL", "KFA2", "MGE-USV SYSTEME", "SENNHEISER", "LACIE", "C4B", "UBIQUITI NETWORKS", "FELLOWES", "AUERSWALD", "SEH", "VADE SECURE", "BARRACUDA", "NUTANIX", "OKI", "SYNOLOGY", "OPTOMA", "SANDISK", "INTRA2NET", "ESTOS", "IC INTRACOM", "EVER", "LANBERG", "DROPBOX", "SILEX TECHNOLOGY EUROPE", "LEITZ ACCO BRANDS", "PALIT", "SAPPHIRE", "RAIDSONIC", "XFX", "CHIEFTEC", "WACOM", "TOSHIBA EUROPE", "EFB", "3DCONNEXION", "PANASONIC", "CORSAIR", "AV STUMPFL", "PIXMINDS", "CANDY", "PEERLESS-AV", "OTTER PRODUCTS", "PATRIOT MEMORY", "TRUST", "AVER INDORMATION", "STARTECH.COM", "POWERCOLOR TUL", "PORT DESIGNS", "QOLTEC", "APACER", "MIKROTIK", "A-DATA", "NVIDIA", "GAINWARD EUROPE", "SHARP", "PARAT", "GO EUROPE", "GREEN CELL", "HAMA", "HITACHI-LG", "TEAM GROUP", "GETT GERÄTETECHNIK", "SECOMP", "INTER-TECH", "RITTAL", "GFI SOFTWARE", "AIRSLATE", "ZEBRA", "EXTRALINK", "1&1 IONOS", "CHECK POINT", "JABRA", "REINER KARTENGERÄTE", "COOLER MASTER", "MEDION", "NATEC", "AKYGA", "SANUS", "JJ-COMPUTER", "INNOFIL3D", "GREENBONE", "COREL", "WITHSECURE", "SONOS", "ASROCK", "ZEPP", "SOLARWINDS", "MCAFEE IRELAND", "AXIS COMMUNICATIONS", "KEMP TECHNOLOGIES", "WIKO", "TECHLY", "NETRACK", "TRACER", "RSA SECURITY", "ART", "KRAMER", "BASF 3D", "LOGILINK", "DATA AND MORE", "ZALMAN", "ACTIVISION", "WITHINGS", "INTEGRAL MEMORY PLC", "DORO", "CYBER POWER", "CENOR", "GOODRAM", "DYEMANSION", "TP VISION", "BMG", "PEACOCK", "SMS EVOKO GROUP", "A4TECH", "VERBATIM", "HGST", "EVE SYSTEMS", "ANKI", "BLIZZARD ENTERTAINMENT", "PARTNER CARE EUROPE", "ENERGENIE BY GEMBIRD", "TWELVE SOUTH", "MILESTONES SYSTEMS A/S", "LINKSYS", "MEDIA TECH", "TEAMVIEWER", "TECHLY PRO", "CREAFORM", "PRINTRONIX", "PANDUIT", "ATEN", "4WORLD", "SUUNTO", "MW", "BLAUPUNKT", "CSB", "RICOH", "CLOUD TECHNOLOGY SOLUTIONS", "COMDIS", "NEXT CONCEPT", "REALME", "KONICA MINOLTA", "DIGITUS", "XTON", "EIZO", "CRICUT", "LETSIGNIT", "NEOLT FACTORY", "PELCO", "MANHATTAN", "ELITE SCREENS", "PLENOM", "EDIMAX", "AZON", "VIDIS S.A.", "APPLICATIELINK", "IVANTI", "ZIMBRA", "ESPERANZA", "INCASE", "SMART TECHNOLOGIES ULC", "GRIFFIN", "WHITENERGY", "TENDA TECHNOLOGY", "VAXTOR", "HISENSE", "DIGICERT", "VIVO MOBILE COMMUNICATION", "QS SOLUTIONS", "PERSONDATASUPPORT", "DROPSUITE", "CRAFTUNIQUE", "INCIPIO", "INNO3D", "TALLY GENICOM", "PRICE INTERNATIONAL", "ORVALDI", "G.SKILL"
         ];
@@ -550,11 +582,17 @@
             tableBodyName.innerHTML = "";
 
             salesOrgMap[lang].forEach(code => {
+                const org = salesOrgs.find(item => item.code === code);
+                const countryName = org ? org.countryName : "Unknown";
+
+
                 const fullName = `${code}-${programCode}-${yycw}-${mmdd}-${vendor}-${lang}${campaign}-${project}`;
                 const row = document.createElement("tr");
 
                 row.innerHTML = `
             <td>${code}_${lang}</td>
+                    <td>${countryName}</td>
+
             <td><span class="email-name">${fullName}</span></td>
             <td class="copy-col"><div class="center-copy"><button class="copy-btn" data-name="${fullName}">Copy</button></div></td>
         `;
