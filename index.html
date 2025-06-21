@@ -16,10 +16,10 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f4f7f8;
-    color: #333;
-    margin: 20px;
-    line-height: 1.5;
+            background: #f4f7f8;
+            color: #333;
+            margin: 20px;
+            line-height: 1.5;
         }
 
         h2 {
@@ -228,7 +228,7 @@
                 <label for="programCode">Program Code</label>
                 <select id="programCode">
                     <option value="ES">ES - Email Send</option>
-                    <option value="LE">LE - Live Event</option>
+                    <option value="NL">NL - Newsletter</option>
                 </select>
             </div>
             <div class="form-group">
@@ -243,7 +243,7 @@
                     <option value="DE">DE</option>
                     <option value="FR">FR</option>
                     <option value="NL">NL</option>
-                    <option value="UK">UK</option>
+                    <option value="EN">EN</option>
                     <option value="ES">ES</option>
                     <option value="IT">IT</option>
                     <option value="DK">DK</option>
@@ -266,6 +266,10 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="customDate">Date:</label>
+                <input type="date" id="customDate">
+            </div>
+            <div class="form-group">
                 <label for="campaignName">Campaign Name</label>
                 <input type="text" id="campaignName" placeholder="e.g. AMDServer" />
             </div>
@@ -273,8 +277,8 @@
                 <label for="campaignID">Project ID</label>
                 <input type="text" id="campaignID" placeholder="e.g. 2800DK259014" />
             </div>
-            <button onclick="generateNames()" id="submitBtn">Generate Email Names</button>
-
+            <!-- <button onclick="generateNames()" id="submitBtn">Generate Email Names</button> -->
+            <h2>Naming Convention Table</h2>
             <table id="resultTableName">
                 <thead>
                     <tr>
@@ -303,12 +307,14 @@
         </div>
         <div id="Unicode" class="section">
             <h2>Unicode to HTML</h2>
-            <label for="inputHTML">Enter or paste icon / Unicode character:</label>
-            <textarea id="inputHTML" placeholder=""></textarea>
-
-            <label for="outputHTML">Result (HTML Entity):</label>
-            <textarea id="outputHTML" readonly placeholder="The result will appear here..."></textarea>
-
+            <div class="form-group">
+                <label for="inputHTML">Enter or paste icon / Unicode character:</label>
+                <textarea id="inputHTML" placeholder=""></textarea>
+            </div>
+            <div class="form-group">
+                <label for="outputHTML">Result (HTML Entity):</label>
+                <textarea id="outputHTML" readonly placeholder=""></textarea>
+            </div>
         </div>
 
     </div>
@@ -317,7 +323,7 @@
             DE: ["1010", "2200", "6110"],
             FR: ["2000", "2320", "6110"],
             NL: ["2320", "2420"],
-            UK: ["2510"],
+            EN: ["1550", "2510", "2320"],
             ES: ["2610"],
             IT: ["2710"],
             DK: ["2800"],
@@ -404,8 +410,10 @@
                 "2320": { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "newsletter.be@also.com" },
                 "2420": { text1: "ALSO Nederland B.V.", text2: "nieuwsbrief@email.also.com", text3: "info.nl@also.com", email: "info.nl@also.com" }
             },
-            UK: {
-                "2510": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" }
+            EN: {
+                "1550": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" },
+                "2510": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" },
+                "2320": { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "newsletter.be@also.com" },
             },
             ES: {
                 "2610": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info.es@also.com", email: "info.es@also.com" }
@@ -525,49 +533,108 @@
             const dd = String(now.getDate()).padStart(2, '0');
             return mm + dd;
         }
+        document.addEventListener("DOMContentLoaded", () => {
+            const fields = [
+                "language",
+                "vendor",
+                "campaignName",
+                "campaignID",
+                "programCode",
+                "customDate"
+            ];
 
+            const checkAndGenerate = () => {
+                const allFilled = fields.every(id => {
+                    const el = document.getElementById(id);
+                    return el && el.value.trim() !== "";
+                });
+
+                if (allFilled) {
+                    generateNames();
+                }
+            };
+
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener("input", checkAndGenerate);
+                    el.addEventListener("change", checkAndGenerate);
+                }
+            });
+
+        });
         function generateNames() {
             const lang = document.getElementById("language").value;
             const vendor = document.getElementById("vendor").value.toLowerCase();
             const campaign = document.getElementById("campaignName").value.trim();
             const project = document.getElementById("campaignID").value.trim();
             const programCode = document.getElementById("programCode").value;
+            const selectedDate = document.getElementById("customDate").value;
 
             if (!salesOrgMap[lang] || !vendor || !campaign || !project) {
                 alert("Please fill in all the required information.");
                 return;
             }
 
-            const week = getCurrentWeek();
-            const year = new Date().getFullYear().toString().slice(-2);
-            const mmdd = getMMDD();
+            const dateObj = selectedDate ? new Date(selectedDate) : new Date();
+            const year = dateObj.getFullYear().toString().slice(-2);
+            const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const dd = String(dateObj.getDate()).padStart(2, '0');
+            const mmdd = `${mm}${dd}`;
+
+            const week = getWeekNumber(dateObj);
             const yycw = `${year}CW${week}`;
 
             const tableBodyName = document.getElementById("tableBodyName");
-            tableBodyName.innerHTML = ""; 
+            tableBodyName.innerHTML = "";
 
             salesOrgMap[lang].forEach(code => {
                 const fullName = `${code}-${programCode}-${yycw}-${mmdd}-${vendor}-${lang}${campaign}-${project}`;
                 const row = document.createElement("tr");
 
                 row.innerHTML = `
-        <td>${code}_${lang}</td>
-        <td><span class="email-name">${fullName}</span></td>
-        <td class="copy-col"><div class="center-copy"><button class="copy-btn" data-name="${fullName}">Copy</button></div></td>
-
-    `;
+            <td>${code}_${lang}</td>
+            <td><span class="email-name">${fullName}</span></td>
+            <td class="copy-col"><div class="center-copy"><button class="copy-btn" data-name="${fullName}">Copy</button></div></td>
+        `;
 
                 tableBodyName.appendChild(row);
-                // Gán sự kiện sau khi append vào DOM
-                const btn = row.querySelector(".copy-btn");
-                btn.addEventListener("click", () => {
-                    copyToClipboard(fullName, btn);
-                });
             });
 
+            setTimeout(() => {
+                document.querySelectorAll(".copy-btn").forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        const text = btn.getAttribute("data-name");
+                        copyToClipboard(text, btn);
+                    });
+                });
+            }, 0);
         }
 
+        function getWeekNumber(d) {
+            d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+            d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+            const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            return String(weekNo).padStart(2, '0');
+        }
 
+        document.addEventListener("DOMContentLoaded", () => {
+            const today = new Date().toISOString().split("T")[0];
+            document.getElementById("customDate").value = today;
+        });
+
+        document.getElementById("language").addEventListener("change", () => {
+            const vendor = document.getElementById("vendor").value.trim();
+            const campaign = document.getElementById("campaignName").value.trim();
+            const project = document.getElementById("campaignID").value.trim();
+            const programCode = document.getElementById("programCode").value.trim();
+            const date = document.getElementById("customDate").value;
+
+            if (vendor && campaign && project && programCode && date) {
+                generateNames();
+            }
+        });
         function copyToClipboard(text, btn) {
             navigator.clipboard.writeText(text).then(() => {
                 btn.textContent = "Copied!";
