@@ -30,6 +30,7 @@
         }
 
         #resultTable td,
+        #tableBodyName td,
         #outputHTML {
             cursor: copy;
             position: relative;
@@ -313,7 +314,6 @@
                 <label for="campaignID">Project ID</label>
                 <input type="text" id="campaignID" />
             </div>
-            <!-- <button onclick="generateNames()" id="submitBtn">Generate Email Names</button> -->
             <h2>Naming Convention Table</h2>
             <table id="resultTableName">
                 <thead>
@@ -321,7 +321,6 @@
                         <th>Country Code</th>
                         <th>Country Name</th>
                         <th>Name Email</th>
-                        <th>Copy</th>
                     </tr>
                 </thead>
                 <tbody id="tableBodyName"></tbody>
@@ -597,7 +596,19 @@
                     });
                 }
             });
+            const tableBody = document.getElementById("tableBodyName");
 
+            tableBody.addEventListener("click", function (event) {
+                const span = event.target.closest(".email-name");
+                if (span) {
+                    const text = span.textContent.trim();
+                    navigator.clipboard.writeText(text).then(() => {
+                        showTooltip(span);
+                    }).catch(err => {
+                        console.error("Copy failed:", err);
+                    });
+                }
+            });
             const outputTextarea = document.getElementById("outputHTML");
             outputTextarea.addEventListener("click", function () {
                 outputTextarea.select();
@@ -675,20 +686,11 @@
                     <td>${countryName}</td>
 
             <td><span class="email-name">${fullName}</span></td>
-            <td class="copy-col"><div class="center-copy"><button class="copy-btn" data-name="${fullName}">Copy Name</button></div></td>
         `;
 
                 tableBodyName.appendChild(row);
             });
 
-            setTimeout(() => {
-                document.querySelectorAll(".copy-btn").forEach(btn => {
-                    btn.addEventListener("click", () => {
-                        const text = btn.getAttribute("data-name");
-                        copyToClipboard(text, btn);
-                    });
-                });
-            }, 0);
         }
 
         function getWeekNumber(d) {
@@ -715,14 +717,6 @@
                 generateNames();
             }
         });
-        function copyToClipboard(text, btn) {
-            navigator.clipboard.writeText(text).then(() => {
-                btn.textContent = "Copied!";
-                setTimeout(() => btn.textContent = "Copy", 1500);
-            }).catch(err => {
-                console.error("Copy failed", err);
-            });
-        }
 
         const inputEl = document.getElementById("inputHTML");
         const outputEl = document.getElementById("outputHTML");
