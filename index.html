@@ -540,6 +540,34 @@
             const dd = String(now.getDate()).padStart(2, '0');
             return mm + dd;
         }
+        document.addEventListener("DOMContentLoaded", function () {
+            const table = document.getElementById("resultTable");
+            table.addEventListener("click", function (event) {
+                const target = event.target;
+
+                if (target.tagName === "TD" || target.closest("td")) {
+                    const td = target.closest("td");
+                    const text = td.innerText.trim();
+                    navigator.clipboard.writeText(text).then(() => {
+                        console.log(`Copied: ${text}`);
+                    }).catch(err => {
+                        console.error('Failed to copy!', err);
+                    });
+                }
+            });
+            const outputTextarea = document.getElementById("outputHTML");
+
+            outputTextarea.addEventListener("click", function () {
+                outputTextarea.select();
+                outputTextarea.setSelectionRange(0, 99999);
+
+                navigator.clipboard.writeText(outputTextarea.value).then(() => {
+                    console.log(`Copied: ${text}`);
+                }).catch(err => {
+                    console.error("Failed to copy:", err);
+                });
+            });
+        });
         document.addEventListener("DOMContentLoaded", () => {
             const fields = [
                 "language",
