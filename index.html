@@ -94,7 +94,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         th,
@@ -216,6 +216,13 @@
             border-radius: 8px;
             box-shadow: 0 3px 8px rgb(0 0 0 / 0.1);
         }
+
+        #tableBodyName tr td:first-of-type,
+        #resultTable tr td:first-of-type {
+            background-color: #2980b9;
+            font-weight: bold;
+            color: #fff;
+        }
     </style>
 
 </head>
@@ -253,6 +260,7 @@
                     <option value="LV">LV</option>
                     <option value="LT">LT</option>
                     <option value="PL">PL</option>
+                    <option value="PT">PT</option>
                     <option value="FI">FI</option>
                     <option value="SI">SI</option>
                     <option value="HR">HR</option>
@@ -271,11 +279,11 @@
             </div>
             <div class="form-group">
                 <label for="campaignName">Campaign Name</label>
-                <input type="text" id="campaignName" placeholder="e.g. AMDServer" />
+                <input type="text" id="campaignName" />
             </div>
             <div class="form-group">
                 <label for="campaignID">Project ID</label>
-                <input type="text" id="campaignID" placeholder="e.g. 2800DK259014" />
+                <input type="text" id="campaignID" />
             </div>
             <!-- <button onclick="generateNames()" id="submitBtn">Generate Email Names</button> -->
             <h2>Naming Convention Table</h2>
@@ -301,6 +309,7 @@
                         <th>Field 2</th>
                         <th>Field 3</th>
                         <th>Email</th>
+                        <th>Text Product CTAs</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -326,6 +335,7 @@
             NL: ["2320", "2420"],
             EN: ["1550", "2510", "2320"],
             ES: ["2610"],
+            PT: ["2640"],
             IT: ["2710"],
             DK: ["2800"],
             NO: ["2900"],
@@ -390,80 +400,83 @@
 
         const dataMap = {
             DE: {
-                "1010": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" },
-                "2200": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "oedataadminreturns-at@also.com", email: "oedataadminreturns-at@also.com" },
-                "6110": { text1: "ALSO News", text2: "alsonews-ch@email.also.com", text3: "alsonews-ch@news.also.com", email: "alsonews-ch@news.also.com" }
+                "1010": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "bueckendorf@metacomp.de", ctaText: "MEHR ERFAHREN" },
+                "2200": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "oedataadminreturns-at@also.com", email: "georg.henke@henke.co.at", ctaText: "MEHR ERFAHREN" },
+                "6110": { text1: "ALSO News", text2: "alsonews-ch@email.also.com", text3: "alsonews-ch@news.also.com", email: "elvis.muriniti@swisspro.ch", ctaText: "MEHR ERFAHREN" }
             },
             FR: {
-                "2000": { text1: "ALSO France", text2: "marketing-fr@email.also.com", text3: "noreply-fr@also.com", email: "noreply-fr@also.com" },
-                "2320": { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "newsletter.be@also.com" },
-                "6110": { text1: "ALSO News", text2: "alsonews-ch@email.also.com", text3: "alsonews-ch@news.also.com", email: "alsonews-ch@news.also.com" }
+                "2000": { text1: "ALSO France", text2: "marketing-fr@email.also.com", text3: "noreply-fr@also.com", email: "jlaroussinie@ecotic.fr", ctaText: "VOIR LE PRODUIT" },
+                "2320": { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "jeroen@autosoft.be", ctaText: "VOIR LE PRODUIT" },
+                "6110": { text1: "ALSO News", text2: "alsonews-ch@email.also.com", text3: "alsonews-ch@news.also.com", email: "claude.christophi@birdnet.ch", ctaText: "VOIR LE PRODUIT" }
             },
             NL: {
-                "2320": { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "newsletter.be@also.com" },
-                "2420": { text1: "ALSO Nederland B.V.", text2: "nieuwsbrief@email.also.com", text3: "info.nl@also.com", email: "info.nl@also.com" }
+                "2320": { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "kristof.de.coninck@becosoft.be", ctaText: "BESTEL NU" },
+                "2420": { text1: "ALSO Nederland B.V.", text2: "nieuwsbrief@email.also.com", text3: "info.nl@also.com", email: "elyse.vanrossum@also.com", ctaText: "BESTEL NU" }
             },
             EN: {
-                "1550": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" },
-                "2510": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" },
-                "2320": { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "newsletter.be@also.com" },
+                "1550": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "senait.isaac@also.com", ctaText: "LEARN MORE" },
+                "2510": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "senait.isaac@also.com", ctaText: "LEARN MORE" },
+                "2320": { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "newsletter.be@also.com", ctaText: "LEARN MORE" },
             },
             ES: {
-                "2610": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info.es@also.com", email: "info.es@also.com" }
+                "2610": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info.es@also.com", email: "juan.cabrera@bps.com.es", ctaText: "APRENDE MÁS" }
             },
             IT: {
-                "2710": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "no-reply@also.com", email: "no-reply@also.com" }
+                "2710": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "no-reply@also.com", email: "natalino@gigahertz.it", ctaText: "MAGGIORI INFORMAZIONI" }
             },
             DK: {
-                "2800": { text1: "ALSO A/S", text2: "info@email.also.com", text3: "marketing.danmark@also.com", email: "marketing.danmark@also.com" }
+                "2800": { text1: "ALSO A/S", text2: "info@email.also.com", text3: "marketing.danmark@also.com", email: "info@moduldata.dk", ctaText: "LÆR MERE" }
             },
             NO: {
-                "2900": { text1: "ALSO Nyhetsbrev", text2: "info@email.also.com", text3: "marketing.norge@also.com", email: "marketing.norge@also.com" }
+                "2900": { text1: "ALSO Nyhetsbrev", text2: "info@email.also.com", text3: "marketing.norge@also.com", email: "rikard.faanes@atea.no", ctaText: "KJØP" }
             },
             SE: {
-                "3100": { text1: "ALSO Nyhetsbrev", text2: "info@email.also.com", text3: "Marketing.Sverige@also.com", email: "Marketing.Sverige@also.com" }
+                "3100": { text1: "ALSO Nyhetsbrev", text2: "info@email.also.com", text3: "Marketing.Sverige@also.com", email: "johan@itbiten.se", ctaText: "LÄR MER" }
             },
             EE: {
-                "5110": { text1: "ALSO Eesti", text2: "info@email.also.com", text3: "ee-mailserver@also.com", email: "ee-mailserver@also.com" }
+                "5110": { text1: "ALSO Eesti", text2: "info@email.also.com", text3: "ee-mailserver@also.com", email: "ilmar@fivepoint.ee", ctaText: "UURI LISAKS" }
             },
             LV: {
-                "5210": { text1: "ALSO Jaunumi", text2: "info@email.also.com", text3: "LV-marketing@also.com", email: "LV-marketing@also.com" }
+                "5210": { text1: "ALSO Jaunumi", text2: "info@email.also.com", text3: "LV-marketing@also.com", email: "lauris.v@tomega.lv", ctaText: "PIRKT" }
             },
             LT: {
-                "5310": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" }
+                "5310": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "sigitas@ella.lt", ctaText: "SUŽINOKITE DAUGIAU" }
             },
             PL: {
-                "5410": { text1: "ALSO Newsletter", text2: "newsletter@email.also.com", text3: "newsletter@alsopolska.pl", email: "newsletter@alsopolska.pl" }
+                "5410": { text1: "ALSO Newsletter", text2: "newsletter@email.also.com", text3: "newsletter@alsopolska.pl", email: "biuro@cybertom.pl", ctaText: "DOWIEDZ SIȨ WIȨCEJ" }
             },
             FI: {
-                "5710": { text1: "ALSO Finland Oy", text2: "FI-mailserver@email.also.com", text3: "FI-mailserver@also.com", email: "FI-mailserver@also.com" }
+                "5710": { text1: "ALSO Finland Oy", text2: "FI-mailserver@email.also.com", text3: "FI-mailserver@also.com", email: "anne.kangas@ta.fi", ctaText: "LUE LISÄÄ" }
             },
             SI: {
-                "5820": { text1: "ALSO Slovenija", text2: "info@email.also.com", text3: "Info.si@also.com", email: "Info.si@also.com" }
+                "5820": { text1: "ALSO Slovenija", text2: "info@email.also.com", text3: "Info.si@also.com", email: "borut.jurcevic@tend.si", ctaText: "VEČ INFORMACIJ" }
             },
             HR: {
-                "5830": { text1: "ALSO Croatia", text2: "marketing.hr@email.also.com", text3: "Info.ALSOCroatia@also.com", email: "Info.ALSOCroatia@also.com" }
+                "5830": { text1: "ALSO Croatia", text2: "marketing.hr@email.also.com", text3: "Info.ALSOCroatia@also.com", email: "prodaja@biro-media.hr", ctaText: "SAZNAJTE VIŠE" }
             },
             SK: {
-                "5840": { text1: "ALSO Newsletter", text2: "info-sk@email.also.com", text3: "info-sk@also.com", email: "info-sk@also.com" }
+                "5840": { text1: "ALSO Newsletter", text2: "info-sk@email.also.com", text3: "info-sk@also.com", email: "suhaj@zero.sk", ctaText: "UČ SA VIAC" }
             },
             CZ: {
-                "5845": { text1: "ALSO Newsletter", text2: "info-cz@email.also.com", text3: "info-cz@also.com", email: "info-cz@also.com" }
+                "5845": { text1: "ALSO Newsletter", text2: "info-cz@email.also.com", text3: "info-cz@also.com", email: "forcomp@seznam.cz", ctaText: "DALŠÍ INFORMACE" }
             },
             HU: {
-                "5850": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" }
+                "5850": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "laszlo.farago@lemonet.hu", ctaText: "TUDJON MEG TÖBBET" }
             },
             RO: {
-                "5860": { text1: "ALSO Technology Romania", text2: "info@email.also.com", text3: "info@email.also.com", email: "info@email.also.com" }
+                "5860": { text1: "ALSO Technology Romania", text2: "info@email.also.com", text3: "info@email.also.com", email: "florin.tirca@vexio.ro", ctaText: "AFLAȚI MAI MULTE" }
             },
             BG: {
-                "5870": { text1: "ALSO Bulgaria Ltd.", text2: "office.bg@email.also.com", text3: "office.bg@also.com", email: "office.bg@also.com" }
+                "5870": { text1: "ALSO Bulgaria Ltd.", text2: "office.bg@email.also.com", text3: "office.bg@also.com", email: "a.petrov@econsult.bg", ctaText: "НАУЧЕТЕ ПОВЕЧЕ" }
             },
             RS: {
-                "5881": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" }
+                "5881": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com", ctaText: "LEARN MORE" }
             },
             ME: {
-                "5895": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com" }
+                "5895": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com", ctaText: "LEARN MORE" }
+            },
+            PT: {
+                "2640": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "vasco@mvti.pt", ctaText: "Comprar" }
             }
         };
 
@@ -492,6 +505,7 @@
           <td>${data.text2}</td>
           <td>${data.text3}</td>
           <td>${data.email}</td>
+          <td><strong>${data.ctaText}</strong></td>
         </tr>
       `;
                 }
@@ -594,7 +608,7 @@
                     <td>${countryName}</td>
 
             <td><span class="email-name">${fullName}</span></td>
-            <td class="copy-col"><div class="center-copy"><button class="copy-btn" data-name="${fullName}">Copy</button></div></td>
+            <td class="copy-col"><div class="center-copy"><button class="copy-btn" data-name="${fullName}">Copy Name</button></div></td>
         `;
 
                 tableBodyName.appendChild(row);
