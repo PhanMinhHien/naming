@@ -29,6 +29,34 @@
             color: #2980b9;
         }
 
+        #resultTable td,
+        #outputHTML {
+            cursor: copy;
+            position: relative;
+        }
+
+        /* Tooltip cơ bản */
+        .copy-tooltip {
+            position: absolute;
+            background: #333;
+            color: white;
+            padding: 4px 8px;
+            font-size: 12px;
+            border-radius: 4px;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .copy-tooltip.show {
+            opacity: 1;
+        }
+
         h3 {
             text-align: center;
             color: #333;
@@ -541,30 +569,41 @@
             return mm + dd;
         }
         document.addEventListener("DOMContentLoaded", function () {
+            function showTooltip(target, message = "Copied!") {
+                const oldTooltip = target.querySelector(".copy-tooltip");
+                if (oldTooltip) oldTooltip.remove();
+
+                const tooltip = document.createElement("div");
+                tooltip.className = "copy-tooltip";
+                tooltip.textContent = message;
+                target.appendChild(tooltip);
+
+
+                requestAnimationFrame(() => tooltip.classList.add("show"));
+
+                setTimeout(() => {
+                    tooltip.classList.remove("show");
+                    setTimeout(() => tooltip.remove(), 300);
+                }, 1000);
+            }
+
             const table = document.getElementById("resultTable");
             table.addEventListener("click", function (event) {
-                const target = event.target;
-
-                if (target.tagName === "TD" || target.closest("td")) {
-                    const td = target.closest("td");
+                const td = event.target.closest("td");
+                if (td) {
                     const text = td.innerText.trim();
                     navigator.clipboard.writeText(text).then(() => {
-                        console.log(`Copied: ${text}`);
-                    }).catch(err => {
-                        console.error('Failed to copy!', err);
+                        showTooltip(td);
                     });
                 }
             });
-            const outputTextarea = document.getElementById("outputHTML");
 
+            const outputTextarea = document.getElementById("outputHTML");
             outputTextarea.addEventListener("click", function () {
                 outputTextarea.select();
                 outputTextarea.setSelectionRange(0, 99999);
-
                 navigator.clipboard.writeText(outputTextarea.value).then(() => {
-                    console.log(`Copied: ${text}`);
-                }).catch(err => {
-                    console.error("Failed to copy:", err);
+                    showTooltip(outputTextarea.parentElement);
                 });
             });
         });
