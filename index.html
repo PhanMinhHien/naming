@@ -277,6 +277,27 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .copy-tooltip {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4caf50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .copy-tooltip.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
+        }
     </style>
 
 </head>
@@ -295,12 +316,13 @@
                 </div>
                 <div class="form-group">
                     <label for="vendor">Vendor*</label>
-                    <input list="vendor-list" id="vendor" placeholder="Choose vendor..." />
+                    <input list="vendor-list" id="vendor" autocomplete="off" placeholder="Choose vendor..." />
                     <datalist id="vendor-list"></datalist>
                 </div>
                 <div class="form-group">
                     <label for="language">Language*</label>
-                    <select id="language">
+                    <input list="language-list" id="language" autocomplete="off" placeholder="Choose language..." />
+                    <datalist id="language-list">
                         <option value="" selected disabled>Please select</option>
                         <option value="DE">DE</option>
                         <option value="FR">FR</option>
@@ -326,7 +348,7 @@
                         <option value="BG">BG</option>
                         <option value="RS">RS</option>
                         <option value="ME">ME</option>
-                    </select>
+                        </select>
                 </div>
                 <div class="form-group">
                     <label for="customDate">Date*</label>
@@ -334,11 +356,11 @@
                 </div>
                 <div class="form-group">
                     <label for="campaignName">Campaign Name*</label>
-                    <input type="text" id="campaignName" />
+                    <input type="text" id="campaignName" autocomplete="off" />
                 </div>
                 <div class="form-group">
                     <label for="campaignID">Project ID*</label>
-                    <input type="text" id="campaignID" />
+                    <input type="text" id="campaignID" autocomplete="off" />
                 </div>
             </div>
             <h2>Naming Convention Table</h2>
@@ -443,7 +465,7 @@
             { code: "6110", countryCode: "CH", countryName: "Switzerland" },
         ];
         const vendorList = [
-            "Euronic", "Club-3D BV", "VIEWSONIC", "ADERIAN", "SAMSUNG-GSM", "NEOMOUNTS", "FRACTAL DESIGN", "SEAMCOM", "MICROSOFT", "GoTo", "HP", "REFURB", "MICROSOFT-CSP", "MICROSOFT-SURFACE", "MICROSOFT-SURFACEHUB", "MICROSOFT-OEM", "XIAOMI-ECO", "XIAOMI", "LENOVO", "LENOVO-IDG", "LENOVO-ISG", "BRIDGE", "HP-SUPPLIES", "HP-PRINTING", "HP-COMPUTING", "HPE", "ARUBA", "DELL", "DELL-COMPUTERS", "CISCO", "TELEKOM-DEUTSCHLAND", "INTEL", "SEAGATE", "SAMSUNG", "SAMSUNG-MOBILE", "SAMSUNG-STORAGE", "ELECTRONIC ARTS", "APPLE", "APC", "LOGITECH", "WESTERN DIGITAL", "HUAWEI", "SOPHOS", "AMD", "CANON", "CANON-SCANNER", "CANON-SUPPLIES", "CANON-LFP", "FUJITSU", "FUJITSU-SCANNER", "FUJITSU-CCD", "FORTINET", "EATON", "BROTHER", "ASUS", "N-ABLE", "EPSON", "UNIFY", "ACER", "ACER-MONITOR", "ADOBE", "ZOTAC", "PATRONICS", "LG-DISPLAYS", "LG-SMART SIGNAGE", "ACRONIS", "IIYAMA", "MOTORLA", "CONTOUR DESIGN", "DEMANT SOUND", "VMWARE", "LISTAN", "GN-NETCOM", "ERGOTRON", "ALCATEL-LUCENT", "AOC INTERNATIONAL", "CONGSTAR", "IBM-CLOUD", "IBM-HARDWARE", "IBM-SOFTWARE", "KASPERKY LAB", "ZYXEL", "POLYCOM", "NORTONLIFELOCK", "LEXMARK", "ESET", "WATCHGUARD", "RAZER", "VEEAM", "DATTO", "MMD-MONITORS & DISPLAYS", "BOSE", "DICTOTA", "MITEL", "KINGSTON", "KYOCERA", "XEROX", "LINDY", "LEXWARE", "INNOVISION", "TRANSCEND", "EMC", "NEWSTAR", "QNAP SYSTEMS", "CHERRY", "ROOMZ", "CIRTRIX", "TARGUS", "NETGEAR", "REALWEAR", "SK HYNIX NAND PRODUCT SOLUTIONS", "TP-LINK", "BARCO", "ARCSERVE", "PROMETHEAN", "AVERPOINT", "ALLIED TELESIS", "LANCOM", "URBAN FACTORY", "ASSMANN ELECTRONIC", "GIGASET", "GIGASET-PRO", "GIGASET-CONSUMER", "ALSO", "MULTIVENDOR", "CAMBIUM NETWORKS", "3M", "NEC DISPLAY SOLUTIONS", "ESR", "NETAPP", "CROWDSTRIKE", "BLUEWALKER", "QUANTUM", "DELOCK", "OCTOGATE", "YEALINK", "TANDBERG DATA", "MSI", "INSYS", "NCP", "SANDBERG", "DYNABOOK", "MICROFOCUS", "SUPER MICRO COMPUTER", "VERTIV", "PHILIPS", "D-LINK", "GIGABYTE", "I-TEC", "AUREA SOFTWARE", "SNOM TECHNOLOGY", "SONY", "SILICON POWER COMPUTER & COMMUNICATION", "KONFTEL AB", "FANVIL", "BELKIN", "GEMBIRD", "AVM", "PNY", "NET-AT-WORK", "BENQ", "AGFEO", "BINTEC-ELMEG", "MATERIALISE", "STATIC CONTROL", "KFA2", "MGE-USV SYSTEME", "SENNHEISER", "LACIE", "C4B", "UBIQUITI NETWORKS", "FELLOWES", "AUERSWALD", "SEH", "VADE SECURE", "BARRACUDA", "NUTANIX", "OKI", "SYNOLOGY", "OPTOMA", "SANDISK", "INTRA2NET", "ESTOS", "IC INTRACOM", "EVER", "LANBERG", "DROPBOX", "SILEX TECHNOLOGY EUROPE", "LEITZ ACCO BRANDS", "PALIT", "SAPPHIRE", "RAIDSONIC", "XFX", "CHIEFTEC", "WACOM", "TOSHIBA EUROPE", "EFB", "3DCONNEXION", "PANASONIC", "CORSAIR", "AV STUMPFL", "PIXMINDS", "CANDY", "PEERLESS-AV", "OTTER PRODUCTS", "PATRIOT MEMORY", "TRUST", "AVER INDORMATION", "STARTECH.COM", "POWERCOLOR TUL", "PORT DESIGNS", "QOLTEC", "APACER", "MIKROTIK", "A-DATA", "NVIDIA", "GAINWARD EUROPE", "SHARP", "PARAT", "GO EUROPE", "GREEN CELL", "HAMA", "HITACHI-LG", "TEAM GROUP", "GETT GERÄTETECHNIK", "SECOMP", "INTER-TECH", "RITTAL", "GFI SOFTWARE", "AIRSLATE", "ZEBRA", "EXTRALINK", "1&1 IONOS", "CHECK POINT", "JABRA", "REINER KARTENGERÄTE", "COOLER MASTER", "MEDION", "NATEC", "AKYGA", "SANUS", "JJ-COMPUTER", "INNOFIL3D", "GREENBONE", "COREL", "WITHSECURE", "SONOS", "ASROCK", "ZEPP", "SOLARWINDS", "MCAFEE IRELAND", "AXIS COMMUNICATIONS", "KEMP TECHNOLOGIES", "WIKO", "TECHLY", "NETRACK", "TRACER", "RSA SECURITY", "ART", "KRAMER", "BASF 3D", "LOGILINK", "DATA AND MORE", "ZALMAN", "ACTIVISION", "WITHINGS", "INTEGRAL MEMORY PLC", "DORO", "CYBER POWER", "CENOR", "GOODRAM", "DYEMANSION", "TP VISION", "BMG", "PEACOCK", "SMS EVOKO GROUP", "A4TECH", "VERBATIM", "HGST", "EVE SYSTEMS", "ANKI", "BLIZZARD ENTERTAINMENT", "PARTNER CARE EUROPE", "ENERGENIE BY GEMBIRD", "TWELVE SOUTH", "MILESTONES SYSTEMS A/S", "LINKSYS", "MEDIA TECH", "TEAMVIEWER", "TECHLY PRO", "CREAFORM", "PRINTRONIX", "PANDUIT", "ATEN", "4WORLD", "SUUNTO", "MW", "BLAUPUNKT", "CSB", "RICOH", "CLOUD TECHNOLOGY SOLUTIONS", "COMDIS", "NEXT CONCEPT", "REALME", "KONICA MINOLTA", "DIGITUS", "XTON", "EIZO", "CRICUT", "LETSIGNIT", "NEOLT FACTORY", "PELCO", "MANHATTAN", "ELITE SCREENS", "PLENOM", "EDIMAX", "AZON", "VIDIS S.A.", "APPLICATIELINK", "IVANTI", "ZIMBRA", "ESPERANZA", "INCASE", "SMART TECHNOLOGIES ULC", "GRIFFIN", "WHITENERGY", "TENDA TECHNOLOGY", "VAXTOR", "HISENSE", "DIGICERT", "VIVO MOBILE COMMUNICATION", "QS SOLUTIONS", "PERSONDATASUPPORT", "DROPSUITE", "CRAFTUNIQUE", "INCIPIO", "INNO3D", "TALLY GENICOM", "PRICE INTERNATIONAL", "ORVALDI", "G.SKILL"
+            "Euronic", "Club-3D-BV", "VIEWSONIC", "ADERIAN", "SAMSUNG-GSM", "NEOMOUNTS", "FRACTAL DESIGN", "SEAMCOM", "MICROSOFT", "GoTo", "HP", "REFURB", "MICROSOFT-CSP", "MICROSOFT-SURFACE", "MICROSOFT-SURFACEHUB", "MICROSOFT-OEM", "XIAOMI-ECO", "XIAOMI", "LENOVO", "LENOVO-IDG", "LENOVO-ISG", "BRIDGE", "HP-SUPPLIES", "HP-PRINTING", "HP-COMPUTING", "HPE", "ARUBA", "DELL", "DELL-COMPUTERS", "CISCO", "TELEKOM-DEUTSCHLAND", "INTEL", "SEAGATE", "SAMSUNG", "SAMSUNG-MOBILE", "SAMSUNG-STORAGE", "ELECTRONIC ARTS", "APPLE", "APC", "LOGITECH", "WESTERN DIGITAL", "HUAWEI", "SOPHOS", "AMD", "CANON", "CANON-SCANNER", "CANON-SUPPLIES", "CANON-LFP", "FUJITSU", "FUJITSU-SCANNER", "FUJITSU-CCD", "FORTINET", "EATON", "BROTHER", "ASUS", "N-ABLE", "EPSON", "UNIFY", "ACER", "ACER-MONITOR", "ADOBE", "ZOTAC", "PATRONICS", "LG-DISPLAYS", "LG-SMART SIGNAGE", "ACRONIS", "IIYAMA", "MOTORLA", "CONTOUR DESIGN", "DEMANT SOUND", "VMWARE", "LISTAN", "GN-NETCOM", "ERGOTRON", "ALCATEL-LUCENT", "AOC INTERNATIONAL", "CONGSTAR", "IBM-CLOUD", "IBM-HARDWARE", "IBM-SOFTWARE", "KASPERKY LAB", "ZYXEL", "POLYCOM", "NORTONLIFELOCK", "LEXMARK", "ESET", "WATCHGUARD", "RAZER", "VEEAM", "DATTO", "MMD-MONITORS & DISPLAYS", "BOSE", "DICTOTA", "MITEL", "KINGSTON", "KYOCERA", "XEROX", "LINDY", "LEXWARE", "INNOVISION", "TRANSCEND", "EMC", "NEWSTAR", "QNAP SYSTEMS", "CHERRY", "ROOMZ", "CIRTRIX", "TARGUS", "NETGEAR", "REALWEAR", "SK HYNIX NAND PRODUCT SOLUTIONS", "TP-LINK", "BARCO", "ARCSERVE", "PROMETHEAN", "AVERPOINT", "ALLIED TELESIS", "LANCOM", "URBAN FACTORY", "ASSMANN ELECTRONIC", "GIGASET", "GIGASET-PRO", "GIGASET-CONSUMER", "ALSO", "MULTIVENDOR", "CAMBIUM NETWORKS", "3M", "NEC DISPLAY SOLUTIONS", "ESR", "NETAPP", "CROWDSTRIKE", "BLUEWALKER", "QUANTUM", "DELOCK", "OCTOGATE", "YEALINK", "TANDBERG DATA", "MSI", "INSYS", "NCP", "SANDBERG", "DYNABOOK", "MICROFOCUS", "SUPER MICRO COMPUTER", "VERTIV", "PHILIPS", "D-LINK", "GIGABYTE", "I-TEC", "AUREA SOFTWARE", "SNOM TECHNOLOGY", "SONY", "SILICON POWER COMPUTER & COMMUNICATION", "KONFTEL AB", "FANVIL", "BELKIN", "GEMBIRD", "AVM", "PNY", "NET-AT-WORK", "BENQ", "AGFEO", "BINTEC-ELMEG", "MATERIALISE", "STATIC CONTROL", "KFA2", "MGE-USV SYSTEME", "SENNHEISER", "LACIE", "C4B", "UBIQUITI NETWORKS", "FELLOWES", "AUERSWALD", "SEH", "VADE SECURE", "BARRACUDA", "NUTANIX", "OKI", "SYNOLOGY", "OPTOMA", "SANDISK", "INTRA2NET", "ESTOS", "IC INTRACOM", "EVER", "LANBERG", "DROPBOX", "SILEX TECHNOLOGY EUROPE", "LEITZ ACCO BRANDS", "PALIT", "SAPPHIRE", "RAIDSONIC", "XFX", "CHIEFTEC", "WACOM", "TOSHIBA EUROPE", "EFB", "3DCONNEXION", "PANASONIC", "CORSAIR", "AV STUMPFL", "PIXMINDS", "CANDY", "PEERLESS-AV", "OTTER PRODUCTS", "PATRIOT MEMORY", "TRUST", "AVER INDORMATION", "STARTECH.COM", "POWERCOLOR TUL", "PORT DESIGNS", "QOLTEC", "APACER", "MIKROTIK", "A-DATA", "NVIDIA", "GAINWARD EUROPE", "SHARP", "PARAT", "GO EUROPE", "GREEN CELL", "HAMA", "HITACHI-LG", "TEAM GROUP", "GETT GERÄTETECHNIK", "SECOMP", "INTER-TECH", "RITTAL", "GFI SOFTWARE", "AIRSLATE", "ZEBRA", "EXTRALINK", "1&1 IONOS", "CHECK POINT", "JABRA", "REINER KARTENGERÄTE", "COOLER MASTER", "MEDION", "NATEC", "AKYGA", "SANUS", "JJ-COMPUTER", "INNOFIL3D", "GREENBONE", "COREL", "WITHSECURE", "SONOS", "ASROCK", "ZEPP", "SOLARWINDS", "MCAFEE IRELAND", "AXIS COMMUNICATIONS", "KEMP TECHNOLOGIES", "WIKO", "TECHLY", "NETRACK", "TRACER", "RSA SECURITY", "ART", "KRAMER", "BASF 3D", "LOGILINK", "DATA AND MORE", "ZALMAN", "ACTIVISION", "WITHINGS", "INTEGRAL MEMORY PLC", "DORO", "CYBER POWER", "CENOR", "GOODRAM", "DYEMANSION", "TP VISION", "BMG", "PEACOCK", "SMS EVOKO GROUP", "A4TECH", "VERBATIM", "HGST", "EVE SYSTEMS", "ANKI", "BLIZZARD ENTERTAINMENT", "PARTNER CARE EUROPE", "ENERGENIE BY GEMBIRD", "TWELVE SOUTH", "MILESTONES SYSTEMS A/S", "LINKSYS", "MEDIA TECH", "TEAMVIEWER", "TECHLY PRO", "CREAFORM", "PRINTRONIX", "PANDUIT", "ATEN", "4WORLD", "SUUNTO", "MW", "BLAUPUNKT", "CSB", "RICOH", "CLOUD TECHNOLOGY SOLUTIONS", "COMDIS", "NEXT CONCEPT", "REALME", "KONICA MINOLTA", "DIGITUS", "XTON", "EIZO", "CRICUT", "LETSIGNIT", "NEOLT FACTORY", "PELCO", "MANHATTAN", "ELITE SCREENS", "PLENOM", "EDIMAX", "AZON", "VIDIS S.A.", "APPLICATIELINK", "IVANTI", "ZIMBRA", "ESPERANZA", "INCASE", "SMART TECHNOLOGIES ULC", "GRIFFIN", "WHITENERGY", "TENDA TECHNOLOGY", "VAXTOR", "HISENSE", "DIGICERT", "VIVO MOBILE COMMUNICATION", "QS SOLUTIONS", "PERSONDATASUPPORT", "DROPSUITE", "CRAFTUNIQUE", "INCIPIO", "INNO3D", "TALLY GENICOM", "PRICE INTERNATIONAL", "ORVALDI", "G.SKILL"
         ];
 
         const datalist = document.getElementById('vendor-list');
@@ -611,7 +633,7 @@
                 setTimeout(() => {
                     tooltip.classList.remove("show");
                     setTimeout(() => tooltip.remove(), 300);
-                }, 1000);
+                }, 5000);
             }
 
             const table = document.getElementById("resultTable");
