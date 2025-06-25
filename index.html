@@ -86,6 +86,12 @@
             transition: all 0.3s ease;
         }
 
+        #vendor,
+        #campaignName,
+        #campaignID {
+            padding: 11px 12px;
+        }
+
         input:focus,
         select:focus {
             border-color: #007bff;
@@ -252,6 +258,25 @@
             font-weight: bold;
             color: #fff;
         }
+
+
+        #Naming .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+        }
+
+        #Naming .form-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            #Naming .form-layout {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 
 </head>
@@ -260,59 +285,61 @@
     <div class="container">
         <div id="Naming" class="section">
             <h2>Naming Convention</h2>
-            <div class="form-group">
-                <label for="programCode">Program Code</label>
-                <select id="programCode">
-                    <option value="ES">ES - Email Send</option>
-                    <option value="NL">NL - Newsletter</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="vendor">Vendor</label>
-                <input list="vendor-list" id="vendor" placeholder="Chọn vendor..." />
-                <datalist id="vendor-list"></datalist>
-            </div>
-            <div class="form-group">
-                <label for="language">Language</label>
-                <select id="language">
-                    <option value="" selected disabled>Please select</option>
-                    <option value="DE">DE</option>
-                    <option value="FR">FR</option>
-                    <option value="NL">NL</option>
-                    <option value="EN">EN</option>
-                    <option value="ES">ES</option>
-                    <option value="IT">IT</option>
-                    <option value="DK">DK</option>
-                    <option value="NO">NO</option>
-                    <option value="SE">SE</option>
-                    <option value="EE">EE</option>
-                    <option value="LV">LV</option>
-                    <option value="LT">LT</option>
-                    <option value="PL">PL</option>
-                    <option value="PT">PT</option>
-                    <option value="FI">FI</option>
-                    <option value="SI">SI</option>
-                    <option value="HR">HR</option>
-                    <option value="SK">SK</option>
-                    <option value="CZ">CZ</option>
-                    <option value="HU">HU</option>
-                    <option value="RO">RO</option>
-                    <option value="BG">BG</option>
-                    <option value="RS">RS</option>
-                    <option value="ME">ME</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="customDate">Date:</label>
-                <input type="date" id="customDate">
-            </div>
-            <div class="form-group">
-                <label for="campaignName">Campaign Name</label>
-                <input type="text" id="campaignName" />
-            </div>
-            <div class="form-group">
-                <label for="campaignID">Project ID</label>
-                <input type="text" id="campaignID" />
+            <div class="form-layout">
+                <div class="form-group">
+                    <label for="programCode">Program Code*</label>
+                    <select id="programCode">
+                        <option value="ES">ES - Email Send</option>
+                        <option value="NL">NL - Newsletter</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vendor">Vendor*</label>
+                    <input list="vendor-list" id="vendor" placeholder="Choose vendor..." />
+                    <datalist id="vendor-list"></datalist>
+                </div>
+                <div class="form-group">
+                    <label for="language">Language*</label>
+                    <select id="language">
+                        <option value="" selected disabled>Please select</option>
+                        <option value="DE">DE</option>
+                        <option value="FR">FR</option>
+                        <option value="NL">NL</option>
+                        <option value="EN">EN</option>
+                        <option value="ES">ES</option>
+                        <option value="IT">IT</option>
+                        <option value="DK">DK</option>
+                        <option value="NO">NO</option>
+                        <option value="SE">SE</option>
+                        <option value="EE">EE</option>
+                        <option value="LV">LV</option>
+                        <option value="LT">LT</option>
+                        <option value="PL">PL</option>
+                        <option value="PT">PT</option>
+                        <option value="FI">FI</option>
+                        <option value="SI">SI</option>
+                        <option value="HR">HR</option>
+                        <option value="SK">SK</option>
+                        <option value="CZ">CZ</option>
+                        <option value="HU">HU</option>
+                        <option value="RO">RO</option>
+                        <option value="BG">BG</option>
+                        <option value="RS">RS</option>
+                        <option value="ME">ME</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="customDate">Date*</label>
+                    <input type="date" id="customDate">
+                </div>
+                <div class="form-group">
+                    <label for="campaignName">Campaign Name*</label>
+                    <input type="text" id="campaignName" />
+                </div>
+                <div class="form-group">
+                    <label for="campaignID">Project ID*</label>
+                    <input type="text" id="campaignID" />
+                </div>
             </div>
             <h2>Naming Convention Table</h2>
             <table id="resultTableName">
@@ -325,6 +352,7 @@
                 </thead>
                 <tbody id="tableBodyName"></tbody>
             </table>
+
         </div>
         <div id="TableEmail" class="section">
             <h2>Email Table</h2>
