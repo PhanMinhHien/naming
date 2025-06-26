@@ -706,10 +706,10 @@
             const programCode = document.getElementById("programCode").value;
             const selectedDate = document.getElementById("customDate").value;
 
-            if (!salesOrgMap[lang] || !vendor || !campaign || !project) {
-                alert("Please fill in all the required information.");
-                return;
-            }
+            // if (!salesOrgMap[lang] || !vendor || !campaign || !project) {
+            //     alert("Please fill in all the required information.");
+            //     return;
+            // }
 
             const dateObj = selectedDate ? new Date(selectedDate) : new Date();
             const year = dateObj.getFullYear().toString().slice(-2);
