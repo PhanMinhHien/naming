@@ -618,16 +618,16 @@
                 return;
             }
 
-            if (val.length === 2 && languageOptions.includes(val)) {
-                this.value = val;
-                languageList.style.display = "none";
-                currentFocus = -1;
-                return;
-            }
-
             currentFocus = -1;
             renderList(val);
+
+            if (languageOptions.includes(val)) {
+                this.value = val;
+                languageList.style.display = "none";
+                renderTableByLanguage(val);
+            }
         });
+
         languageInput.addEventListener("keydown", function (e) {
             const items = languageList.querySelectorAll(".autocomplete-item");
             if (e.key === "ArrowDown") {
