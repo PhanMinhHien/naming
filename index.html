@@ -298,6 +298,44 @@
             opacity: 1;
             transform: translateX(-50%) translateY(-5px);
         }
+
+        .autocomplete-wrapper {
+            position: relative;
+        }
+
+        #languageInput {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            border: 1px solid #ccc;
+            background-color: white;
+            z-index: 999;
+            max-height: 150px;
+            overflow-y: auto;
+            display: none;
+            border-radius: 4px;
+        }
+
+        .autocomplete-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .autocomplete-item.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .autocomplete-item:hover {
+            background-color: #f0f0f0;
+        }
     </style>
 
 </head>
@@ -314,41 +352,15 @@
                         <option value="NL">NL - Newsletter</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group autocomplete-wrapper">
                     <label for="vendor">Vendor*</label>
-                    <input list="vendor-list" id="vendor" autocomplete="off" placeholder="Choose vendor..." />
-                    <datalist id="vendor-list"></datalist>
+                    <input id="vendor" type="text" placeholder="Choose vendor..." autocomplete="off" />
+                    <div id="vendorList" class="autocomplete-list"></div>
                 </div>
-                <div class="form-group">
-                    <label for="language">Language*</label>
-                    <input list="language-list" id="language" autocomplete="off" placeholder="Choose language..." />
-                    <datalist id="language-list">
-                        <option value="">Please select</option>
-                        <option value="DE">DE</option>
-                        <option value="FR">FR</option>
-                        <option value="NL">NL</option>
-                        <option value="EN">EN</option>
-                        <option value="ES">ES</option>
-                        <option value="IT">IT</option>
-                        <option value="DK">DK</option>
-                        <option value="NO">NO</option>
-                        <option value="SE">SE</option>
-                        <option value="EE">EE</option>
-                        <option value="LV">LV</option>
-                        <option value="LT">LT</option>
-                        <option value="PL">PL</option>
-                        <option value="PT">PT</option>
-                        <option value="FI">FI</option>
-                        <option value="SI">SI</option>
-                        <option value="HR">HR</option>
-                        <option value="SK">SK</option>
-                        <option value="CZ">CZ</option>
-                        <option value="HU">HU</option>
-                        <option value="RO">RO</option>
-                        <option value="BG">BG</option>
-                        <option value="RS">RS</option>
-                        <option value="ME">ME</option>
-                        </datalist>
+                <div class="form-group autocomplete-wrapper">
+                    <label for="languageInput">Language*</label>
+                    <input id="languageInput" type="text" placeholder="Type to search..." autocomplete="off" />
+                    <div id="languageList" class="autocomplete-list"></div>
                 </div>
                 <div class="form-group">
                     <label for="customDate">Date*</label>
@@ -464,17 +476,179 @@
             { code: "6000", countryCode: "EN", countryName: "International" },
             { code: "6110", countryCode: "CH", countryName: "Switzerland" },
         ];
+        const vendorInput = document.getElementById("vendor");
+        const vendorListDiv = document.getElementById("vendorList");
         const vendorList = [
             "Euronic", "Club-3D-BV", "VIEWSONIC", "ADERIAN", "SAMSUNG-GSM", "NEOMOUNTS", "FRACTAL DESIGN", "SEAMCOM", "MICROSOFT", "GoTo", "HP", "REFURB", "MICROSOFT-CSP", "MICROSOFT-SURFACE", "MICROSOFT-SURFACEHUB", "MICROSOFT-OEM", "XIAOMI-ECO", "XIAOMI", "LENOVO", "LENOVO-IDG", "LENOVO-ISG", "BRIDGE", "HP-SUPPLIES", "HP-PRINTING", "HP-COMPUTING", "HPE", "ARUBA", "DELL", "DELL-COMPUTERS", "CISCO", "TELEKOM-DEUTSCHLAND", "INTEL", "SEAGATE", "SAMSUNG", "SAMSUNG-MOBILE", "SAMSUNG-STORAGE", "ELECTRONIC ARTS", "APPLE", "APC", "LOGITECH", "WESTERN DIGITAL", "HUAWEI", "SOPHOS", "AMD", "CANON", "CANON-SCANNER", "CANON-SUPPLIES", "CANON-LFP", "FUJITSU", "FUJITSU-SCANNER", "FUJITSU-CCD", "FORTINET", "EATON", "BROTHER", "ASUS", "N-ABLE", "EPSON", "UNIFY", "ACER", "ACER-MONITOR", "ADOBE", "ZOTAC", "PATRONICS", "LG-DISPLAYS", "LG-SMART SIGNAGE", "ACRONIS", "IIYAMA", "MOTORLA", "CONTOUR DESIGN", "DEMANT SOUND", "VMWARE", "LISTAN", "GN-NETCOM", "ERGOTRON", "ALCATEL-LUCENT", "AOC INTERNATIONAL", "CONGSTAR", "IBM-CLOUD", "IBM-HARDWARE", "IBM-SOFTWARE", "KASPERKY LAB", "ZYXEL", "POLYCOM", "NORTONLIFELOCK", "LEXMARK", "ESET", "WATCHGUARD", "RAZER", "VEEAM", "DATTO", "MMD-MONITORS & DISPLAYS", "BOSE", "DICTOTA", "MITEL", "KINGSTON", "KYOCERA", "XEROX", "LINDY", "LEXWARE", "INNOVISION", "TRANSCEND", "EMC", "NEWSTAR", "QNAP SYSTEMS", "CHERRY", "ROOMZ", "CIRTRIX", "TARGUS", "NETGEAR", "REALWEAR", "SK HYNIX NAND PRODUCT SOLUTIONS", "TP-LINK", "BARCO", "ARCSERVE", "PROMETHEAN", "AVERPOINT", "ALLIED TELESIS", "LANCOM", "URBAN FACTORY", "ASSMANN ELECTRONIC", "GIGASET", "GIGASET-PRO", "GIGASET-CONSUMER", "ALSO", "MULTIVENDOR", "CAMBIUM NETWORKS", "3M", "NEC DISPLAY SOLUTIONS", "ESR", "NETAPP", "CROWDSTRIKE", "BLUEWALKER", "QUANTUM", "DELOCK", "OCTOGATE", "YEALINK", "TANDBERG DATA", "MSI", "INSYS", "NCP", "SANDBERG", "DYNABOOK", "MICROFOCUS", "SUPER MICRO COMPUTER", "VERTIV", "PHILIPS", "D-LINK", "GIGABYTE", "I-TEC", "AUREA SOFTWARE", "SNOM TECHNOLOGY", "SONY", "SILICON POWER COMPUTER & COMMUNICATION", "KONFTEL AB", "FANVIL", "BELKIN", "GEMBIRD", "AVM", "PNY", "NET-AT-WORK", "BENQ", "AGFEO", "BINTEC-ELMEG", "MATERIALISE", "STATIC CONTROL", "KFA2", "MGE-USV SYSTEME", "SENNHEISER", "LACIE", "C4B", "UBIQUITI NETWORKS", "FELLOWES", "AUERSWALD", "SEH", "VADE SECURE", "BARRACUDA", "NUTANIX", "OKI", "SYNOLOGY", "OPTOMA", "SANDISK", "INTRA2NET", "ESTOS", "IC INTRACOM", "EVER", "LANBERG", "DROPBOX", "SILEX TECHNOLOGY EUROPE", "LEITZ ACCO BRANDS", "PALIT", "SAPPHIRE", "RAIDSONIC", "XFX", "CHIEFTEC", "WACOM", "TOSHIBA EUROPE", "EFB", "3DCONNEXION", "PANASONIC", "CORSAIR", "AV STUMPFL", "PIXMINDS", "CANDY", "PEERLESS-AV", "OTTER PRODUCTS", "PATRIOT MEMORY", "TRUST", "AVER INDORMATION", "STARTECH.COM", "POWERCOLOR TUL", "PORT DESIGNS", "QOLTEC", "APACER", "MIKROTIK", "A-DATA", "NVIDIA", "GAINWARD EUROPE", "SHARP", "PARAT", "GO EUROPE", "GREEN CELL", "HAMA", "HITACHI-LG", "TEAM GROUP", "GETT GERÄTETECHNIK", "SECOMP", "INTER-TECH", "RITTAL", "GFI SOFTWARE", "AIRSLATE", "ZEBRA", "EXTRALINK", "1&1 IONOS", "CHECK POINT", "JABRA", "REINER KARTENGERÄTE", "COOLER MASTER", "MEDION", "NATEC", "AKYGA", "SANUS", "JJ-COMPUTER", "INNOFIL3D", "GREENBONE", "COREL", "WITHSECURE", "SONOS", "ASROCK", "ZEPP", "SOLARWINDS", "MCAFEE IRELAND", "AXIS COMMUNICATIONS", "KEMP TECHNOLOGIES", "WIKO", "TECHLY", "NETRACK", "TRACER", "RSA SECURITY", "ART", "KRAMER", "BASF 3D", "LOGILINK", "DATA AND MORE", "ZALMAN", "ACTIVISION", "WITHINGS", "INTEGRAL MEMORY PLC", "DORO", "CYBER POWER", "CENOR", "GOODRAM", "DYEMANSION", "TP VISION", "BMG", "PEACOCK", "SMS EVOKO GROUP", "A4TECH", "VERBATIM", "HGST", "EVE SYSTEMS", "ANKI", "BLIZZARD ENTERTAINMENT", "PARTNER CARE EUROPE", "ENERGENIE BY GEMBIRD", "TWELVE SOUTH", "MILESTONES SYSTEMS A/S", "LINKSYS", "MEDIA TECH", "TEAMVIEWER", "TECHLY PRO", "CREAFORM", "PRINTRONIX", "PANDUIT", "ATEN", "4WORLD", "SUUNTO", "MW", "BLAUPUNKT", "CSB", "RICOH", "CLOUD TECHNOLOGY SOLUTIONS", "COMDIS", "NEXT CONCEPT", "REALME", "KONICA MINOLTA", "DIGITUS", "XTON", "EIZO", "CRICUT", "LETSIGNIT", "NEOLT FACTORY", "PELCO", "MANHATTAN", "ELITE SCREENS", "PLENOM", "EDIMAX", "AZON", "VIDIS S.A.", "APPLICATIELINK", "IVANTI", "ZIMBRA", "ESPERANZA", "INCASE", "SMART TECHNOLOGIES ULC", "GRIFFIN", "WHITENERGY", "TENDA TECHNOLOGY", "VAXTOR", "HISENSE", "DIGICERT", "VIVO MOBILE COMMUNICATION", "QS SOLUTIONS", "PERSONDATASUPPORT", "DROPSUITE", "CRAFTUNIQUE", "INCIPIO", "INNO3D", "TALLY GENICOM", "PRICE INTERNATIONAL", "ORVALDI", "G.SKILL"
         ];
 
-        const datalist = document.getElementById('vendor-list');
-        vendorList.forEach(vendor => {
-            const option = document.createElement('option');
-            option.value = vendor;
-            datalist.appendChild(option);
+        let vendorFocus = -1;
+
+        function renderVendorList(value) {
+            vendorListDiv.innerHTML = "";
+            const filtered = vendorList.filter(vendor =>
+                vendor.toLowerCase().startsWith(value.toLowerCase())
+            );
+
+            if (filtered.length === 0) {
+                vendorListDiv.style.display = "none";
+                return;
+            }
+
+            filtered.forEach(vendor => {
+                const div = document.createElement("div");
+                div.className = "autocomplete-item";
+                div.textContent = vendor;
+                div.addEventListener("click", () => {
+                    vendorInput.value = vendor;
+                    vendorListDiv.style.display = "none";
+                });
+                vendorListDiv.appendChild(div);
+            });
+
+            vendorListDiv.style.display = "block";
+        }
+
+        function removeVendorActive(items) {
+            items.forEach(item => item.classList.remove("active"));
+        }
+
+        function addVendorActive(items) {
+            if (!items.length) return;
+            removeVendorActive(items);
+            if (vendorFocus >= items.length) vendorFocus = 0;
+            if (vendorFocus < 0) vendorFocus = items.length - 1;
+            items[vendorFocus].classList.add("active");
+            items[vendorFocus].scrollIntoView({ block: "nearest" });
+        }
+
+        vendorInput.addEventListener("input", function () {
+            const val = this.value;
+
+            vendorFocus = -1;
+            if (!val) {
+                vendorListDiv.style.display = "none";
+                return;
+            }
+
+            const exactMatch = vendorList.find(vendor => vendor.toLowerCase() === val.toLowerCase());
+            if (exactMatch) {
+                this.value = exactMatch;
+                vendorListDiv.style.display = "none";
+                return;
+            }
+
+            renderVendorList(val);
         });
 
+        vendorInput.addEventListener("keydown", function (e) {
+            const items = vendorListDiv.querySelectorAll(".autocomplete-item");
+            if (e.key === "ArrowDown") {
+                vendorFocus++;
+                addVendorActive(items);
+            } else if (e.key === "ArrowUp") {
+                vendorFocus--;
+                addVendorActive(items);
+            } else if (e.key === "Enter") {
+                e.preventDefault();
+                if (vendorFocus > -1 && items[vendorFocus]) {
+                    items[vendorFocus].click();
+                }
+            }
+        });
+
+        document.addEventListener("click", function (e) {
+            if (!vendorListDiv.contains(e.target) && e.target !== vendorInput) {
+                vendorListDiv.style.display = "none";
+            }
+        });
+
+
+        const languageInput = document.getElementById("languageInput");
+        const languageList = document.getElementById("languageList");
+
+        const languageOptions = [
+            "DE", "FR", "NL", "EN", "ES", "IT", "DK", "NO", "SE",
+            "EE", "LV", "LT", "PL", "PT", "FI", "SI", "HR", "SK",
+            "CZ", "HU", "RO", "BG", "RS", "ME"
+        ];
+
+        let currentFocus = -1;
+
+        function renderList(value) {
+            languageList.innerHTML = "";
+            const filtered = languageOptions.filter(opt => opt.startsWith(value.toUpperCase()));
+            if (filtered.length === 0) {
+                languageList.style.display = "none";
+                return;
+            }
+
+            filtered.forEach((opt, index) => {
+                const div = document.createElement("div");
+                div.className = "autocomplete-item";
+                div.textContent = opt;
+                div.addEventListener("click", () => {
+                    languageInput.value = opt;
+                    languageList.style.display = "none";
+                });
+                languageList.appendChild(div);
+            });
+
+            languageList.style.display = "block";
+        }
+
+        function removeActive(items) {
+            items.forEach(item => item.classList.remove("active"));
+        }
+
+        function addActive(items) {
+            if (!items.length) return;
+            removeActive(items);
+            if (currentFocus >= items.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = items.length - 1;
+            items[currentFocus].classList.add("active");
+            items[currentFocus].scrollIntoView({ block: "nearest" });
+        }
+
+        languageInput.addEventListener("input", function () {
+            const val = this.value.toUpperCase();
+
+            if (!val) {
+                languageList.style.display = "none";
+                return;
+            }
+
+            if (val.length === 2 && languageOptions.includes(val)) {
+                this.value = val;
+                languageList.style.display = "none";
+                currentFocus = -1;
+                return;
+            }
+
+            currentFocus = -1;
+            renderList(val);
+        });
+        languageInput.addEventListener("keydown", function (e) {
+            const items = languageList.querySelectorAll(".autocomplete-item");
+            if (e.key === "ArrowDown") {
+                currentFocus++;
+                addActive(items);
+            } else if (e.key === "ArrowUp") {
+                currentFocus--;
+                addActive(items);
+            } else if (e.key === "Enter") {
+                e.preventDefault();
+                if (currentFocus > -1 && items[currentFocus]) {
+                    items[currentFocus].click();
+                }
+            }
+        });
+
+        document.addEventListener("click", function (e) {
+            if (!languageList.contains(e.target) && e.target !== languageInput) {
+                languageList.style.display = "none";
+            }
+        });
         const dataMap = {
             DE: {
                 "1010": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "bueckendorf@metacomp.de", ctaText: "MEHR ERFAHREN" },
@@ -558,7 +732,7 @@
         };
 
 
-        const languageSelect = document.getElementById("language");
+        const languageSelect = document.getElementById("languageInput");
         const codeInput = document.getElementById("codeInput");
         const submitBtn = document.getElementById("submitBtn");
         const resultTable = document.getElementById("resultTable");
@@ -594,14 +768,14 @@
             } else {
                 tableBody.innerHTML = "";
                 resultTable.style.display = "none";
-                // alert(`No data available for the selected language "${lang}"`);
             }
         }
 
-        languageSelect.addEventListener("change", () => {
+        languageSelect.addEventListener("input", () => {
             const lang = languageSelect.value;
             renderTableByLanguage(lang);
         });
+
 
         function getCurrentWeek() {
             const now = new Date();
@@ -617,6 +791,7 @@
             const dd = String(now.getDate()).padStart(2, '0');
             return mm + dd;
         }
+
         document.addEventListener("DOMContentLoaded", function () {
             function showTooltip(target, message = "Copied!") {
                 const oldTooltip = target.querySelector(".copy-tooltip");
@@ -670,7 +845,7 @@
         });
         document.addEventListener("DOMContentLoaded", () => {
             const fields = [
-                "language",
+                "languageInput",
                 "vendor",
                 "campaignName",
                 "campaignID",
@@ -699,17 +874,12 @@
 
         });
         function generateNames() {
-            const lang = document.getElementById("language").value;
+            const lang = document.getElementById("languageInput").value;
             const vendor = document.getElementById("vendor").value.toLowerCase();
             const campaign = document.getElementById("campaignName").value.replace(/\s+/g, '');
             const project = document.getElementById("campaignID").value.trim();
             const programCode = document.getElementById("programCode").value;
             const selectedDate = document.getElementById("customDate").value;
-
-            // if (!salesOrgMap[lang] || !vendor || !campaign || !project) {
-            //     alert("Please fill in all the required information.");
-            //     return;
-            // }
 
             const dateObj = selectedDate ? new Date(selectedDate) : new Date();
             const year = dateObj.getFullYear().toString().slice(-2);
@@ -756,7 +926,7 @@
             document.getElementById("customDate").value = today;
         });
 
-        document.getElementById("language").addEventListener("change", () => {
+        document.getElementById("languageInput").addEventListener("change", () => {
             const vendor = document.getElementById("vendor").value.trim();
             const campaign = document.getElementById("campaignName").value.trim();
             const project = document.getElementById("campaignID").value.trim();
