@@ -590,7 +590,9 @@
                 div.addEventListener("click", () => {
                     languageInput.value = opt;
                     languageList.style.display = "none";
+                    renderTableByLanguage(opt);
                 });
+
                 languageList.appendChild(div);
             });
 
@@ -636,11 +638,19 @@
             } else if (e.key === "ArrowUp") {
                 currentFocus--;
                 addActive(items);
-            } else if (e.key === "Enter") {
-                e.preventDefault();
-                if (currentFocus > -1 && items[currentFocus]) {
-                    items[currentFocus].click();
+            } else {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    if (currentFocus > -1 && items[currentFocus]) {
+                        items[currentFocus].click();
+                    } else {
+                        const val = this.value.toUpperCase();
+                        if (languageOptions.includes(val)) {
+                            renderTableByLanguage(val);
+                        }
+                    }
                 }
+
             }
         });
 
