@@ -259,7 +259,6 @@
             color: #fff;
         }
 
-
         #Naming .form-group {
             display: flex;
             flex-direction: column;
@@ -336,8 +335,12 @@
         .autocomplete-item:hover {
             background-color: #f0f0f0;
         }
-    </style>
 
+        #languageInputWrapper.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -357,10 +360,11 @@
                     <input id="vendor" type="text" placeholder="Choose vendor..." autocomplete="off" />
                     <div id="vendorList" class="autocomplete-list"></div>
                 </div>
-                <div class="form-group autocomplete-wrapper">
+                <div id="languageInputWrapper" class="form-group autocomplete-wrapper">
                     <label for="languageInput">Language*</label>
                     <input id="languageInput" type="text" placeholder="Type to search..." autocomplete="off" />
                     <div id="languageList" class="autocomplete-list"></div>
+                    <div id="salesOrgPopup" class="autocomplete-list" style="display: none;"></div>
                 </div>
                 <div class="form-group">
                     <label for="customDate">Date*</label>
@@ -386,7 +390,6 @@
                 </thead>
                 <tbody id="tableBodyName"></tbody>
             </table>
-
         </div>
         <div id="TableEmail" class="section">
             <h2>Email Table</h2>
@@ -415,7 +418,6 @@
                 <textarea id="outputHTML" readonly placeholder=""></textarea>
             </div>
         </div>
-
     </div>
     <script>
         const salesOrgMap = {
@@ -444,7 +446,6 @@
             SER: ["5881"],
             ME: ["5895"]
         };
-
         const salesOrgs = [
             { code: "1010", countryCode: "DE", countryName: "Germany" },
             { code: "1550", countryCode: "EN", countryName: "International" },
@@ -481,20 +482,16 @@
         const vendorList = [
             "Euronic", "Club-3D-BV", "VIEWSONIC", "ADERIAN", "SAMSUNG-GSM", "NEOMOUNTS", "FRACTAL DESIGN", "SEAMCOM", "MICROSOFT", "GoTo", "HP", "REFURB", "MICROSOFT-CSP", "MICROSOFT-SURFACE", "MICROSOFT-SURFACEHUB", "MICROSOFT-OEM", "XIAOMI-ECO", "XIAOMI", "LENOVO", "LENOVO-IDG", "LENOVO-ISG", "BRIDGE", "HP-SUPPLIES", "HP-PRINTING", "HP-COMPUTING", "HPE", "ARUBA", "DELL", "DELL-COMPUTERS", "CISCO", "TELEKOM-DEUTSCHLAND", "INTEL", "SEAGATE", "SAMSUNG", "SAMSUNG-MOBILE", "SAMSUNG-STORAGE", "ELECTRONIC ARTS", "APPLE", "APC", "LOGITECH", "WESTERN DIGITAL", "HUAWEI", "SOPHOS", "AMD", "CANON", "CANON-SCANNER", "CANON-SUPPLIES", "CANON-LFP", "FUJITSU", "FUJITSU-SCANNER", "FUJITSU-CCD", "FORTINET", "EATON", "BROTHER", "ASUS", "N-ABLE", "EPSON", "UNIFY", "ACER", "ACER-MONITOR", "ADOBE", "ZOTAC", "PATRONICS", "LG-DISPLAYS", "LG-SMART SIGNAGE", "ACRONIS", "IIYAMA", "MOTORLA", "CONTOUR DESIGN", "DEMANT SOUND", "VMWARE", "LISTAN", "GN-NETCOM", "ERGOTRON", "ALCATEL-LUCENT", "AOC INTERNATIONAL", "CONGSTAR", "IBM-CLOUD", "IBM-HARDWARE", "IBM-SOFTWARE", "KASPERKY LAB", "ZYXEL", "POLYCOM", "NORTONLIFELOCK", "LEXMARK", "ESET", "WATCHGUARD", "RAZER", "VEEAM", "DATTO", "MMD-MONITORS & DISPLAYS", "BOSE", "DICTOTA", "MITEL", "KINGSTON", "KYOCERA", "XEROX", "LINDY", "LEXWARE", "INNOVISION", "TRANSCEND", "EMC", "NEWSTAR", "QNAP SYSTEMS", "CHERRY", "ROOMZ", "CIRTRIX", "TARGUS", "NETGEAR", "REALWEAR", "SK HYNIX NAND PRODUCT SOLUTIONS", "TP-LINK", "BARCO", "ARCSERVE", "PROMETHEAN", "AVERPOINT", "ALLIED TELESIS", "LANCOM", "URBAN FACTORY", "ASSMANN ELECTRONIC", "GIGASET", "GIGASET-PRO", "GIGASET-CONSUMER", "ALSO", "MULTIVENDOR", "CAMBIUM NETWORKS", "3M", "NEC DISPLAY SOLUTIONS", "ESR", "NETAPP", "CROWDSTRIKE", "BLUEWALKER", "QUANTUM", "DELOCK", "OCTOGATE", "YEALINK", "TANDBERG DATA", "MSI", "INSYS", "NCP", "SANDBERG", "DYNABOOK", "MICROFOCUS", "SUPER MICRO COMPUTER", "VERTIV", "PHILIPS", "D-LINK", "GIGABYTE", "I-TEC", "AUREA SOFTWARE", "SNOM TECHNOLOGY", "SONY", "SILICON POWER COMPUTER & COMMUNICATION", "KONFTEL AB", "FANVIL", "BELKIN", "GEMBIRD", "AVM", "PNY", "NET-AT-WORK", "BENQ", "AGFEO", "BINTEC-ELMEG", "MATERIALISE", "STATIC CONTROL", "KFA2", "MGE-USV SYSTEME", "SENNHEISER", "LACIE", "C4B", "UBIQUITI NETWORKS", "FELLOWES", "AUERSWALD", "SEH", "VADE SECURE", "BARRACUDA", "NUTANIX", "OKI", "SYNOLOGY", "OPTOMA", "SANDISK", "INTRA2NET", "ESTOS", "IC INTRACOM", "EVER", "LANBERG", "DROPBOX", "SILEX TECHNOLOGY EUROPE", "LEITZ ACCO BRANDS", "PALIT", "SAPPHIRE", "RAIDSONIC", "XFX", "CHIEFTEC", "WACOM", "TOSHIBA EUROPE", "EFB", "3DCONNEXION", "PANASONIC", "CORSAIR", "AV STUMPFL", "PIXMINDS", "CANDY", "PEERLESS-AV", "OTTER PRODUCTS", "PATRIOT MEMORY", "TRUST", "AVER INDORMATION", "STARTECH.COM", "POWERCOLOR TUL", "PORT DESIGNS", "QOLTEC", "APACER", "MIKROTIK", "A-DATA", "NVIDIA", "GAINWARD EUROPE", "SHARP", "PARAT", "GO EUROPE", "GREEN CELL", "HAMA", "HITACHI-LG", "TEAM GROUP", "GETT GERÄTETECHNIK", "SECOMP", "INTER-TECH", "RITTAL", "GFI SOFTWARE", "AIRSLATE", "ZEBRA", "EXTRALINK", "1&1 IONOS", "CHECK POINT", "JABRA", "REINER KARTENGERÄTE", "COOLER MASTER", "MEDION", "NATEC", "AKYGA", "SANUS", "JJ-COMPUTER", "INNOFIL3D", "GREENBONE", "COREL", "WITHSECURE", "SONOS", "ASROCK", "ZEPP", "SOLARWINDS", "MCAFEE IRELAND", "AXIS COMMUNICATIONS", "KEMP TECHNOLOGIES", "WIKO", "TECHLY", "NETRACK", "TRACER", "RSA SECURITY", "ART", "KRAMER", "BASF 3D", "LOGILINK", "DATA AND MORE", "ZALMAN", "ACTIVISION", "WITHINGS", "INTEGRAL MEMORY PLC", "DORO", "CYBER POWER", "CENOR", "GOODRAM", "DYEMANSION", "TP VISION", "BMG", "PEACOCK", "SMS EVOKO GROUP", "A4TECH", "VERBATIM", "HGST", "EVE SYSTEMS", "ANKI", "BLIZZARD ENTERTAINMENT", "PARTNER CARE EUROPE", "ENERGENIE BY GEMBIRD", "TWELVE SOUTH", "MILESTONES SYSTEMS A/S", "LINKSYS", "MEDIA TECH", "TEAMVIEWER", "TECHLY PRO", "CREAFORM", "PRINTRONIX", "PANDUIT", "ATEN", "4WORLD", "SUUNTO", "MW", "BLAUPUNKT", "CSB", "RICOH", "CLOUD TECHNOLOGY SOLUTIONS", "COMDIS", "NEXT CONCEPT", "REALME", "KONICA MINOLTA", "DIGITUS", "XTON", "EIZO", "CRICUT", "LETSIGNIT", "NEOLT FACTORY", "PELCO", "MANHATTAN", "ELITE SCREENS", "PLENOM", "EDIMAX", "AZON", "VIDIS S.A.", "APPLICATIELINK", "IVANTI", "ZIMBRA", "ESPERANZA", "INCASE", "SMART TECHNOLOGIES ULC", "GRIFFIN", "WHITENERGY", "TENDA TECHNOLOGY", "VAXTOR", "HISENSE", "DIGICERT", "VIVO MOBILE COMMUNICATION", "QS SOLUTIONS", "PERSONDATASUPPORT", "DROPSUITE", "CRAFTUNIQUE", "INCIPIO", "INNO3D", "TALLY GENICOM", "PRICE INTERNATIONAL", "ORVALDI", "G.SKILL"
         ];
-
         let vendorFocus = -1;
-
         function renderVendorList(value) {
             vendorListDiv.innerHTML = "";
             const filtered = vendorList.filter(vendor =>
                 vendor.toLowerCase().startsWith(value.toLowerCase())
             );
-
             if (filtered.length === 0) {
                 vendorListDiv.style.display = "none";
                 return;
             }
-
             filtered.forEach(vendor => {
                 const div = document.createElement("div");
                 div.className = "autocomplete-item";
@@ -505,14 +502,11 @@
                 });
                 vendorListDiv.appendChild(div);
             });
-
             vendorListDiv.style.display = "block";
         }
-
         function removeVendorActive(items) {
             items.forEach(item => item.classList.remove("active"));
         }
-
         function addVendorActive(items) {
             if (!items.length) return;
             removeVendorActive(items);
@@ -521,26 +515,21 @@
             items[vendorFocus].classList.add("active");
             items[vendorFocus].scrollIntoView({ block: "nearest" });
         }
-
         vendorInput.addEventListener("input", function () {
             const val = this.value;
-
             vendorFocus = -1;
             if (!val) {
                 vendorListDiv.style.display = "none";
                 return;
             }
-
             const exactMatch = vendorList.find(vendor => vendor.toLowerCase() === val.toLowerCase());
             if (exactMatch) {
                 this.value = exactMatch;
                 vendorListDiv.style.display = "none";
                 return;
             }
-
             renderVendorList(val);
         });
-
         vendorInput.addEventListener("keydown", function (e) {
             const items = vendorListDiv.querySelectorAll(".autocomplete-item");
             if (e.key === "ArrowDown") {
@@ -556,25 +545,48 @@
                 }
             }
         });
-
         document.addEventListener("click", function (e) {
             if (!vendorListDiv.contains(e.target) && e.target !== vendorInput) {
                 vendorListDiv.style.display = "none";
             }
         });
-
-
+        const salesOrgPopup = document.getElementById("salesOrgPopup");
+        function showSalesOrgPopup(lang) {
+            const salesOrgs = salesOrgMap[lang] || [];
+            if (salesOrgs.length <= 1) {
+                salesOrgPopup.style.display = "none";
+                renderTableByLanguage(lang);
+                generateNames(lang);
+                return;
+            }
+            salesOrgPopup.innerHTML = "";
+            salesOrgs.forEach(code => {
+                const div = document.createElement("div");
+                div.className = "autocomplete-item";
+                div.textContent = code;
+                div.addEventListener("click", () => {
+                    salesOrgPopup.style.display = "none";
+                    renderTableByLanguageAndCode(lang, code);
+                    generateNames(lang, code);
+                });
+                salesOrgPopup.appendChild(div);
+            });
+            salesOrgPopup.style.display = "block";
+        }
         const languageInput = document.getElementById("languageInput");
         const languageList = document.getElementById("languageList");
-
+        languageInput.addEventListener("click", () => {
+            const lang = languageInput.value;
+            if (languageOptions.includes(lang)) {
+                showSalesOrgPopup(lang);
+            }
+        });
         const languageOptions = [
             "DE", "FR", "NL", "EN", "ES", "IT", "DK", "NO", "SE",
             "EE", "LV", "LT", "PL", "PT", "FI", "SI", "HR", "SK",
             "CZ", "HU", "RO", "BG", "SER", "ME"
         ];
-
         let currentFocus = -1;
-
         function renderList(value) {
             languageList.innerHTML = "";
             const filtered = languageOptions.filter(opt => opt.startsWith(value.toUpperCase()));
@@ -582,7 +594,6 @@
                 languageList.style.display = "none";
                 return;
             }
-
             filtered.forEach((opt, index) => {
                 const div = document.createElement("div");
                 div.className = "autocomplete-item";
@@ -591,19 +602,16 @@
                     languageInput.value = opt;
                     languageList.style.display = "none";
                     renderTableByLanguage(opt);
+                    showSalesOrgPopup(opt);
                     generateNames(opt);
                 });
-
                 languageList.appendChild(div);
             });
-
             languageList.style.display = "block";
         }
-
         function removeActive(items) {
             items.forEach(item => item.classList.remove("active"));
         }
-
         function addActive(items) {
             if (!items.length) return;
             removeActive(items);
@@ -612,26 +620,41 @@
             items[currentFocus].classList.add("active");
             items[currentFocus].scrollIntoView({ block: "nearest" });
         }
-
         languageInput.addEventListener("input", function () {
             const val = this.value.toUpperCase();
-
             if (!val) {
                 languageList.style.display = "none";
                 return;
             }
-
             currentFocus = -1;
             renderList(val);
-
             if (languageOptions.includes(val)) {
                 this.value = val;
                 languageList.style.display = "none";
                 renderTableByLanguage(val);
+                showSalesOrgPopup(val);
                 generateNames(val);
             }
         });
-
+        languageInput.addEventListener("input", () => {
+            const value = languageInput.value.trim().toUpperCase();
+            if (!value) {
+                salesOrgPopup.style.display = "none";
+                resultTable.style.display = "none";
+                tableBody.innerHTML = "";
+                tableBodyName.innerHTML = "";
+                return;
+            }
+            renderList(value);
+            showSalesOrgPopup(value);
+        });
+        languageInput.addEventListener("focus", () => {
+            const value = languageInput.value.trim().toUpperCase();
+            if (value) {
+                renderList(value);
+                showSalesOrgPopup(value);
+            }
+        });
         languageInput.addEventListener("keydown", function (e) {
             const items = languageList.querySelectorAll(".autocomplete-item");
             if (e.key === "ArrowDown") {
@@ -653,10 +676,8 @@
                         }
                     }
                 }
-
             }
         });
-
         document.addEventListener("click", function (e) {
             if (!languageList.contains(e.target) && e.target !== languageInput) {
                 languageList.style.display = "none";
@@ -743,38 +764,51 @@
                 "2640": { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "vasco@mvti.pt", ctaText: "Comprar" }
             }
         };
-
-
         const languageSelect = document.getElementById("languageInput");
         const codeInput = document.getElementById("codeInput");
         const submitBtn = document.getElementById("submitBtn");
         const resultTable = document.getElementById("resultTable");
         const tableBody = document.getElementById("tableBody");
-
+        function renderTableByLanguageAndCode(lang, code) {
+            const data = (dataMap[lang] || {})[code];
+            if (data) {
+                tableBody.innerHTML = `
+            <tr>
+                <td>${code}_${lang}</td>
+                <td>${data.text1}</td>
+                <td>${data.text2}</td>
+                <td>${data.text3}</td>
+                <td>${data.email}</td>
+                <td><strong>${data.ctaText}</strong></td>
+            </tr>
+        `;
+                resultTable.style.display = "table";
+            } else {
+                tableBody.innerHTML = "";
+                resultTable.style.display = "none";
+            }
+        }
         function renderTableByLanguage(lang) {
             const codes = salesOrgMap[lang] || [];
             const dataForLang = dataMap[lang] || {};
             let rows = "";
-
             let hasData = false;
-
             codes.forEach(code => {
                 const data = dataForLang[code];
                 if (data) {
                     hasData = true;
                     rows += `
-        <tr>
-          <td>${code}_${lang}</td>
-          <td>${data.text1}</td>
-          <td>${data.text2}</td>
-          <td>${data.text3}</td>
-          <td>${data.email}</td>
-          <td><strong>${data.ctaText}</strong></td>
-        </tr>
-      `;
+            <tr>
+              <td>${code}_${lang}</td>
+              <td>${data.text1}</td>
+              <td>${data.text2}</td>
+              <td>${data.text3}</td>
+              <td>${data.email}</td>
+              <td><strong>${data.ctaText}</strong></td>
+            </tr>
+          `;
                 }
             });
-
             if (hasData) {
                 tableBody.innerHTML = rows;
                 resultTable.style.display = "table";
@@ -783,14 +817,11 @@
                 resultTable.style.display = "none";
             }
         }
-
         languageSelect.addEventListener("input", () => {
             const lang = languageSelect.value;
             renderTableByLanguage(lang);
             generateNames(lang);
         });
-
-
         function getCurrentWeek() {
             const now = new Date();
             const start = new Date(now.getFullYear(), 0, 1);
@@ -798,33 +829,26 @@
             const oneWeek = 604800000;
             return String(Math.ceil(diff / oneWeek)).padStart(2, '0');
         }
-
         function getMMDD() {
             const now = new Date();
             const mm = String(now.getMonth() + 1).padStart(2, '0');
             const dd = String(now.getDate()).padStart(2, '0');
             return mm + dd;
         }
-
         document.addEventListener("DOMContentLoaded", function () {
             function showTooltip(target, message = "Copied!") {
                 const oldTooltip = target.querySelector(".copy-tooltip");
                 if (oldTooltip) oldTooltip.remove();
-
                 const tooltip = document.createElement("div");
                 tooltip.className = "copy-tooltip";
                 tooltip.textContent = message;
                 target.appendChild(tooltip);
-
-
                 requestAnimationFrame(() => tooltip.classList.add("show"));
-
                 setTimeout(() => {
                     tooltip.classList.remove("show");
                     setTimeout(() => tooltip.remove(), 300);
                 }, 5000);
             }
-
             const table = document.getElementById("resultTable");
             table.addEventListener("click", function (event) {
                 const td = event.target.closest("td");
@@ -836,7 +860,6 @@
                 }
             });
             const tableBody = document.getElementById("tableBodyName");
-
             tableBody.addEventListener("click", function (event) {
                 const span = event.target.closest(".email-name");
                 if (span) {
@@ -859,25 +882,28 @@
         });
         document.addEventListener("DOMContentLoaded", () => {
             const fields = [
-                "languageInput",
                 "vendor",
                 "campaignName",
                 "campaignID",
                 "programCode",
                 "customDate"
             ];
-
+            const languageWrapper = document.getElementById("languageInputWrapper");
             const checkAndGenerate = () => {
                 const allFilled = fields.every(id => {
                     const el = document.getElementById(id);
                     return el && el.value.trim() !== "";
                 });
-
                 if (allFilled) {
-                    generateNames();
+                    languageWrapper.classList.remove("disabled");
+                } else {
+                    languageWrapper.classList.add("disabled");
+                }
+                const langInput = document.getElementById("languageInput");
+                if (allFilled && langInput.value.trim() !== "") {
+                    generateNames(langInput.value.trim());
                 }
             };
-
             fields.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
@@ -885,48 +911,43 @@
                     el.addEventListener("change", checkAndGenerate);
                 }
             });
-
+            const langInput = document.getElementById("languageInput");
+            if (langInput) {
+                langInput.addEventListener("input", checkAndGenerate);
+            }
+            checkAndGenerate();
         });
-        function generateNames() {
-            const lang = document.getElementById("languageInput").value;
+        function generateNames(lang, selectedCode) {
             const vendor = document.getElementById("vendor").value.toLowerCase();
             const campaign = document.getElementById("campaignName").value.replace(/\s+/g, '');
             const project = document.getElementById("campaignID").value.trim();
             const programCode = document.getElementById("programCode").value;
             const selectedDate = document.getElementById("customDate").value;
-
             const dateObj = selectedDate ? new Date(selectedDate) : new Date();
             const year = dateObj.getFullYear().toString().slice(-2);
             const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
             const dd = String(dateObj.getDate()).padStart(2, '0');
             const mmdd = `${mm}${dd}`;
-
             const week = getWeekNumber(dateObj);
             const yycw = `${year}CW${week}`;
-
             const tableBodyName = document.getElementById("tableBodyName");
             tableBodyName.innerHTML = "";
-
-            salesOrgMap[lang].forEach(code => {
+            const salesOrgsToRender = selectedCode
+                ? [selectedCode]
+                : (salesOrgMap[lang] || []);
+            salesOrgsToRender.forEach(code => {
                 const org = salesOrgs.find(item => item.code === code);
                 const countryName = org ? org.countryName : "Unknown";
-
-
                 const fullName = `${code}-${programCode}-${yycw}-${mmdd}-${vendor}-${lang}${campaign}-${project}`;
                 const row = document.createElement("tr");
-
                 row.innerHTML = `
             <td>${code}_${lang}</td>
-                    <td>${countryName}</td>
-
+            <td>${countryName}</td>
             <td><span class="email-name">${fullName}</span></td>
         `;
-
                 tableBodyName.appendChild(row);
             });
-
         }
-
         function getWeekNumber(d) {
             d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
             d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
@@ -934,27 +955,22 @@
             const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
             return String(weekNo).padStart(2, '0');
         }
-
         document.addEventListener("DOMContentLoaded", () => {
             const today = new Date().toISOString().split("T")[0];
             document.getElementById("customDate").value = today;
         });
-
         document.getElementById("languageInput").addEventListener("change", () => {
             const vendor = document.getElementById("vendor").value.trim();
             const campaign = document.getElementById("campaignName").value.trim();
             const project = document.getElementById("campaignID").value.trim();
             const programCode = document.getElementById("programCode").value.trim();
             const date = document.getElementById("customDate").value;
-
             if (vendor && campaign && project && programCode && date) {
                 generateNames();
             }
         });
-
         const inputEl = document.getElementById("inputHTML");
         const outputEl = document.getElementById("outputHTML");
-
         function convertUnicodeToHTMLEntities(text) {
             const cleanText = text.replace(/[\n\r]/g, '');
             let result = '';
@@ -963,7 +979,6 @@
             }
             return result;
         }
-
         inputEl.addEventListener("input", () => {
             outputEl.value = convertUnicodeToHTMLEntities(inputEl.value);
         });
