@@ -591,6 +591,7 @@
                     languageInput.value = opt;
                     languageList.style.display = "none";
                     renderTableByLanguage(opt);
+                    generateNames(opt);
                 });
 
                 languageList.appendChild(div);
@@ -627,6 +628,7 @@
                 this.value = val;
                 languageList.style.display = "none";
                 renderTableByLanguage(val);
+                generateNames(val);
             }
         });
 
@@ -647,6 +649,7 @@
                         const val = this.value.toUpperCase();
                         if (languageOptions.includes(val)) {
                             renderTableByLanguage(val);
+                            generateNames(val);
                         }
                     }
                 }
@@ -784,6 +787,7 @@
         languageSelect.addEventListener("input", () => {
             const lang = languageSelect.value;
             renderTableByLanguage(lang);
+            generateNames(lang);
         });
 
 
