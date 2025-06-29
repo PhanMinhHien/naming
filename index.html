@@ -551,14 +551,28 @@
             }
         });
         const salesOrgPopup = document.getElementById("salesOrgPopup");
+
+        
+        function renderTableIfSingleSalesOrg(lang) {
+            const salesOrgs = salesOrgMap[lang] || [];
+            if (salesOrgs.length === 1) {
+                const code = salesOrgs[0];
+                salesOrgPopup.style.display = "none";
+                renderTableByLanguageAndCode(lang, code);
+                generateNames(lang, code);
+                return true;
+            }
+            return false;
+        }
         function showSalesOrgPopup(lang) {
             const salesOrgs = salesOrgMap[lang] || [];
-            if (salesOrgs.length <= 1) {
+
+            if (salesOrgs.length === 1) {
                 salesOrgPopup.style.display = "none";
-                renderTableByLanguage(lang);
-                generateNames(lang);
                 return;
             }
+
+            
             salesOrgPopup.innerHTML = "";
             salesOrgs.forEach(code => {
                 const div = document.createElement("div");
@@ -571,8 +585,12 @@
                 });
                 salesOrgPopup.appendChild(div);
             });
+
             salesOrgPopup.style.display = "block";
         }
+
+
+
         const languageInput = document.getElementById("languageInput");
         const languageList = document.getElementById("languageList");
         languageInput.addEventListener("click", () => {
@@ -586,101 +604,117 @@
             "EE", "LV", "LT", "PL", "PT", "FI", "SI", "HR", "SK",
             "CZ", "HU", "RO", "BG", "SER", "ME"
         ];
-        let currentFocus = -1;
-        function renderList(value) {
+
+        
+        function renderTableByLanguageAndCode(lang, code) {
+            console.log("Render bảng cho", lang, code);
+        }
+        function generateNames(lang, code) {
+            console.log("Render tên cho", lang, code);
+        }
+
+        
+        function handleSingleSalesOrg(lang) {
+            const codes = salesOrgMap[lang] || [];
+            if (codes.length === 1) {
+                salesOrgPopup.style.display = "none";
+                renderTableByLanguageAndCode(lang, codes[0]);
+                generateNames(lang, codes[0]);
+                return true;
+            }
+            return false;
+        }
+
+        
+        function showSalesOrgPopup(lang) {
+            const codes = salesOrgMap[lang] || [];
+            if (codes.length <= 1) {
+                salesOrgPopup.style.display = "none";
+                return;
+            }
+
+            salesOrgPopup.innerHTML = "";
+            codes.forEach(code => {
+                const div = document.createElement("div");
+                div.className = "autocomplete-item";
+                div.textContent = code;
+                div.addEventListener("click", () => {
+                    salesOrgPopup.style.display = "none";
+                    renderTableByLanguageAndCode(lang, code);
+                    generateNames(lang, code);
+                });
+                salesOrgPopup.appendChild(div);
+            });
+            salesOrgPopup.style.display = "block";
+        }
+
+        
+        function renderLanguageList(inputVal) {
             languageList.innerHTML = "";
-            const filtered = languageOptions.filter(opt => opt.startsWith(value.toUpperCase()));
-            if (filtered.length === 0) {
+            const filtered = languageOptions.filter(l => l.startsWith(inputVal));
+            if (filtered.length <= 1) {
                 languageList.style.display = "none";
                 return;
             }
-            filtered.forEach((opt, index) => {
+
+            filtered.forEach(lang => {
                 const div = document.createElement("div");
                 div.className = "autocomplete-item";
-                div.textContent = opt;
+                div.textContent = lang;
                 div.addEventListener("click", () => {
-                    languageInput.value = opt;
+                    languageInput.value = lang;
                     languageList.style.display = "none";
-                    renderTableByLanguage(opt);
-                    showSalesOrgPopup(opt);
-                    generateNames(opt);
+                    if (!handleSingleSalesOrg(lang)) {
+                        showSalesOrgPopup(lang);
+                    }
                 });
                 languageList.appendChild(div);
             });
             languageList.style.display = "block";
         }
-        function removeActive(items) {
-            items.forEach(item => item.classList.remove("active"));
-        }
-        function addActive(items) {
-            if (!items.length) return;
-            removeActive(items);
-            if (currentFocus >= items.length) currentFocus = 0;
-            if (currentFocus < 0) currentFocus = items.length - 1;
-            items[currentFocus].classList.add("active");
-            items[currentFocus].scrollIntoView({ block: "nearest" });
-        }
-        languageInput.addEventListener("input", function () {
-            const val = this.value.toUpperCase();
+
+        
+        languageInput.addEventListener("input", () => {
+            const val = languageInput.value.trim().toUpperCase();
             if (!val) {
                 languageList.style.display = "none";
-                return;
-            }
-            currentFocus = -1;
-            renderList(val);
-            if (languageOptions.includes(val)) {
-                this.value = val;
-                languageList.style.display = "none";
-                renderTableByLanguage(val);
-                showSalesOrgPopup(val);
-                generateNames(val);
-            }
-        });
-        languageInput.addEventListener("input", () => {
-            const value = languageInput.value.trim().toUpperCase();
-            if (!value) {
                 salesOrgPopup.style.display = "none";
-                resultTable.style.display = "none";
-                tableBody.innerHTML = "";
-                tableBodyName.innerHTML = "";
                 return;
             }
-            renderList(value);
-            showSalesOrgPopup(value);
-        });
-        languageInput.addEventListener("focus", () => {
-            const value = languageInput.value.trim().toUpperCase();
-            if (value) {
-                renderList(value);
-                showSalesOrgPopup(value);
-            }
-        });
-        languageInput.addEventListener("keydown", function (e) {
-            const items = languageList.querySelectorAll(".autocomplete-item");
-            if (e.key === "ArrowDown") {
-                currentFocus++;
-                addActive(items);
-            } else if (e.key === "ArrowUp") {
-                currentFocus--;
-                addActive(items);
-            } else {
-                if (e.key === "Enter") {
-                    e.preventDefault();
-                    if (currentFocus > -1 && items[currentFocus]) {
-                        items[currentFocus].click();
-                    } else {
-                        const val = this.value.toUpperCase();
-                        if (languageOptions.includes(val)) {
-                            renderTableByLanguage(val);
-                            generateNames(val);
-                        }
-                    }
+
+            
+            if (languageOptions.includes(val)) {
+                languageInput.value = val; 
+                languageList.style.display = "none";
+                if (!handleSingleSalesOrg(val)) {
+                    showSalesOrgPopup(val);
                 }
+                return;
+            }
+
+            renderLanguageList(val);
+        });
+
+        
+        languageInput.addEventListener("focus", () => {
+            const val = languageInput.value.trim().toUpperCase();
+            if (!val) return;
+            if (languageOptions.includes(val)) {
+                if (!handleSingleSalesOrg(val)) {
+                    showSalesOrgPopup(val);
+                }
+            } else {
+                renderLanguageList(val);
             }
         });
-        document.addEventListener("click", function (e) {
+
+        
+        document.addEventListener("click", (e) => {
             if (!languageList.contains(e.target) && e.target !== languageInput) {
                 languageList.style.display = "none";
+            }
+            if (!salesOrgPopup.contains(e.target) && e.target !== languageInput) {
+                salesOrgPopup.style.display = "none";
             }
         });
         const dataMap = {
@@ -817,11 +851,7 @@
                 resultTable.style.display = "none";
             }
         }
-        languageSelect.addEventListener("input", () => {
-            const lang = languageSelect.value;
-            renderTableByLanguage(lang);
-            generateNames(lang);
-        });
+
         function getCurrentWeek() {
             const now = new Date();
             const start = new Date(now.getFullYear(), 0, 1);
@@ -881,40 +911,43 @@
             });
         });
         document.addEventListener("DOMContentLoaded", () => {
-            const fields = [
-                "vendor",
-                "campaignName",
-                "campaignID",
-                "programCode",
-                "customDate"
-            ];
+            const fields = ["vendor", "campaignName", "campaignID", "programCode", "customDate"];
             const languageWrapper = document.getElementById("languageInputWrapper");
+            const langInput = document.getElementById("languageInput");
+
             const checkAndGenerate = () => {
                 const allFilled = fields.every(id => {
                     const el = document.getElementById(id);
                     return el && el.value.trim() !== "";
                 });
+
+                const langVal = langInput.value.trim().toUpperCase();
+
                 if (allFilled) {
-                    languageWrapper.classList.remove("disabled");
+                    langInput.classList.remove("disabled");
+                    langInput.disabled = false;
+
+                    if (langVal && languageOptions.includes(langVal)) {
+                        const salesOrgs = salesOrgMap[langVal] || [];
+                        if (salesOrgs.length === 1) {
+                            renderTableByLanguageAndCode(langVal, salesOrgs[0]);
+                            generateNames(langVal, salesOrgs[0]);
+                        }
+                    }
                 } else {
-                    languageWrapper.classList.add("disabled");
-                }
-                const langInput = document.getElementById("languageInput");
-                if (allFilled && langInput.value.trim() !== "") {
-                    generateNames(langInput.value.trim());
+                    langInput.classList.add("disabled");
+                    langInput.disabled = true;
                 }
             };
-            fields.forEach(id => {
+
+            [...fields, "languageInput"].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
                     el.addEventListener("input", checkAndGenerate);
                     el.addEventListener("change", checkAndGenerate);
                 }
             });
-            const langInput = document.getElementById("languageInput");
-            if (langInput) {
-                langInput.addEventListener("input", checkAndGenerate);
-            }
+
             checkAndGenerate();
         });
         function generateNames(lang, selectedCode) {
@@ -958,16 +991,6 @@
         document.addEventListener("DOMContentLoaded", () => {
             const today = new Date().toISOString().split("T")[0];
             document.getElementById("customDate").value = today;
-        });
-        document.getElementById("languageInput").addEventListener("change", () => {
-            const vendor = document.getElementById("vendor").value.trim();
-            const campaign = document.getElementById("campaignName").value.trim();
-            const project = document.getElementById("campaignID").value.trim();
-            const programCode = document.getElementById("programCode").value.trim();
-            const date = document.getElementById("customDate").value;
-            if (vendor && campaign && project && programCode && date) {
-                generateNames();
-            }
         });
         const inputEl = document.getElementById("inputHTML");
         const outputEl = document.getElementById("outputHTML");
