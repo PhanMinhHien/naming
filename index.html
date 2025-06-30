@@ -637,7 +637,7 @@
         const emailSalesOrgPopup = document.getElementById("emailSalesOrgPopup");
         function renderEmailLanguageList(val) {
             emailLanguageList.innerHTML = "";
-            const filtered = languageOptions.filter(opt => opt.startsWith(val.toUpperCase()));
+            const filtered = languageOptions.filter(l => l.startsWith(val));
             if (filtered.length <= 1) {
                 emailLanguageList.style.display = "none";
                 return;
@@ -655,6 +655,8 @@
             });
             emailLanguageList.style.display = "block";
         }
+
+
         function showEmailSalesOrgPopup(lang) {
             const salesOrgs = salesOrgMap[lang] || [];
             if (salesOrgs.length === 1) {
@@ -676,6 +678,16 @@
             });
             emailSalesOrgPopup.style.display = "block";
         }
+
+        function handleSingleEmailSalesOrg(lang) {
+            const codes = emailSalesOrgPopup[lang] || [];
+            if (codes.length === 1) {
+                emailSalesOrgPopup.style.display = "none";
+                renderTableByLanguageAndCode(lang, codes[0]);
+                return true;
+            }
+            return false;
+        }
         emailLanguageInput.addEventListener("input", function () {
             const val = emailLanguageInput.value.trim().toUpperCase();
             if (!val) {
@@ -685,11 +697,26 @@
             }
             if (languageOptions.includes(val)) {
                 emailLanguageInput.value = val;
-                emailSalesOrgPopup.style.display = "none";
-                showEmailSalesOrgPopup(val);
+                emailLanguageList.style.display = "none";
+                if (!handleSingleEmailSalesOrg(val)) {
+                    showEmailSalesOrgPopup(val);
+                }
                 return;
             }
             renderEmailLanguageList(val);
+        });
+
+        emailLanguageInput.addEventListener("focus", () => {
+            const val = emailLanguageInput.value.trim().toUpperCase();
+            if (!val) return;
+            if (languageOptions.includes(val)) {
+                if (!handleSingleEmailSalesOrg(val)) {
+                    showEmailSalesOrgPopup(val);
+                }
+
+            } else {
+                renderEmailLanguageList(val);
+            }
         });
         document.addEventListener("click", function (e) {
             if (
