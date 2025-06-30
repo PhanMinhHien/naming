@@ -380,7 +380,6 @@
                 </div>
             </div>
             <h2>Naming Convention Table</h2>
-
             <table id="resultTableName">
                 <thead>
                     <tr>
@@ -393,8 +392,6 @@
             </table>
         </div>
         <div id="TableEmail" class="section">
-
-
             <h2>Email Table</h2>
             <table id="resultTable">
                 <thead>
@@ -410,10 +407,9 @@
                 <tbody id="tableBody"></tbody>
             </table>
             <br>
-            <div id="emailLangFilterWrapper" class="form-group autocomplete-wrapper">
-                <label for="emailLanguageInput">Filter Email Table by Language (Optional)</label>
-                <input id="emailLanguageInput" name="optional" type="text" placeholder="e.g. DE, FR..."
-                    autocomplete="new-optional" />
+            <div id="emailLanguageWrapper" class="form-group autocomplete-wrapper">
+                <label for="emailLanguageInput">Language (Email Table only)</label>
+                <input id="emailLanguageInput" type="text" placeholder="Type to search..." autocomplete="off" />
                 <div id="emailLanguageList" class="autocomplete-list"></div>
                 <div id="emailSalesOrgPopup" class="autocomplete-list" style="display: none;"></div>
             </div>
@@ -493,7 +489,6 @@
         const vendorList = [
             "Euronic", "Club-3D-BV", "VIEWSONIC", "ADERIAN", "SAMSUNG-GSM", "NEOMOUNTS", "FRACTAL DESIGN", "SEAMCOM", "MICROSOFT", "GoTo", "HP", "REFURB", "MICROSOFT-CSP", "MICROSOFT-SURFACE", "MICROSOFT-SURFACEHUB", "MICROSOFT-OEM", "XIAOMI-ECO", "XIAOMI", "LENOVO", "LENOVO-IDG", "LENOVO-ISG", "BRIDGE", "HP-SUPPLIES", "HP-PRINTING", "HP-COMPUTING", "HPE", "ARUBA", "DELL", "DELL-COMPUTERS", "CISCO", "TELEKOM-DEUTSCHLAND", "INTEL", "SEAGATE", "SAMSUNG", "SAMSUNG-MOBILE", "SAMSUNG-STORAGE", "ELECTRONIC ARTS", "APPLE", "APC", "LOGITECH", "WESTERN DIGITAL", "HUAWEI", "SOPHOS", "AMD", "CANON", "CANON-SCANNER", "CANON-SUPPLIES", "CANON-LFP", "FUJITSU", "FUJITSU-SCANNER", "FUJITSU-CCD", "FORTINET", "EATON", "BROTHER", "ASUS", "N-ABLE", "EPSON", "UNIFY", "ACER", "ACER-MONITOR", "ADOBE", "ZOTAC", "PATRONICS", "LG-DISPLAYS", "LG-SMART SIGNAGE", "ACRONIS", "IIYAMA", "MOTORLA", "CONTOUR DESIGN", "DEMANT SOUND", "VMWARE", "LISTAN", "GN-NETCOM", "ERGOTRON", "ALCATEL-LUCENT", "AOC INTERNATIONAL", "CONGSTAR", "IBM-CLOUD", "IBM-HARDWARE", "IBM-SOFTWARE", "KASPERKY LAB", "ZYXEL", "POLYCOM", "NORTONLIFELOCK", "LEXMARK", "ESET", "WATCHGUARD", "RAZER", "VEEAM", "DATTO", "MMD-MONITORS & DISPLAYS", "BOSE", "DICTOTA", "MITEL", "KINGSTON", "KYOCERA", "XEROX", "LINDY", "LEXWARE", "INNOVISION", "TRANSCEND", "EMC", "NEWSTAR", "QNAP SYSTEMS", "CHERRY", "ROOMZ", "CIRTRIX", "TARGUS", "NETGEAR", "REALWEAR", "SK HYNIX NAND PRODUCT SOLUTIONS", "TP-LINK", "BARCO", "ARCSERVE", "PROMETHEAN", "AVERPOINT", "ALLIED TELESIS", "LANCOM", "URBAN FACTORY", "ASSMANN ELECTRONIC", "GIGASET", "GIGASET-PRO", "GIGASET-CONSUMER", "ALSO", "MULTIVENDOR", "CAMBIUM NETWORKS", "3M", "NEC DISPLAY SOLUTIONS", "ESR", "NETAPP", "CROWDSTRIKE", "BLUEWALKER", "QUANTUM", "DELOCK", "OCTOGATE", "YEALINK", "TANDBERG DATA", "MSI", "INSYS", "NCP", "SANDBERG", "DYNABOOK", "MICROFOCUS", "SUPER MICRO COMPUTER", "VERTIV", "PHILIPS", "D-LINK", "GIGABYTE", "I-TEC", "AUREA SOFTWARE", "SNOM TECHNOLOGY", "SONY", "SILICON POWER COMPUTER & COMMUNICATION", "KONFTEL AB", "FANVIL", "BELKIN", "GEMBIRD", "AVM", "PNY", "NET-AT-WORK", "BENQ", "AGFEO", "BINTEC-ELMEG", "MATERIALISE", "STATIC CONTROL", "KFA2", "MGE-USV SYSTEME", "SENNHEISER", "LACIE", "C4B", "UBIQUITI NETWORKS", "FELLOWES", "AUERSWALD", "SEH", "VADE SECURE", "BARRACUDA", "NUTANIX", "OKI", "SYNOLOGY", "OPTOMA", "SANDISK", "INTRA2NET", "ESTOS", "IC INTRACOM", "EVER", "LANBERG", "DROPBOX", "SILEX TECHNOLOGY EUROPE", "LEITZ ACCO BRANDS", "PALIT", "SAPPHIRE", "RAIDSONIC", "XFX", "CHIEFTEC", "WACOM", "TOSHIBA EUROPE", "EFB", "3DCONNEXION", "PANASONIC", "CORSAIR", "AV STUMPFL", "PIXMINDS", "CANDY", "PEERLESS-AV", "OTTER PRODUCTS", "PATRIOT MEMORY", "TRUST", "AVER INDORMATION", "STARTECH.COM", "POWERCOLOR TUL", "PORT DESIGNS", "QOLTEC", "APACER", "MIKROTIK", "A-DATA", "NVIDIA", "GAINWARD EUROPE", "SHARP", "PARAT", "GO EUROPE", "GREEN CELL", "HAMA", "HITACHI-LG", "TEAM GROUP", "GETT GERÄTETECHNIK", "SECOMP", "INTER-TECH", "RITTAL", "GFI SOFTWARE", "AIRSLATE", "ZEBRA", "EXTRALINK", "1&1 IONOS", "CHECK POINT", "JABRA", "REINER KARTENGERÄTE", "COOLER MASTER", "MEDION", "NATEC", "AKYGA", "SANUS", "JJ-COMPUTER", "INNOFIL3D", "GREENBONE", "COREL", "WITHSECURE", "SONOS", "ASROCK", "ZEPP", "SOLARWINDS", "MCAFEE IRELAND", "AXIS COMMUNICATIONS", "KEMP TECHNOLOGIES", "WIKO", "TECHLY", "NETRACK", "TRACER", "RSA SECURITY", "ART", "KRAMER", "BASF 3D", "LOGILINK", "DATA AND MORE", "ZALMAN", "ACTIVISION", "WITHINGS", "INTEGRAL MEMORY PLC", "DORO", "CYBER POWER", "CENOR", "GOODRAM", "DYEMANSION", "TP VISION", "BMG", "PEACOCK", "SMS EVOKO GROUP", "A4TECH", "VERBATIM", "HGST", "EVE SYSTEMS", "ANKI", "BLIZZARD ENTERTAINMENT", "PARTNER CARE EUROPE", "ENERGENIE BY GEMBIRD", "TWELVE SOUTH", "MILESTONES SYSTEMS A/S", "LINKSYS", "MEDIA TECH", "TEAMVIEWER", "TECHLY PRO", "CREAFORM", "PRINTRONIX", "PANDUIT", "ATEN", "4WORLD", "SUUNTO", "MW", "BLAUPUNKT", "CSB", "RICOH", "CLOUD TECHNOLOGY SOLUTIONS", "COMDIS", "NEXT CONCEPT", "REALME", "KONICA MINOLTA", "DIGITUS", "XTON", "EIZO", "CRICUT", "LETSIGNIT", "NEOLT FACTORY", "PELCO", "MANHATTAN", "ELITE SCREENS", "PLENOM", "EDIMAX", "AZON", "VIDIS S.A.", "APPLICATIELINK", "IVANTI", "ZIMBRA", "ESPERANZA", "INCASE", "SMART TECHNOLOGIES ULC", "GRIFFIN", "WHITENERGY", "TENDA TECHNOLOGY", "VAXTOR", "HISENSE", "DIGICERT", "VIVO MOBILE COMMUNICATION", "QS SOLUTIONS", "PERSONDATASUPPORT", "DROPSUITE", "CRAFTUNIQUE", "INCIPIO", "INNO3D", "TALLY GENICOM", "PRICE INTERNATIONAL", "ORVALDI", "G.SKILL"
         ];
-        let vendorFocus = -1;
         function renderVendorList(value) {
             vendorListDiv.innerHTML = "";
             const filtered = vendorList.filter(vendor =>
@@ -518,17 +513,8 @@
         function removeVendorActive(items) {
             items.forEach(item => item.classList.remove("active"));
         }
-        function addVendorActive(items) {
-            if (!items.length) return;
-            removeVendorActive(items);
-            if (vendorFocus >= items.length) vendorFocus = 0;
-            if (vendorFocus < 0) vendorFocus = items.length - 1;
-            items[vendorFocus].classList.add("active");
-            items[vendorFocus].scrollIntoView({ block: "nearest" });
-        }
         vendorInput.addEventListener("input", function () {
             const val = this.value;
-            vendorFocus = -1;
             if (!val) {
                 vendorListDiv.style.display = "none";
                 return;
@@ -541,67 +527,12 @@
             }
             renderVendorList(val);
         });
-        vendorInput.addEventListener("keydown", function (e) {
-            const items = vendorListDiv.querySelectorAll(".autocomplete-item");
-            if (e.key === "ArrowDown") {
-                vendorFocus++;
-                addVendorActive(items);
-            } else if (e.key === "ArrowUp") {
-                vendorFocus--;
-                addVendorActive(items);
-            } else if (e.key === "Enter") {
-                e.preventDefault();
-                if (vendorFocus > -1 && items[vendorFocus]) {
-                    items[vendorFocus].click();
-                }
-            }
-        });
         document.addEventListener("click", function (e) {
             if (!vendorListDiv.contains(e.target) && e.target !== vendorInput) {
                 vendorListDiv.style.display = "none";
             }
         });
         const salesOrgPopup = document.getElementById("salesOrgPopup");
-
-
-        function renderTableIfSingleSalesOrg(lang) {
-            const salesOrgs = salesOrgMap[lang] || [];
-            if (salesOrgs.length === 1) {
-                const code = salesOrgs[0];
-                salesOrgPopup.style.display = "none";
-                renderTableByLanguageAndCode(lang, code);
-                generateNames(lang, code);
-                return true;
-            }
-            return false;
-        }
-        function showSalesOrgPopup(lang) {
-            const salesOrgs = salesOrgMap[lang] || [];
-
-            if (salesOrgs.length === 1) {
-                salesOrgPopup.style.display = "none";
-                return;
-            }
-
-
-            salesOrgPopup.innerHTML = "";
-            salesOrgs.forEach(code => {
-                const div = document.createElement("div");
-                div.className = "autocomplete-item";
-                div.textContent = code;
-                div.addEventListener("click", () => {
-                    salesOrgPopup.style.display = "none";
-                    renderTableByLanguageAndCode(lang, code);
-                    generateNames(lang, code);
-                });
-                salesOrgPopup.appendChild(div);
-            });
-
-            salesOrgPopup.style.display = "block";
-        }
-
-
-
         const languageInput = document.getElementById("languageInput");
         const languageList = document.getElementById("languageList");
         languageInput.addEventListener("click", () => {
@@ -615,16 +546,12 @@
             "EE", "LV", "LT", "PL", "PT", "FI", "SI", "HR", "SK",
             "CZ", "HU", "RO", "BG", "SER", "ME"
         ];
-
-
         function renderTableByLanguageAndCode(lang, code) {
             console.log("Render bảng cho", lang, code);
         }
         function generateNames(lang, code) {
             console.log("Render tên cho", lang, code);
         }
-
-
         function handleSingleSalesOrg(lang) {
             const codes = salesOrgMap[lang] || [];
             if (codes.length === 1) {
@@ -635,15 +562,12 @@
             }
             return false;
         }
-
-
         function showSalesOrgPopup(lang) {
             const codes = salesOrgMap[lang] || [];
             if (codes.length <= 1) {
                 salesOrgPopup.style.display = "none";
                 return;
             }
-
             salesOrgPopup.innerHTML = "";
             codes.forEach(code => {
                 const div = document.createElement("div");
@@ -658,8 +582,6 @@
             });
             salesOrgPopup.style.display = "block";
         }
-
-
         function renderLanguageList(inputVal) {
             languageList.innerHTML = "";
             const filtered = languageOptions.filter(l => l.startsWith(inputVal));
@@ -667,7 +589,6 @@
                 languageList.style.display = "none";
                 return;
             }
-
             filtered.forEach(lang => {
                 const div = document.createElement("div");
                 div.className = "autocomplete-item";
@@ -683,116 +604,6 @@
             });
             languageList.style.display = "block";
         }
-
-        const emailLanguageInput = document.getElementById("emailLanguageInput");
-        const emailLanguageList = document.getElementById("emailLanguageList");
-        const emailSalesOrgPopup = document.getElementById("emailSalesOrgPopup");
-
-        let emailCurrentFocus = -1;
-
-        function showEmailSalesOrgPopup(lang) {
-            const salesOrgs = salesOrgMap[lang] || [];
-
-            if (salesOrgs.length === 1) {
-                const code = salesOrgs[0];
-                emailSalesOrgPopup.style.display = "none";
-                renderTableByLanguageAndCode(lang, code);
-                return;
-            }
-
-            emailSalesOrgPopup.innerHTML = "";
-            salesOrgs.forEach(code => {
-                const div = document.createElement("div");
-                div.className = "autocomplete-item";
-                div.textContent = code;
-                div.addEventListener("click", () => {
-                    emailSalesOrgPopup.style.display = "none";
-                    renderTableByLanguageAndCode(lang, code);
-                });
-                emailSalesOrgPopup.appendChild(div);
-            });
-
-            emailSalesOrgPopup.style.display = "block";
-        }
-
-        function renderEmailLangList(value) {
-            emailLanguageList.innerHTML = "";
-            const filtered = languageOptions.filter(opt => opt.startsWith(value));
-
-            if (filtered.length === 0) {
-                emailLanguageList.style.display = "none";
-                return;
-            }
-
-            if (filtered.length === 1) {
-                emailLanguageInput.value = filtered[0];
-                emailLanguageList.style.display = "none";
-                showEmailSalesOrgPopup(filtered[0]);
-                return;
-            }
-
-            filtered.forEach(lang => {
-                const div = document.createElement("div");
-                div.className = "autocomplete-item";
-                div.textContent = lang;
-                div.addEventListener("click", () => {
-                    emailLanguageInput.value = lang;
-                    emailLanguageList.style.display = "none";
-                    showEmailSalesOrgPopup(lang);
-                });
-                emailLanguageList.appendChild(div);
-            });
-
-            emailLanguageList.style.display = "block";
-        }
-
-        emailLanguageInput.addEventListener("input", function () {
-            const val = this.value.trim().toUpperCase();
-
-            if (!val) {
-                emailLanguageList.style.display = "none";
-                emailSalesOrgPopup.style.display = "none";
-                resultTable.style.display = "none";
-                tableBody.innerHTML = "";
-                return;
-            }
-
-            renderEmailLangList(val);
-            showEmailSalesOrgPopup(val);
-        });
-
-        emailLanguageInput.addEventListener("keydown", function (e) {
-            const items = emailLanguageList.querySelectorAll(".autocomplete-item");
-            if (e.key === "ArrowDown") {
-                emailCurrentFocus++;
-                addActive(items);
-            } else if (e.key === "ArrowUp") {
-                emailCurrentFocus--;
-                addActive(items);
-            } else if (e.key === "Enter") {
-                e.preventDefault();
-                if (emailCurrentFocus > -1 && items[emailCurrentFocus]) {
-                    items[emailCurrentFocus].click();
-                } else {
-                    const val = this.value.trim().toUpperCase();
-                    if (languageOptions.includes(val)) {
-                        showEmailSalesOrgPopup(val);
-                    }
-                }
-            }
-        });
-
-        document.addEventListener("click", function (e) {
-            if (
-                !emailLanguageList.contains(e.target) &&
-                !emailSalesOrgPopup.contains(e.target) &&
-                e.target !== emailLanguageInput
-            ) {
-                emailLanguageList.style.display = "none";
-                emailSalesOrgPopup.style.display = "none";
-            }
-        });
-
         languageInput.addEventListener("input", () => {
             const val = languageInput.value.trim().toUpperCase();
             if (!val) {
@@ -800,8 +611,6 @@
                 salesOrgPopup.style.display = "none";
                 return;
             }
-
-
             if (languageOptions.includes(val)) {
                 languageInput.value = val;
                 languageList.style.display = "none";
@@ -810,11 +619,8 @@
                 }
                 return;
             }
-
             renderLanguageList(val);
         });
-
-
         languageInput.addEventListener("focus", () => {
             const val = languageInput.value.trim().toUpperCase();
             if (!val) return;
@@ -826,8 +632,75 @@
                 renderLanguageList(val);
             }
         });
-
-
+        const emailLanguageInput = document.getElementById("emailLanguageInput");
+        const emailLanguageList = document.getElementById("emailLanguageList");
+        const emailSalesOrgPopup = document.getElementById("emailSalesOrgPopup");
+        function renderEmailLanguageList(val) {
+            emailLanguageList.innerHTML = "";
+            const filtered = languageOptions.filter(opt => opt.startsWith(val.toUpperCase()));
+            if (filtered.length <= 1) {
+                emailLanguageList.style.display = "none";
+                return;
+            }
+            filtered.forEach((opt) => {
+                const div = document.createElement("div");
+                div.className = "autocomplete-item";
+                div.textContent = opt;
+                div.addEventListener("click", () => {
+                    emailLanguageInput.value = opt;
+                    emailLanguageList.style.display = "none";
+                    showEmailSalesOrgPopup(opt);
+                });
+                emailLanguageList.appendChild(div);
+            });
+            emailLanguageList.style.display = "block";
+        }
+        function showEmailSalesOrgPopup(lang) {
+            const salesOrgs = salesOrgMap[lang] || [];
+            if (salesOrgs.length === 1) {
+                const code = salesOrgs[0];
+                emailSalesOrgPopup.style.display = "none";
+                renderTableByLanguageAndCode(lang, code);
+                return;
+            }
+            emailSalesOrgPopup.innerHTML = "";
+            salesOrgs.forEach(code => {
+                const div = document.createElement("div");
+                div.className = "autocomplete-item";
+                div.textContent = code;
+                div.addEventListener("click", () => {
+                    emailSalesOrgPopup.style.display = "none";
+                    renderTableByLanguageAndCode(lang, code);
+                });
+                emailSalesOrgPopup.appendChild(div);
+            });
+            emailSalesOrgPopup.style.display = "block";
+        }
+        emailLanguageInput.addEventListener("input", function () {
+            const val = emailLanguageInput.value.trim().toUpperCase();
+            if (!val) {
+                emailLanguageList.style.display = "none";
+                emailSalesOrgPopup.style.display = "none";
+                return;
+            }
+            if (languageOptions.includes(val)) {
+                emailLanguageInput.value = val;
+                emailSalesOrgPopup.style.display = "none";
+                showEmailSalesOrgPopup(val);
+                return;
+            }
+            renderEmailLanguageList(val);
+        });
+        document.addEventListener("click", function (e) {
+            if (
+                !emailLanguageList.contains(e.target) &&
+                !emailSalesOrgPopup.contains(e.target) &&
+                e.target !== emailLanguageInput
+            ) {
+                emailLanguageList.style.display = "none";
+                emailSalesOrgPopup.style.display = "none";
+            }
+        });
         document.addEventListener("click", (e) => {
             if (!languageList.contains(e.target) && e.target !== languageInput) {
                 languageList.style.display = "none";
@@ -970,7 +843,6 @@
                 resultTable.style.display = "none";
             }
         }
-
         function getCurrentWeek() {
             const now = new Date();
             const start = new Date(now.getFullYear(), 0, 1);
@@ -1033,19 +905,15 @@
             const fields = ["vendor", "campaignName", "campaignID", "programCode", "customDate"];
             const languageWrapper = document.getElementById("languageInputWrapper");
             const langInput = document.getElementById("languageInput");
-
             const checkAndGenerate = () => {
                 const allFilled = fields.every(id => {
                     const el = document.getElementById(id);
                     return el && el.value.trim() !== "";
                 });
-
                 const langVal = langInput.value.trim().toUpperCase();
-
                 if (allFilled) {
                     langInput.classList.remove("disabled");
                     langInput.disabled = false;
-
                     if (langVal && languageOptions.includes(langVal)) {
                         const salesOrgs = salesOrgMap[langVal] || [];
                         if (salesOrgs.length === 1) {
@@ -1058,7 +926,6 @@
                     langInput.disabled = true;
                 }
             };
-
             [...fields, "languageInput"].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
@@ -1066,7 +933,6 @@
                     el.addEventListener("change", checkAndGenerate);
                 }
             });
-
             checkAndGenerate();
         });
         function generateNames(lang, selectedCode) {
