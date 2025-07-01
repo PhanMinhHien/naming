@@ -606,6 +606,11 @@
         }
         languageInput.addEventListener("input", () => {
             const val = languageInput.value.trim().toUpperCase();
+            if (val && languageOptions.includes(val)) {
+                emailLanguageInput.setAttribute("value", "");
+                emailLanguageInput.value = "";
+
+            }
             if (!val) {
                 languageList.style.display = "none";
                 salesOrgPopup.style.display = "none";
@@ -624,6 +629,11 @@
         languageInput.addEventListener("focus", () => {
             const val = languageInput.value.trim().toUpperCase();
             if (!val) return;
+            if (val && languageOptions.includes(val)) {
+                emailLanguageInput.setAttribute("value", "");
+                emailLanguageInput.value = "";
+
+            }
             if (languageOptions.includes(val)) {
                 if (!handleSingleSalesOrg(val)) {
                     showSalesOrgPopup(val);
