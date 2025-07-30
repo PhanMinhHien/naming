@@ -1417,6 +1417,31 @@
         </div>
     `;
             }
+            var bannerToSizeMapping = {
+                "acmp-dashboard-banner": ["510x170", "1150x170", "1150x360"],
+                "email-banner": ["640x90", "620x180"],
+                "external-display-banner": ["160x600", "120x600", "300x250", "728x90"],
+                "shop-basket-banner": ["300x100"],
+                "shop-compare-banner": ["300x100"],
+                "shop-daily-news": ["510x170", "120x600"],
+                "shop-dashboard": ["510x170"],
+                "shop-dashboard-mega": ["1150x360"],
+                "shop-dashboard-super": ["1150x170", "1150x360"],
+                "shop-footer-banner": ["185x90"],
+                "shop-layer-banner": ["800x500"],
+                "shop-notepad-banner": ["300x100"],
+                "shop-order-confirmation-banner": ["510x400"],
+                "shop-popup-banner": ["960x500", "800x500"],
+                "shop-product-detail": ["920x90", "510x170"],
+                "social-banner": ["1200x628"],
+                "today-email-special-banner": ["620x300"],
+                "today-email-topbanner": ["670x620"],
+                "website-deals&discoveries-banner": ["510x170"],
+                "website-deals&discoveries-teaser-image": ["703x410"],
+                "website-deals&discoveries-hero-image": ["1260x523"],
+                "website-homepage-banner": ["1012x570", "920x90", "1920x575"],
+                "website-otherpage-banner": ["1012x570", "920x90", "1920x575"],
+            };
             function generatePositionBannerName(lang, selectedCode) {
                 const vendor = document.getElementById("vendor").value.trim().toLowerCase();
                 const campaign = document.getElementById("campaignName").value.trim().replace(/\s+/g, "");
