@@ -366,10 +366,10 @@
                     <label for="campaignID">Project ID*</label>
                     <input type="text" id="campaignID" autocomplete="off" />
                 </div>
-               
+
             </div>
-             <h2>Banner Fields</h2>
-                <div class="form-layout">
+            <h2>Banner Fields</h2>
+            <div class="form-layout">
                 <div class="form-group">
                     <label for="typeBanner">Type Banner*</label>
                     <select id="typeBanner">
@@ -384,7 +384,7 @@
                     <input type="text" id="idTicket" autocomplete="off" />
 
                 </div>
-                </div>
+            </div>
             <h2>Naming Marketo Result</h2>
             <table id="resultTableName">
                 <thead>
@@ -850,9 +850,12 @@
             filtered.forEach((vendor) => {
                 const div = document.createElement("div");
                 div.className = "autocomplete-item";
-                div.textContent = vendor;
+
+                const vendorWithDash = vendor.replace(/\s+/g, '-');
+
+                div.textContent = vendorWithDash;
                 div.addEventListener("click", () => {
-                    vendorInput.value = vendor;
+                    vendorInput.value = vendorWithDash;
                     vendorListDiv.style.display = "none";
                     checkAndGenerate();
                 });
@@ -860,6 +863,7 @@
             });
             vendorListDiv.style.display = "block";
         }
+
         function removeVendorActive(items) {
             items.forEach((item) => item.classList.remove("active"));
         }
