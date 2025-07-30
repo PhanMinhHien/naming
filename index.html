@@ -400,8 +400,9 @@
                         <h3>Banner Fields Name</h3>
                         <div class="form-group">
                             <label for="bannerPosition">Banner Position*</label>
-                            <input list="bannerPositions" id="bannerPosition" autocomplete="off" />
-                            <datalist id="bannerPositions"> </datalist>
+                            <select id="bannerPosition">
+                                <option value="">-- Select Position --</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -1365,10 +1366,14 @@
                 const bannerSizeSelect = document.getElementById("bannerSize");
                 const datalist = document.getElementById("bannerPositions");
 
-                Object.keys(bannerToSizeMapping).forEach((key) => {
+                const bannerPositionSelect = document.getElementById("bannerPosition");
+                bannerPositionSelect.innerHTML = `<option value="">-- Select Position --</option>`; // reset
+
+                Object.keys(bannerToSizeMapping).forEach((position) => {
                     const option = document.createElement("option");
-                    option.value = key;
-                    datalist.appendChild(option);
+                    option.value = position;
+                    option.textContent = position;
+                    bannerPositionSelect.appendChild(option);
                 });
 
                 bannerPositionInput.addEventListener("input", () => {
@@ -1383,6 +1388,7 @@
                     });
                 });
             });
+
             function checkAndGenerate() {
                 const fields = ["vendor", "campaignName", "campaignID", "programCode", "customDate"];
                 const langInput = document.getElementById("languageInput");
@@ -1397,19 +1403,21 @@
                     return el && el.value.trim() !== "";
                 });
 
-                if (idTicketEl && idTicketEl.value.trim() !== "") {
+                const langVal = langInput.value.trim().toUpperCase();
+                const isLangValid = langVal && languageOptions.includes(langVal);
+
+                if (idTicketEl && idTicketEl.value.trim() !== "" && isLangValid) {
                     bannerProofSection.style.display = "block";
                 } else {
                     bannerProofSection.style.display = "none";
                 }
 
-                if (bannerSize && bannerSize.value.trim() !== "") {
+                if (bannerSize && bannerSize.value.trim() !== "" && isLangValid) {
                     bannerPositionSection.style.display = "block";
                 } else {
                     bannerPositionSection.style.display = "none";
                 }
 
-                const langVal = langInput.value.trim().toUpperCase();
                 if (allFilled) {
                     langInput.classList.remove("disabled");
                     langInput.disabled = false;
@@ -1510,6 +1518,22 @@
         </div>
     `;
             }
+            document.getElementById("bannerPosition").addEventListener("change", function () {
+                const selectedPosition = this.value;
+                const bannerSizeSelect = document.getElementById("bannerSize");
+
+                bannerSizeSelect.innerHTML = `<option value="">-- Select Size --</option>`;
+
+                if (bannerToSizeMapping[selectedPosition]) {
+                    bannerToSizeMapping[selectedPosition].forEach((size) => {
+                        const option = document.createElement("option");
+                        option.value = size;
+                        option.textContent = size;
+                        bannerSizeSelect.appendChild(option);
+                    });
+                }
+            });
+
             document.getElementById("bannerSize").addEventListener("change", () => {
                 const lang = document.getElementById("languageInput").value.trim().toUpperCase();
                 if (lang && languageOptions.includes(lang)) {
