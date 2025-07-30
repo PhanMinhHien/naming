@@ -384,7 +384,8 @@
                         <div class="form-group">
                             <label for="typeBanner">Type Banner*</label>
                             <select id="typeBanner">
-                                <option value="FrontBanner" selected>Front Banner</option>
+                                <option value="">--- Select Banner ---</option>
+                                <option value="FrontBanner">Front Banner</option>
                                 <option value="LargeBanner">Large Banner</option>
                                 <option value="MegaBanner">Mega Banner</option>
                                 <option value="ProductBanner">Product Banner</option>
@@ -1396,6 +1397,8 @@
                 const bannerProofSection = document.getElementById("bannerProofSection");
 
                 const bannerSize = document.getElementById("bannerSize");
+                const typeBanner = document.getElementById("typeBanner");
+
                 const bannerPositionSection = document.getElementById("bannerPositonSection");
 
                 const allFilled = fields.every((id) => {
@@ -1406,7 +1409,7 @@
                 const langVal = langInput.value.trim().toUpperCase();
                 const isLangValid = langVal && languageOptions.includes(langVal);
 
-                if (idTicketEl && idTicketEl.value.trim() !== "" && isLangValid) {
+                if (typeBanner && typeBanner.value.trim() !== "" && isLangValid) {
                     bannerProofSection.style.display = "block";
                 } else {
                     bannerProofSection.style.display = "none";
@@ -1460,7 +1463,10 @@
 
                 const countryCode = languageInput.value.trim().toUpperCase() || selectedCode || lang;
                 const week = getWeekNumber(dateObj);
-
+                if (!typeBanner) {
+                    document.getElementById("proofNameResult").innerHTML = "";
+                    return;
+                }
                 const proofName = `${countryCode}_${week}_${typeBanner}_${vendor}_${campaign}_${idTicket}`;
 
                 document.getElementById("proofNameResult").innerHTML = `
@@ -1468,6 +1474,15 @@
             <p>${proofName}</p>
         </div>
     `;
+                document.getElementById("typeBanner").addEventListener("change", () => {
+                    const lang = document.getElementById("languageInput").value.trim().toUpperCase();
+                    if (lang && languageOptions.includes(lang)) {
+                        const salesOrgs = salesOrgMap[lang] || [];
+                        if (salesOrgs.length > 0) {
+                            generateProofName(lang, salesOrgs[0]);
+                        }
+                    }
+                });
             }
             var bannerToSizeMapping = {
                 "acmp-dashboard-banner": ["510x170", "1150x170", "1150x360"],
