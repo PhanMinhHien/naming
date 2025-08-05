@@ -935,43 +935,39 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function checkAndGenerate() {
-    const fields = ["vendor", "campaignName", "programCode", "customDate", "idTicket"];
+    const fields = ["vendor", "campaignName", "programCode", "customDate"];
     const langInput = document.getElementById("languageInput");
     const idTicketEl = document.getElementById("idTicket");
+    const campaignIDEl = document.getElementById("campaignID");
     const bannerProofSection = document.getElementById("bannerProofSection");
+    const marketoSection = document.querySelector(".marketoSection");
 
     const bannerSize = document.getElementById("bannerSize");
     const typeBanner = document.getElementById("typeBanner");
-
     const bannerPositionSection = document.getElementById("bannerPositonSection");
+
+    const typeBannerVal = typeBanner?.value.trim();
+    const idTicketVal = idTicketEl?.value.trim();
+    const campaignIDVal = campaignIDEl?.value.trim();
+    const langVal = langInput.value.trim().toUpperCase();
+    const isLangValid = langVal && languageOptions.includes(langVal);
 
     const allFilled = fields.every((id) => {
         const el = document.getElementById(id);
         return el && el.value.trim() !== "";
     });
 
-    const langVal = langInput.value.trim().toUpperCase();
-    const isLangValid = langVal && languageOptions.includes(langVal);
+    const showProof = typeBannerVal !== "" && idTicketVal !== "" && isLangValid;
+    bannerProofSection.style.display = showProof ? "block" : "none";
 
-    const typeBannerVal = typeBanner?.value.trim();
-    const idTicketVal = idTicketEl?.value.trim();
+    bannerPositionSection.style.display = bannerSize && bannerSize.value.trim() !== "" && isLangValid ? "block" : "none";
 
-    if (typeBannerVal !== "" && idTicketVal !== "" && isLangValid) {
-        bannerProofSection.style.display = "block";
-    } else {
-        bannerProofSection.style.display = "none";
-    }
-
-    if (bannerSize && bannerSize.value.trim() !== "" && isLangValid) {
-        bannerPositionSection.style.display = "block";
-    } else {
-        bannerPositionSection.style.display = "none";
-    }
+    marketoSection.style.display = campaignIDVal ? "block" : "none";
 
     if (allFilled) {
         langInput.classList.remove("disabled");
         langInput.disabled = false;
-        if (langVal && languageOptions.includes(langVal)) {
+        if (isLangValid) {
             const salesOrgs = salesOrgMap[langVal] || [];
             if (salesOrgs.length === 1) {
                 renderTableByLanguageAndCode(langVal, salesOrgs[0]);
@@ -1106,11 +1102,8 @@ function autoParseCampaignInfo() {
         const langInput = document.getElementById("languageInput");
         langInput.value = langCode;
 
-        // ✅ Đảm bảo trigger sự kiện để hệ thống phản ứng
         langInput.dispatchEvent(new Event("input", { bubbles: true }));
     }
-
-    console.log("🎯 Auto parsed:", { langCode, vendor, campaign });
 }
 
 function normalize(str) {
@@ -1217,7 +1210,6 @@ function generateNames(_, __) {
         document.getElementById("languageInput").value = parsed.langCode;
     }
 
-    // 🔁 Đọc lại từ input để chắc chắn dùng giá trị cuối cùng
     const vendor = document.getElementById("vendor").value;
     const campaign = document.getElementById("campaignName").value;
     const langCode = document.getElementById("languageInput").value;
@@ -1250,8 +1242,6 @@ function generateNames(_, __) {
         `;
         tableBodyName.appendChild(row);
     });
-
-    console.log("✅ Final info:", { campaign, vendor, langCode });
 
     generateProofName(langCode, salesOrgsToRender[0]);
     generatePositionBannerName(langCode, salesOrgsToRender[0]);

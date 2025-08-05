@@ -51,12 +51,11 @@
                         <div class="form-group">
                             <label for="typeBanner">Type Banner*</label>
                             <select id="typeBanner">
-                                <option value="">-- Select Banner --</option>
+                                <option value="">--- Select Banner ---</option>
                                 <option value="FrontBanner">Front Banner</option>
                                 <option value="LargeBanner">Large Banner</option>
                                 <option value="MegaBanner">Mega Banner</option>
                                 <option value="ProductBanner">Product Banner</option>
-                                <option value="BasketBanner">Basket Banner</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -82,17 +81,19 @@
                         </div>
                     </div>
                 </div>
-                <h2>Naming Marketo Result</h2>
-                <table id="resultTableName">
-                    <thead>
-                        <tr>
-                            <th>Country Code</th>
-                            <th>Country Name</th>
-                            <th>Name Email</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBodyName"></tbody>
-                </table>
+                <div class="marketoSection" style="display: none">
+                    <h2>Naming Marketo Result</h2>
+                    <table id="resultTableName">
+                        <thead>
+                            <tr>
+                                <th>Country Code</th>
+                                <th>Country Name</th>
+                                <th>Name Email</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBodyName"></tbody>
+                    </table>
+                </div>
                 <div id="bannerProofSection" style="display: none">
                     <h2>Naming Proof Banner</h2>
                     <div id="proofNameResult"></div>
