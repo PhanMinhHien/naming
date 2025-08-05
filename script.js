@@ -1099,11 +1099,20 @@ function autoParseCampaignInfo() {
     const { langCode, vendor, campaign } = parseCampaignInfo(raw);
 
     if (campaign) document.getElementById("campaignName").value = campaign;
+
     if (vendor) document.getElementById("vendor").value = vendor;
-    if (langCode) document.getElementById("languageInput").value = langCode;
+
+    if (langCode) {
+        const langInput = document.getElementById("languageInput");
+        langInput.value = langCode;
+
+        // ✅ Đảm bảo trigger sự kiện để hệ thống phản ứng
+        langInput.dispatchEvent(new Event("input", { bubbles: true }));
+    }
 
     console.log("🎯 Auto parsed:", { langCode, vendor, campaign });
 }
+
 
 
 function normalize(str) {
@@ -1204,10 +1213,23 @@ function parseCampaignInfo(rawCampaign) {
 
 function generateNames(_, __) {
     const rawCampaign = document.getElementById("campaignName").value;
-    const { langCode, vendor, campaign } = parseCampaignInfo(rawCampaign);
-    if (campaign) document.getElementById("campaignName").value = campaign;
-    if (vendor) document.getElementById("vendor").value = vendor;
-    if (langCode) document.getElementById("languageInput").value = langCode;
+    const parsed = parseCampaignInfo(rawCampaign);
+
+    if (parsed.campaign) {
+        document.getElementById("campaignName").value = parsed.campaign;
+    }
+    if (parsed.vendor) {
+        document.getElementById("vendor").value = parsed.vendor;
+    }
+    if (parsed.langCode) {
+        document.getElementById("languageInput").value = parsed.langCode;
+    }
+
+    // 🔁 Đọc lại từ input để chắc chắn dùng giá trị cuối cùng
+    const vendor = document.getElementById("vendor").value;
+    const campaign = document.getElementById("campaignName").value;
+    const langCode = document.getElementById("languageInput").value;
+
     const project = document.getElementById("campaignID").value.trim();
     const programCode = document.getElementById("programCode").value;
     const selectedDate = document.getElementById("customDate").value;
@@ -1218,6 +1240,7 @@ function generateNames(_, __) {
     const mmdd = `${mm}${dd}`;
     const week = getWeekNumber(dateObj);
     const yycw = `${year}CW${week}`;
+
     const tableBodyName = document.getElementById("tableBodyName");
     tableBodyName.innerHTML = "";
 
@@ -1225,6 +1248,7 @@ function generateNames(_, __) {
     salesOrgsToRender.forEach((code) => {
         const org = salesOrgs.find((item) => item.code === code);
         const countryName = org ? org.countryName : "Unknown";
+
         const fullName = `${code}-${programCode}-${yycw}-${mmdd}-${vendor}-${langCode}${campaign}-${project}`;
         const row = document.createElement("tr");
         row.innerHTML = `
@@ -1234,11 +1258,13 @@ function generateNames(_, __) {
         `;
         tableBodyName.appendChild(row);
     });
+
     console.log("✅ Final info:", { campaign, vendor, langCode });
 
     generateProofName(langCode, salesOrgsToRender[0]);
     generatePositionBannerName(langCode, salesOrgsToRender[0]);
 }
+
 
 document.getElementById("bannerPosition").addEventListener("change", function () {
     const selectedPosition = this.value;
