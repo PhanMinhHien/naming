@@ -400,27 +400,41 @@ const vendorList = [
     "ORVALDI",
     "G.SKILL",
 ];
+
+
+let reverseVendorMap = new Map();
+
 function renderVendorList(value) {
     vendorListDiv.innerHTML = "";
-    const filtered = vendorList.filter((vendor) => vendor.toLowerCase().startsWith(value.toLowerCase()));
+    reverseVendorMap.clear();
+
+    const filtered = vendorList.filter((vendor) =>
+        vendor.toLowerCase().startsWith(value.toLowerCase())
+    );
+
     if (filtered.length === 0) {
         vendorListDiv.style.display = "none";
         return;
     }
+
     filtered.forEach((vendor) => {
         const div = document.createElement("div");
         div.className = "autocomplete-item";
 
         const vendorWithDash = vendor.replace(/\s+/g, "-");
-
         div.textContent = vendorWithDash;
+
+        reverseVendorMap.set(vendorWithDash.toLowerCase(), vendor);
+
         div.addEventListener("click", () => {
             vendorInput.value = vendorWithDash;
             vendorListDiv.style.display = "none";
             checkAndGenerate();
         });
+
         vendorListDiv.appendChild(div);
     });
+
     vendorListDiv.style.display = "block";
 }
 
@@ -441,6 +455,17 @@ vendorInput.addEventListener("input", function () {
     }
     renderVendorList(val);
 });
+vendorInput.addEventListener("blur", () => {
+    setTimeout(() => {
+        const inputValue = vendorInput.value;
+        const renderedVendor = findAndRenderVendor(inputValue); 
+        vendorInput.value = renderedVendor; 
+        vendorListDiv.style.display = "none";
+
+        checkAndGenerate(); 
+    }, 200);
+});
+
 document.addEventListener("click", function (e) {
     if (!vendorListDiv.contains(e.target) && e.target !== vendorInput) {
         vendorListDiv.style.display = "none";
@@ -456,12 +481,7 @@ languageInput.addEventListener("click", () => {
     }
 });
 const languageOptions = ["DE", "FR", "NL", "EN", "ES", "IT", "DK", "NO", "SE", "EE", "LV", "LT", "PL", "PT", "FI", "SI", "HR", "SK", "CZ", "HU", "RO", "BG", "SER", "ME"];
-function renderTableByLanguageAndCode(lang, code) {
-    console.log("Render bảng cho", lang, code);
-}
-function generateNames(lang, code) {
-    console.log("Render tên cho", lang, code);
-}
+
 function handleSingleSalesOrg(lang) {
     const codes = salesOrgMap[lang] || [];
     if (codes.length === 1) {
@@ -895,7 +915,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const datalist = document.getElementById("bannerPositions");
 
     const bannerPositionSelect = document.getElementById("bannerPosition");
-    bannerPositionSelect.innerHTML = `<option value="">-- Select Position --</option>`; // reset
+    bannerPositionSelect.innerHTML = `<option value="">-- Select Position --</option>`; 
 
     Object.keys(bannerToSizeMapping).forEach((position) => {
         const option = document.createElement("option");
@@ -1065,7 +1085,6 @@ function generatePositionBannerName(lang, selectedCode) {
         </div>
     `;
 }
-// Hàm map từ salesOrg sang language
 function getLangFromSalesOrg(code) {
     for (const lang in salesOrgMap) {
         if (salesOrgMap[lang].includes(code)) {
@@ -1085,22 +1104,23 @@ function autoParseCampaignInfo() {
 
     console.log("🎯 Auto parsed:", { langCode, vendor, campaign });
 }
+
+
 function normalize(str) {
     return str
-        .toLowerCase()
-        .replace(/[^a-z0-9]/g, ""); 
+        .toLowerCase();
 }
 
 
 function findBestMatchingVendor(possibleVendor) {
-    const normalizedInput = normalize(possibleVendor);
+     const normalizedInput = normalize(possibleVendor);
 
     const candidates = vendorList.map((vendor) => {
         const normalizedVendor = normalize(vendor);
         let score = 0;
 
         if (normalizedInput === normalizedVendor) {
-            score = 100; 
+            score = 100;
         } else if (normalizedInput.includes(normalizedVendor)) {
             score = 80;
         } else if (normalizedVendor.includes(normalizedInput)) {
@@ -1109,7 +1129,7 @@ function findBestMatchingVendor(possibleVendor) {
             const inputWords = normalizedInput.match(/[a-z0-9]+/g) || [];
             inputWords.forEach((word) => {
                 if (normalizedVendor.includes(word)) {
-                    score += word.length; 
+                    score += word.length;
                 }
             });
         }
@@ -1121,9 +1141,25 @@ function findBestMatchingVendor(possibleVendor) {
         .filter((c) => c.score > 0)
         .sort((a, b) => b.score - a.score);
 
-    return sorted.length > 0 ? sorted[0].original : "";
+    const bestMatch = sorted.length > 0 ? sorted[0].original : "";
+
+    renderVendorList(bestMatch);
+
+    for (const [vendorWithDash, vendorOriginal] of reverseVendorMap.entries()) {
+        if (vendorOriginal === bestMatch) {
+            return vendorWithDash;
+        }
+    }
+
+    return bestMatch.replace(/\s+/g, "-");
 }
 
+function getRenderedVendor(vendor) {
+    for (const [withDash, original] of vendorMap.entries()) {
+        if (original === vendor) return withDash;
+    }
+    return vendor.replace(/\s+/g, "-"); 
+}
 
 
 
@@ -1153,7 +1189,6 @@ function parseCampaignInfo(rawCampaign) {
         campaign = campaignTokens.join(" ");
     }
 
-    // Viết hoa chữ đầu mỗi từ campaign
     campaign = campaign
         .split(/\s+/)
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
