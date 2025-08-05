@@ -401,16 +401,13 @@ const vendorList = [
     "G.SKILL",
 ];
 
-
 let reverseVendorMap = new Map();
 
 function renderVendorList(value) {
     vendorListDiv.innerHTML = "";
     reverseVendorMap.clear();
 
-    const filtered = vendorList.filter((vendor) =>
-        vendor.toLowerCase().startsWith(value.toLowerCase())
-    );
+    const filtered = vendorList.filter((vendor) => vendor.toLowerCase().startsWith(value.toLowerCase()));
 
     if (filtered.length === 0) {
         vendorListDiv.style.display = "none";
@@ -458,11 +455,11 @@ vendorInput.addEventListener("input", function () {
 vendorInput.addEventListener("blur", () => {
     setTimeout(() => {
         const inputValue = vendorInput.value;
-        const renderedVendor = findAndRenderVendor(inputValue); 
-        vendorInput.value = renderedVendor; 
+        const renderedVendor = findAndRenderVendor(inputValue);
+        vendorInput.value = renderedVendor;
         vendorListDiv.style.display = "none";
 
-        checkAndGenerate(); 
+        checkAndGenerate();
     }, 200);
 });
 
@@ -915,7 +912,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const datalist = document.getElementById("bannerPositions");
 
     const bannerPositionSelect = document.getElementById("bannerPosition");
-    bannerPositionSelect.innerHTML = `<option value="">-- Select Position --</option>`; 
+    bannerPositionSelect.innerHTML = `<option value="">-- Select Position --</option>`;
 
     Object.keys(bannerToSizeMapping).forEach((position) => {
         const option = document.createElement("option");
@@ -938,7 +935,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function checkAndGenerate() {
-    const fields = ["vendor", "campaignName", "campaignID", "programCode", "customDate"];
+    const fields = ["vendor", "campaignName", "programCode", "customDate", "idTicket"];
     const langInput = document.getElementById("languageInput");
     const idTicketEl = document.getElementById("idTicket");
     const bannerProofSection = document.getElementById("bannerProofSection");
@@ -956,7 +953,10 @@ function checkAndGenerate() {
     const langVal = langInput.value.trim().toUpperCase();
     const isLangValid = langVal && languageOptions.includes(langVal);
 
-    if (typeBanner && typeBanner.value.trim() !== "" && isLangValid) {
+    const typeBannerVal = typeBanner?.value.trim();
+    const idTicketVal = idTicketEl?.value.trim();
+
+    if (typeBannerVal !== "" && idTicketVal !== "" && isLangValid) {
         bannerProofSection.style.display = "block";
     } else {
         bannerProofSection.style.display = "none";
@@ -1113,16 +1113,12 @@ function autoParseCampaignInfo() {
     console.log("🎯 Auto parsed:", { langCode, vendor, campaign });
 }
 
-
-
 function normalize(str) {
-    return str
-        .toLowerCase();
+    return str.toLowerCase();
 }
 
-
 function findBestMatchingVendor(possibleVendor) {
-     const normalizedInput = normalize(possibleVendor);
+    const normalizedInput = normalize(possibleVendor);
 
     const candidates = vendorList.map((vendor) => {
         const normalizedVendor = normalize(vendor);
@@ -1146,9 +1142,7 @@ function findBestMatchingVendor(possibleVendor) {
         return { original: vendor, score };
     });
 
-    const sorted = candidates
-        .filter((c) => c.score > 0)
-        .sort((a, b) => b.score - a.score);
+    const sorted = candidates.filter((c) => c.score > 0).sort((a, b) => b.score - a.score);
 
     const bestMatch = sorted.length > 0 ? sorted[0].original : "";
 
@@ -1167,10 +1161,8 @@ function getRenderedVendor(vendor) {
     for (const [withDash, original] of vendorMap.entries()) {
         if (original === vendor) return withDash;
     }
-    return vendor.replace(/\s+/g, "-"); 
+    return vendor.replace(/\s+/g, "-");
 }
-
-
 
 function parseCampaignInfo(rawCampaign) {
     let mainPart = rawCampaign.split("-").slice(1).join("-").split("*")[0].trim();
@@ -1264,7 +1256,6 @@ function generateNames(_, __) {
     generateProofName(langCode, salesOrgsToRender[0]);
     generatePositionBannerName(langCode, salesOrgsToRender[0]);
 }
-
 
 document.getElementById("bannerPosition").addEventListener("change", function () {
     const selectedPosition = this.value;
