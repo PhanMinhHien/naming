@@ -898,14 +898,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         }
     });
-    const outputTextarea = document.getElementById("outputHTML");
-    outputTextarea.addEventListener("click", function () {
-        outputTextarea.select();
-        outputTextarea.setSelectionRange(0, 99999);
-        navigator.clipboard.writeText(outputTextarea.value).then(() => {
-            showTooltip(outputTextarea.parentElement);
-        });
-    });
+    // const outputTextarea = document.getElementById("outputHTML");
+    // outputTextarea.addEventListener("click", function () {
+    //     outputTextarea.select();
+    //     outputTextarea.setSelectionRange(0, 99999);
+    //     navigator.clipboard.writeText(outputTextarea.value).then(() => {
+    //         showTooltip(outputTextarea.parentElement);
+    //     });
+    // });
 
     const bannerPositionInput = document.getElementById("bannerPosition");
     const bannerSizeSelect = document.getElementById("bannerSize");
@@ -1296,16 +1296,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-const inputEl = document.getElementById("inputHTML");
-const outputEl = document.getElementById("outputHTML");
-function convertUnicodeToHTMLEntities(text) {
-    const cleanText = text.replace(/[\n\r]/g, "");
-    let result = "";
-    for (let char of cleanText) {
-        result += `&#${char.codePointAt(0)};`;
-    }
-    return result;
-}
-inputEl.addEventListener("input", () => {
-    outputEl.value = convertUnicodeToHTMLEntities(inputEl.value);
-});
+// const inputEl = document.getElementById("inputHTML");
+// const outputEl = document.getElementById("outputHTML");
+// function convertUnicodeToHTMLEntities(text) {
+//     const cleanText = text.replace(/[\n\r]/g, "");
+//     let result = "";
+//     for (let char of cleanText) {
+//         result += `&#${char.codePointAt(0)};`;
+//     }
+//     return result;
+// }
+// inputEl.addEventListener("input", () => {
+//     outputEl.value = convertUnicodeToHTMLEntities(inputEl.value);
+// });
