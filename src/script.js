@@ -455,7 +455,7 @@ vendorInput.addEventListener("input", function () {
 vendorInput.addEventListener("blur", () => {
     setTimeout(() => {
         const inputValue = vendorInput.value;
-        const renderedVendor = findAndRenderVendor(inputValue);
+        const renderedVendor = findBestMatchingVendor(inputValue);
         vendorInput.value = renderedVendor;
         vendorListDiv.style.display = "none";
 
@@ -1204,7 +1204,7 @@ function generateNames(_, __) {
         document.getElementById("campaignName").value = parsed.campaign;
     }
     if (parsed.vendor) {
-        document.getElementById("vendor").value.toLowerCase() = parsed.vendor;
+        document.getElementById("vendor").value = parsed.vendor;
     }
     if (parsed.langCode) {
         document.getElementById("languageInput").value = parsed.langCode;
