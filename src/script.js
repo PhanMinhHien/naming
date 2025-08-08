@@ -1204,13 +1204,13 @@ function generateNames(_, __) {
         document.getElementById("campaignName").value = parsed.campaign;
     }
     if (parsed.vendor) {
-        document.getElementById("vendor").value = parsed.vendor;
+        document.getElementById("vendor").value.toLowerCase() = parsed.vendor;
     }
     if (parsed.langCode) {
         document.getElementById("languageInput").value = parsed.langCode;
     }
 
-    const vendor = document.getElementById("vendor").value;
+const vendor = document.getElementById("vendor").value.toLowerCase();
     const campaign = document.getElementById("campaignName").value;
     const langCode = document.getElementById("languageInput").value;
 
