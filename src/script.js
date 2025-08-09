@@ -409,6 +409,10 @@ function renderVendorList(value) {
 
     const filtered = vendorList.filter((vendor) => vendor.toLowerCase().startsWith(value.toLowerCase()));
 
+    if (!value.trim()) {
+        vendorListDiv.style.display = "none";
+        return;
+    }
     if (filtered.length === 0) {
         vendorListDiv.style.display = "none";
         return;
@@ -421,7 +425,7 @@ function renderVendorList(value) {
         const vendorWithDash = vendor.replace(/\s+/g, "-");
         div.textContent = vendorWithDash;
 
-        reverseVendorMap.set(vendorWithDash.toLowerCase(), vendor);
+        reverseVendorMap.set(vendorWithDash, vendor);
 
         div.addEventListener("click", () => {
             vendorInput.value = vendorWithDash;
@@ -1111,10 +1115,12 @@ function normalize(str) {
 }
 
 function findBestMatchingVendor(possibleVendor) {
-    const normalizedInput = normalize(possibleVendor);
+    if (!possibleVendor.trim()) return "";
+
+    const normalizedInput = possibleVendor.toLowerCase();
 
     const candidates = vendorList.map((vendor) => {
-        const normalizedVendor = normalize(vendor);
+        const normalizedVendor = vendor.toLowerCase();
         let score = 0;
 
         if (normalizedInput === normalizedVendor) {
@@ -1136,18 +1142,24 @@ function findBestMatchingVendor(possibleVendor) {
     });
 
     const sorted = candidates.filter((c) => c.score > 0).sort((a, b) => b.score - a.score);
+    if (!sorted.length) return "";
 
-    const bestMatch = sorted.length > 0 ? sorted[0].original : "";
+    const bestScore = sorted[0].score;
+    const bestMatches = sorted.filter((c) => c.score === bestScore);
 
-    renderVendorList(bestMatch);
-
-    for (const [vendorWithDash, vendorOriginal] of reverseVendorMap.entries()) {
-        if (vendorOriginal === bestMatch) {
-            return vendorWithDash;
+    if (bestMatches.length === 1) {
+        const bestMatch = bestMatches[0].original;
+        renderVendorList(bestMatch);
+        for (const [vendorWithDash, vendorOriginal] of reverseVendorMap.entries()) {
+            if (vendorOriginal.toLowerCase() === bestMatch.toLowerCase()) {
+                return vendorWithDash;
+            }
         }
+        return bestMatch.replace(/\s+/g, "-");
+    } else {
+        renderVendorList(possibleVendor);
+        return "";
     }
-
-    return bestMatch.replace(/\s+/g, "-");
 }
 
 function getRenderedVendor(vendor) {
@@ -1159,7 +1171,6 @@ function getRenderedVendor(vendor) {
 
 function parseCampaignInfo(rawCampaign) {
     let mainPart = rawCampaign.split("-").slice(1).join("-").split("*")[0].trim();
-    console.log("mainPart", mainPart);
 
     const tokens = mainPart.split(/\s+/);
 
@@ -1210,7 +1221,7 @@ function generateNames(_, __) {
         document.getElementById("languageInput").value = parsed.langCode;
     }
 
-const vendor = document.getElementById("vendor").value.toLowerCase();
+    const vendor = document.getElementById("vendor").value.toLowerCase();
     const campaign = document.getElementById("campaignName").value;
     const langCode = document.getElementById("languageInput").value;
 
