@@ -1,133 +1,136 @@
 <!DOCTYPE html>
 <html lang="vi">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Naming Convention</title>
-        <link rel="stylesheet" href="css/index.min.css" />
-    </head>
 
-    <body>
-        <div class="container">
-            <div id="Naming" class="section">
-                <h2>Naming Convention Fields</h2>
-                <div class="form-layout">
-                    <div class="form-group">
-                        <label for="programCode">Program Code*</label>
-                        <select id="programCode">
-                            <option value="ES">ES - Email Send</option>
-                            <option value="NL">NL - Newsletter</option>
-                        </select>
-                    </div>
-                    <div class="form-group autocomplete-wrapper">
-                        <label for="vendor">Vendor*</label>
-                        <input id="vendor" type="text" placeholder="Choose vendor..." autocomplete="off" />
-                        <div id="vendorList" class="autocomplete-list"></div>
-                    </div>
-                    <div id="languageInputWrapper" class="form-group autocomplete-wrapper">
-                        <label for="languageInput">Language*</label>
-                        <input id="languageInput" type="text" placeholder="Type to search..." autocomplete="off" />
-                        <div id="languageList" class="autocomplete-list"></div>
-                        <div id="salesOrgPopup" class="autocomplete-list" style="display: none"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="customDate">Date*</label>
-                        <input type="date" id="customDate" />
-                    </div>
-                    <div class="form-group">
-                        <label for="campaignName">Campaign Name*</label>
-                        <input type="text" id="campaignName" autocomplete="off" onblur="autoParseCampaignInfo()" />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Naming Convention</title>
+    <link rel="stylesheet" href="css/index.min.css" />
+</head>
 
-                        <!-- <input type="text" id="campaignName" autocomplete="off" /> -->
-                    </div>
-                    <div class="form-group">
-                        <label for="campaignID">Project ID*</label>
-                        <input type="text" id="campaignID" autocomplete="off" />
-                    </div>
+<body>
+    <div class="container">
+        <div id="Naming" class="section">
+            <h2>Naming Convention Fields</h2>
+            <div class="form-layout">
+                <div class="form-group">
+                    <label for="programCode">Program Code*</label>
+                    <select id="programCode">
+                        <option value="ES">ES - Email Send</option>
+                        <option value="NL">NL - Newsletter</option>
+                    </select>
                 </div>
-                <div class="form-layout-2">
-                    <div class="form-1">
-                        <h3>Banner Fields POE</h3>
-                        <div class="form-group">
-                            <label for="typeBanner">Type Banner*</label>
-                            <select id="typeBanner">
-                                <option value="">--- Select Banner ---</option>
-                                <option value="FrontBanner">Front Banner</option>
-                                <option value="LargeBanner">Large Banner</option>
-                                <option value="MegaBanner">Mega Banner</option>
-                                <option value="ProductBanner">Product Banner</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="idTicket">ID Ticket*</label>
-                            <input type="text" id="idTicket" autocomplete="off" />
-                        </div>
-                    </div>
+                <div class="form-group autocomplete-wrapper">
+                    <label for="vendor">Vendor*</label>
+                    <input id="vendor" type="text" placeholder="Choose vendor..." autocomplete="off" />
+                    <div id="vendorList" class="autocomplete-list"></div>
+                </div>
+                <div id="languageInputWrapper" class="form-group autocomplete-wrapper">
+                    <label for="languageInput">Language*</label>
+                    <input id="languageInput" type="text" placeholder="Type to search..." autocomplete="off" />
+                    <div id="languageList" class="autocomplete-list"></div>
+                    <div id="salesOrgPopup" class="autocomplete-list" style="display: none"></div>
+                </div>
+                <div class="form-group">
+                    <label for="customDate">Date*</label>
+                    <input type="date" id="customDate" />
+                </div>
+                <div class="form-group">
+                    <label for="campaignName">Campaign Name*</label>
+                    <input type="text" id="campaignName" autocomplete="off" onblur="autoParseCampaignInfo()" />
 
-                    <div class="form-1">
-                        <h3>Banner Fields Name</h3>
-                        <div class="form-group">
-                            <label for="bannerPosition">Banner Position*</label>
-                            <select id="bannerPosition">
-                                <option value="">-- Select Position --</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="bannerSize">Banner Size*</label>
-                            <select id="bannerSize">
-                                <option value="">-- Select Size --</option>
-                            </select>
-                        </div>
-                    </div>
+                    <!-- <input type="text" id="campaignName" autocomplete="off" /> -->
                 </div>
-                <div class="marketoSection" style="display: none">
-                    <h2>Naming Marketo Result</h2>
-                    <table id="resultTableName">
-                        <thead>
-                            <tr>
-                                <th>Country Code</th>
-                                <th>Country Name</th>
-                                <th>Name Email</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBodyName"></tbody>
-                    </table>
-                </div>
-                <div id="bannerProofSection" style="display: none">
-                    <h2>Naming Proof Banner</h2>
-                    <div id="proofNameResult"></div>
-                </div>
-                <div id="bannerPositonSection" style="display: none">
-                    <h2>Banner Naming</h2>
-                    <div id="bannerPositionResult"></div>
+                <div class="form-group">
+                    <label for="campaignID">Project ID*</label>
+                    <input type="text" id="campaignID" autocomplete="off" />
                 </div>
             </div>
+            <div class="form-layout-2">
+                <div class="form-1">
+                    <h3>Banner Fields POE</h3>
+                    <div class="form-group">
+                        <label for="typeBanner">Type Banner*</label>
+                        <select id="typeBanner">
+                            <option value="">-- Select Banner --</option>
+                            <option value="FrontBanner">Front Banner</option>
+                            <option value="LargeBanner">Large Banner</option>
+                            <option value="MegaBanner">Mega Banner</option>
+                            <option value="ProductBanner">Product Banner</option>
+                            <option value="BasketBanner">Basket Banner</option>
 
-            <div id="TableEmail" class="section">
-                <h2>Email Table</h2>
-                <table id="resultTable">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="idTicket">ID Ticket*</label>
+                        <input type="text" id="idTicket" autocomplete="off" />
+                    </div>
+                </div>
+
+                <div class="form-1">
+                    <h3>Banner Fields Name</h3>
+                    <div class="form-group">
+                        <label for="bannerPosition">Banner Position*</label>
+                        <select id="bannerPosition">
+                            <option value="">-- Select Position --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bannerSize">Banner Size*</label>
+                        <select id="bannerSize">
+                            <option value="">-- Select Size --</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="marketoSection" style="display: none">
+                <h2>Naming Marketo Result</h2>
+                <table id="resultTableName">
                     <thead>
                         <tr>
                             <th>Country Code</th>
-                            <th>Field 1</th>
-                            <th>Field 2</th>
-                            <th>Field 3</th>
-                            <th>Test Email</th>
-                            <th>Text Product CTAs</th>
+                            <th>Country Name</th>
+                            <th>Name Email</th>
                         </tr>
                     </thead>
-                    <tbody id="tableBody"></tbody>
+                    <tbody id="tableBodyName"></tbody>
                 </table>
-                <br />
-                <div id="emailLanguageWrapper" class="form-group autocomplete-wrapper">
-                    <label for="emailLanguageInput">Language (Email Table only)</label>
-                    <input id="emailLanguageInput" type="text" placeholder="Type to search..." autocomplete="off" />
-                    <div id="emailLanguageList" class="autocomplete-list"></div>
-                    <div id="emailSalesOrgPopup" class="autocomplete-list" style="display: none"></div>
-                </div>
             </div>
-            <!-- <div id="Unicode" class="section">
+            <div id="bannerProofSection" style="display: none">
+                <h2>Naming Proof Banner</h2>
+                <div id="proofNameResult"></div>
+            </div>
+            <div id="bannerPositonSection" style="display: none">
+                <h2>Banner Naming</h2>
+                <div id="bannerPositionResult"></div>
+            </div>
+        </div>
+
+        <div id="TableEmail" class="section">
+            <h2>Email Table</h2>
+            <table id="resultTable">
+                <thead>
+                    <tr>
+                        <th>Country Code</th>
+                        <th>Field 1</th>
+                        <th>Field 2</th>
+                        <th>Field 3</th>
+                        <th>Test Email</th>
+                        <th>Text Product CTAs</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+            <br />
+            <div id="emailLanguageWrapper" class="form-group autocomplete-wrapper">
+                <label for="emailLanguageInput">Language (Email Table only)</label>
+                <input id="emailLanguageInput" type="text" placeholder="Type to search..." autocomplete="off" />
+                <div id="emailLanguageList" class="autocomplete-list"></div>
+                <div id="emailSalesOrgPopup" class="autocomplete-list" style="display: none"></div>
+            </div>
+        </div>
+        <!-- <div id="Unicode" class="section">
                 <h2>Unicode to HTML</h2>
                 <div class="form-group">
                     <label for="inputHTML">Enter or paste icon / Unicode character:</label>
@@ -138,7 +141,8 @@
                     <textarea id="outputHTML" readonly placeholder=""></textarea>
                 </div>
             </div> -->
-        </div>
-        <script src="js/script.min.js"></script>
-    </body>
+    </div>
+    <script src="js/script.min.js"></script>
+</body>
+
 </html>
