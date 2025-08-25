@@ -399,6 +399,7 @@ const vendorList = [
     "PRICE INTERNATIONAL",
     "ORVALDI",
     "G.SKILL",
+    "Nuvoo",
 ];
 
 let reverseVendorMap = new Map();
