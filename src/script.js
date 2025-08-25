@@ -408,7 +408,9 @@ function renderVendorList(value) {
     vendorListDiv.innerHTML = "";
     reverseVendorMap.clear();
 
-    const filtered = vendorList.filter((vendor) => vendor.toLowerCase().startsWith(value.toLowerCase()));
+    const filtered = vendorList.filter((vendor) =>
+        vendor.toLowerCase().startsWith(value.toLowerCase())
+    );
 
     if (!value.trim()) {
         vendorListDiv.style.display = "none";
@@ -449,7 +451,9 @@ vendorInput.addEventListener("input", function () {
         vendorListDiv.style.display = "none";
         return;
     }
-    const exactMatch = vendorList.find((vendor) => vendor.toLowerCase() === val.toLowerCase());
+    const exactMatch = vendorList.find(
+        (vendor) => vendor.toLowerCase() === val.toLowerCase()
+    );
     if (exactMatch) {
         this.value = exactMatch;
         vendorListDiv.style.display = "none";
@@ -482,7 +486,32 @@ languageInput.addEventListener("click", () => {
         showSalesOrgPopup(lang);
     }
 });
-const languageOptions = ["DE", "FR", "NL", "EN", "ES", "IT", "DK", "NO", "SE", "EE", "LV", "LT", "PL", "PT", "FI", "SI", "HR", "SK", "CZ", "HU", "RO", "BG", "SER", "ME"];
+const languageOptions = [
+    "DE",
+    "FR",
+    "NL",
+    "EN",
+    "ES",
+    "IT",
+    "DK",
+    "NO",
+    "SE",
+    "EE",
+    "LV",
+    "LT",
+    "PL",
+    "PT",
+    "FI",
+    "SI",
+    "HR",
+    "SK",
+    "CZ",
+    "HU",
+    "RO",
+    "BG",
+    "SER",
+    "ME",
+];
 
 function handleSingleSalesOrg(lang) {
     const codes = salesOrgMap[lang] || [];
@@ -657,7 +686,11 @@ emailLanguageInput.addEventListener("focus", () => {
     }
 });
 document.addEventListener("click", function (e) {
-    if (!emailLanguageList.contains(e.target) && !emailSalesOrgPopup.contains(e.target) && e.target !== emailLanguageInput) {
+    if (
+        !emailLanguageList.contains(e.target) &&
+        !emailSalesOrgPopup.contains(e.target) &&
+        e.target !== emailLanguageInput
+    ) {
         emailLanguageList.style.display = "none";
         emailSalesOrgPopup.style.display = "none";
     }
@@ -672,83 +705,269 @@ document.addEventListener("click", (e) => {
 });
 const dataMap = {
     DE: {
-        1010: { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "bueckendorf@metacomp.de", ctaText: "MEHR ERFAHREN" },
-        2200: { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "oedataadminreturns-at@also.com", email: "georg.henke@henke.co.at", ctaText: "MEHR ERFAHREN" },
-        6110: { text1: "ALSO News", text2: "alsonews-ch@email.also.com", text3: "alsonews-ch@news.also.com", email: "elvis.muriniti@swisspro.ch", ctaText: "MEHR ERFAHREN" },
+        1010: {
+            text1: "ALSO Newsletter",
+            text2: "info@email.also.com",
+            text3: "info@also.com",
+            email: "bueckendorf@metacomp.de",
+            ctaText: "MEHR ERFAHREN",
+        },
+        2200: {
+            text1: "ALSO Newsletter",
+            text2: "info@email.also.com",
+            text3: "oedataadminreturns-at@also.com",
+            email: "georg.henke@henke.co.at",
+            ctaText: "MEHR ERFAHREN",
+        },
+        6110: {
+            text1: "ALSO News",
+            text2: "alsonews-ch@email.also.com",
+            text3: "alsonews-ch@news.also.com",
+            email: "elvis.muriniti@swisspro.ch",
+            ctaText: "MEHR ERFAHREN",
+        },
     },
     FR: {
-        2000: { text1: "ALSO France", text2: "marketing-fr@email.also.com", text3: "noreply-fr@also.com", email: "jlaroussinie@ecotic.fr", ctaText: "VOIR LE PRODUIT" },
-        2320: { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "jeroen@autosoft.be", ctaText: "VOIR LE PRODUIT" },
-        6110: { text1: "ALSO News", text2: "alsonews-ch@email.also.com", text3: "alsonews-ch@news.also.com", email: "claude.christophi@birdnet.ch", ctaText: "VOIR LE PRODUIT" },
+        2000: {
+            text1: "ALSO France",
+            text2: "marketing-fr@email.also.com",
+            text3: "noreply-fr@also.com",
+            email: "jlaroussinie@ecotic.fr",
+            ctaText: "VOIR LE PRODUIT",
+        },
+        2320: {
+            text1: "ALSO Belgium",
+            text2: "newsletter.be@email.also.com",
+            text3: "newsletter.be@also.com",
+            email: "jeroen@autosoft.be",
+            ctaText: "VOIR LE PRODUIT",
+        },
+        6110: {
+            text1: "ALSO News",
+            text2: "alsonews-ch@email.also.com",
+            text3: "alsonews-ch@news.also.com",
+            email: "claude.christophi@birdnet.ch",
+            ctaText: "VOIR LE PRODUIT",
+        },
     },
     NL: {
-        2320: { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "kristof.de.coninck@becosoft.be", ctaText: "BESTEL NU" },
-        2420: { text1: "ALSO Nederland B.V.", text2: "nieuwsbrief@email.also.com", text3: "info.nl@also.com", email: "elyse.vanrossum@also.com", ctaText: "BESTEL NU" },
+        2320: {
+            text1: "ALSO Belgium",
+            text2: "newsletter.be@email.also.com",
+            text3: "newsletter.be@also.com",
+            email: "kristof.de.coninck@becosoft.be",
+            ctaText: "BESTEL NU",
+        },
+        2420: {
+            text1: "ALSO Nederland B.V.",
+            text2: "nieuwsbrief@email.also.com",
+            text3: "info.nl@also.com",
+            email: "elyse.vanrossum@also.com",
+            ctaText: "BESTEL NU",
+        },
     },
     EN: {
-        1550: { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "senait.isaac@also.com", ctaText: "LEARN MORE" },
-        2510: { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "senait.isaac@also.com", ctaText: "LEARN MORE" },
-        2320: { text1: "ALSO Belgium", text2: "newsletter.be@email.also.com", text3: "newsletter.be@also.com", email: "newsletter.be@also.com", ctaText: "LEARN MORE" },
+        1550: {
+            text1: "ALSO Newsletter",
+            text2: "info@email.also.com",
+            text3: "info@also.com",
+            email: "senait.isaac@also.com",
+            ctaText: "LEARN MORE",
+        },
+        2510: {
+            text1: "ALSO Newsletter",
+            text2: "info@email.also.com",
+            text3: "info@also.com",
+            email: "senait.isaac@also.com",
+            ctaText: "LEARN MORE",
+        },
+        2320: {
+            text1: "ALSO Belgium",
+            text2: "newsletter.be@email.also.com",
+            text3: "newsletter.be@also.com",
+            email: "newsletter.be@also.com",
+            ctaText: "LEARN MORE",
+        },
     },
     ES: {
-        2610: { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info.es@also.com", email: "juan.cabrera@bps.com.es", ctaText: "APRENDE MÁS" },
+        2610: {
+            text1: "ALSO Newsletter",
+            text2: "info@email.also.com",
+            text3: "info.es@also.com",
+            email: "juan.cabrera@bps.com.es",
+            ctaText: "APRENDE MÁS",
+        },
     },
     IT: {
-        2710: { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "no-reply@also.com", email: "natalino@gigahertz.it", ctaText: "MAGGIORI INFORMAZIONI" },
+        2710: {
+            text1: "ALSO Newsletter",
+            text2: "info@email.also.com",
+            text3: "no-reply@also.com",
+            email: "natalino@gigahertz.it",
+            ctaText: "MAGGIORI INFORMAZIONI",
+        },
     },
     DK: {
-        2800: { text1: "ALSO A/S", text2: "info@email.also.com", text3: "marketing.danmark@also.com", email: "info@moduldata.dk", ctaText: "LÆR MERE" },
+        2800: {
+            text1: "ALSO A/S",
+            text2: "info@email.also.com",
+            text3: "marketing.danmark@also.com",
+            email: "info@moduldata.dk",
+            ctaText: "LÆR MERE",
+        },
     },
     NO: {
-        2900: { text1: "ALSO Nyhetsbrev", text2: "info@email.also.com", text3: "marketing.norge@also.com", email: "rikard.faanes@atea.no", ctaText: "KJØP" },
+        2900: {
+            text1: "ALSO Nyhetsbrev",
+            text2: "info@email.also.com",
+            text3: "marketing.norge@also.com",
+            email: "rikard.faanes@atea.no",
+            ctaText: "KJØP",
+        },
     },
     SE: {
-        3100: { text1: "ALSO Nyhetsbrev", text2: "info@email.also.com", text3: "Marketing.Sverige@also.com", email: "johan@itbiten.se", ctaText: "LÄR MER" },
+        3100: {
+            text1: "ALSO Nyhetsbrev",
+            text2: "info@email.also.com",
+            text3: "Marketing.Sverige@also.com",
+            email: "johan@itbiten.se",
+            ctaText: "LÄR MER",
+        },
     },
     EE: {
-        5110: { text1: "ALSO Eesti", text2: "info@email.also.com", text3: "ee-mailserver@also.com", email: "ilmar@fivepoint.ee", ctaText: "UURI LISAKS" },
+        5110: {
+            text1: "ALSO Eesti",
+            text2: "info@email.also.com",
+            text3: "ee-mailserver@also.com",
+            email: "ilmar@fivepoint.ee",
+            ctaText: "UURI LISAKS",
+        },
     },
     LV: {
-        5210: { text1: "ALSO Jaunumi", text2: "info@email.also.com", text3: "LV-marketing@also.com", email: "lauris.v@tomega.lv", ctaText: "PIRKT" },
+        5210: {
+            text1: "ALSO Jaunumi",
+            text2: "info@email.also.com",
+            text3: "LV-marketing@also.com",
+            email: "lauris.v@tomega.lv",
+            ctaText: "PIRKT",
+        },
     },
     LT: {
-        5310: { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "sigitas@ella.lt", ctaText: "SUŽINOKITE DAUGIAU" },
+        5310: {
+            text1: "ALSO Newsletter",
+            text2: "info@email.also.com",
+            text3: "info@also.com",
+            email: "sigitas@ella.lt",
+            ctaText: "SUŽINOKITE DAUGIAU",
+        },
     },
     PL: {
-        5410: { text1: "ALSO Newsletter", text2: "newsletter@email.also.com", text3: "newsletter@alsopolska.pl", email: "biuro@cybertom.pl", ctaText: "DOWIEDZ SIȨ WIȨCEJ" },
+        5410: {
+            text1: "ALSO Newsletter",
+            text2: "newsletter@email.also.com",
+            text3: "newsletter@alsopolska.pl",
+            email: "biuro@cybertom.pl",
+            ctaText: "DOWIEDZ SIȨ WIȨCEJ",
+        },
     },
     FI: {
-        5710: { text1: "ALSO Finland Oy", text2: "FI-mailserver@email.also.com", text3: "FI-mailserver@also.com", email: "anne.kangas@ta.fi", ctaText: "LUE LISÄÄ" },
+        5710: {
+            text1: "ALSO Finland Oy",
+            text2: "FI-mailserver@email.also.com",
+            text3: "FI-mailserver@also.com",
+            email: "anne.kangas@ta.fi",
+            ctaText: "LUE LISÄÄ",
+        },
     },
     SI: {
-        5820: { text1: "ALSO Slovenija", text2: "info@email.also.com", text3: "Info.si@also.com", email: "borut.jurcevic@tend.si", ctaText: "VEČ INFORMACIJ" },
+        5820: {
+            text1: "ALSO Slovenija",
+            text2: "info@email.also.com",
+            text3: "Info.si@also.com",
+            email: "borut.jurcevic@tend.si",
+            ctaText: "VEČ INFORMACIJ",
+        },
     },
     HR: {
-        5830: { text1: "ALSO Croatia", text2: "marketing.hr@email.also.com", text3: "Info.ALSOCroatia@also.com", email: "prodaja@biro-media.hr", ctaText: "SAZNAJTE VIŠE" },
+        5830: {
+            text1: "ALSO Croatia",
+            text2: "marketing.hr@email.also.com",
+            text3: "Info.ALSOCroatia@also.com",
+            email: "prodaja@biro-media.hr",
+            ctaText: "SAZNAJTE VIŠE",
+        },
     },
     SK: {
-        5840: { text1: "ALSO Newsletter", text2: "info-sk@email.also.com", text3: "info-sk@also.com", email: "suhaj@zero.sk", ctaText: "UČ SA VIAC" },
+        5840: {
+            text1: "ALSO Newsletter",
+            text2: "info-sk@email.also.com",
+            text3: "info-sk@also.com",
+            email: "suhaj@zero.sk",
+            ctaText: "UČ SA VIAC",
+        },
     },
     CZ: {
-        5845: { text1: "ALSO Newsletter", text2: "info-cz@email.also.com", text3: "info-cz@also.com", email: "forcomp@seznam.cz", ctaText: "DALŠÍ INFORMACE" },
+        5845: {
+            text1: "ALSO Newsletter",
+            text2: "info-cz@email.also.com",
+            text3: "info-cz@also.com",
+            email: "forcomp@seznam.cz",
+            ctaText: "DALŠÍ INFORMACE",
+        },
     },
     HU: {
-        5850: { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "laszlo.farago@lemonet.hu", ctaText: "TUDJON MEG TÖBBET" },
+        5850: {
+            text1: "ALSO Newsletter",
+            text2: "info@email.also.com",
+            text3: "info@also.com",
+            email: "laszlo.farago@lemonet.hu",
+            ctaText: "TUDJON MEG TÖBBET",
+        },
     },
     RO: {
-        5860: { text1: "ALSO Technology Romania", text2: "info@email.also.com", text3: "info@email.also.com", email: "florin.tirca@vexio.ro", ctaText: "AFLAȚI MAI MULTE" },
+        5860: {
+            text1: "ALSO Technology Romania",
+            text2: "info@email.also.com",
+            text3: "info@email.also.com",
+            email: "florin.tirca@vexio.ro",
+            ctaText: "AFLAȚI MAI MULTE",
+        },
     },
     BG: {
-        5870: { text1: "ALSO Bulgaria Ltd.", text2: "office.bg@email.also.com", text3: "office.bg@also.com", email: "a.petrov@econsult.bg", ctaText: "НАУЧЕТЕ ПОВЕЧЕ" },
+        5870: {
+            text1: "ALSO Bulgaria Ltd.",
+            text2: "office.bg@email.also.com",
+            text3: "office.bg@also.com",
+            email: "a.petrov@econsult.bg",
+            ctaText: "НАУЧЕТЕ ПОВЕЧЕ",
+        },
     },
     SER: {
-        5881: { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com", ctaText: "LEARN MORE" },
+        5881: {
+            text1: "ALSO Newsletter",
+            text2: "info@email.also.com",
+            text3: "info@also.com",
+            email: "info@also.com",
+            ctaText: "LEARN MORE",
+        },
     },
     ME: {
-        5895: { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "info@also.com", ctaText: "LEARN MORE" },
+        5895: {
+            text1: "ALSO Newsletter",
+            text2: "info@email.also.com",
+            text3: "info@also.com",
+            email: "info@also.com",
+            ctaText: "LEARN MORE",
+        },
     },
     PT: {
-        2640: { text1: "ALSO Newsletter", text2: "info@email.also.com", text3: "info@also.com", email: "vasco@mvti.pt", ctaText: "Comprar" },
+        2640: {
+            text1: "ALSO Newsletter",
+            text2: "info@email.also.com",
+            text3: "info@also.com",
+            email: "vasco@mvti.pt",
+            ctaText: "Comprar",
+        },
     },
 };
 
@@ -824,7 +1043,8 @@ function renderTableByLanguage(lang) {
 function getCurrentWeek() {
     const now = new Date();
     const start = new Date(now.getFullYear(), 0, 1);
-    const diff = now - start + (start.getTimezoneOffset() - now.getTimezoneOffset()) * 60000;
+    const diff =
+        now - start + (start.getTimezoneOffset() - now.getTimezoneOffset()) * 60000;
     const oneWeek = 604800000;
     return String(Math.ceil(diff / oneWeek)).padStart(2, "0");
 }
@@ -965,7 +1185,10 @@ function checkAndGenerate() {
     const showProof = typeBannerVal !== "" && idTicketVal !== "" && isLangValid;
     bannerProofSection.style.display = showProof ? "block" : "none";
 
-    bannerPositionSection.style.display = bannerSize && bannerSize.value.trim() !== "" && isLangValid ? "block" : "none";
+    bannerPositionSection.style.display =
+        bannerSize && bannerSize.value.trim() !== "" && isLangValid
+            ? "block"
+            : "none";
 
     marketoSection.style.display = campaignIDVal ? "block" : "none";
 
@@ -986,7 +1209,17 @@ function checkAndGenerate() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const fields = ["vendor", "campaignName", "campaignID", "idTicket", "programCode", "bannerPosition", "bannerSize", "customDate", "languageInput"];
+    const fields = [
+        "vendor",
+        "campaignName",
+        "campaignID",
+        "idTicket",
+        "programCode",
+        "bannerPosition",
+        "bannerSize",
+        "customDate",
+        "languageInput",
+    ];
 
     fields.forEach((id) => {
         const el = document.getElementById(id);
@@ -1026,7 +1259,10 @@ var bannerToSizeMapping = {
 };
 function generateProofName(lang, selectedCode) {
     const vendor = document.getElementById("vendor").value.toLowerCase();
-    const campaign = document.getElementById("campaignName").value.trim().replace(/\s+/g, "_");
+    const campaign = document
+        .getElementById("campaignName")
+        .value.trim()
+        .replace(/\s+/g, "_");
     const project = document.getElementById("campaignID").value.trim();
     const idTicket = document.getElementById("idTicket").value.trim();
 
@@ -1034,7 +1270,8 @@ function generateProofName(lang, selectedCode) {
     const selectedDate = document.getElementById("customDate").value;
     const dateObj = selectedDate ? new Date(selectedDate) : new Date();
 
-    const countryCode = languageInput.value.trim().toUpperCase() || selectedCode || lang;
+    const countryCode =
+        languageInput.value.trim().toUpperCase() || selectedCode || lang;
     const week = getWeekNumber(dateObj);
     if (!typeBanner) {
         document.getElementById("proofNameResult").innerHTML = "";
@@ -1048,7 +1285,10 @@ function generateProofName(lang, selectedCode) {
         </div>
     `;
     document.getElementById("typeBanner").addEventListener("change", () => {
-        const lang = document.getElementById("languageInput").value.trim().toUpperCase();
+        const lang = document
+            .getElementById("languageInput")
+            .value.trim()
+            .toUpperCase();
         if (lang && languageOptions.includes(lang)) {
             const salesOrgs = salesOrgMap[lang] || [];
             if (salesOrgs.length > 0) {
@@ -1076,7 +1316,8 @@ function generatePositionBannerName(lang, selectedCode) {
     const week = getWeekNumber(dateObj);
     const yycw = `${year}CW${week}`;
 
-    const code = selectedCode || (salesOrgMap[lang] && salesOrgMap[lang][0]) || "0000";
+    const code =
+        selectedCode || (salesOrgMap[lang] && salesOrgMap[lang][0]) || "0000";
 
     const name = `${code}_${vendor}_${yycw}_${lang}${campaign}_${project}_${bannerPosition}_${bannerSize}`;
 
@@ -1142,7 +1383,9 @@ function findBestMatchingVendor(possibleVendor) {
         return { original: vendor, score };
     });
 
-    const sorted = candidates.filter((c) => c.score > 0).sort((a, b) => b.score - a.score);
+    const sorted = candidates
+        .filter((c) => c.score > 0)
+        .sort((a, b) => b.score - a.score);
     if (!sorted.length) return "";
 
     const bestScore = sorted[0].score;
@@ -1173,13 +1416,24 @@ function getRenderedVendor(vendor) {
 function parseCampaignInfo(rawCampaign) {
     let mainPart = rawCampaign.split("-").slice(1).join("-").split("*")[0].trim();
 
+    mainPart = mainPart
+        .replace(/-/g, " ")
+        .replace(/_/g, " ")
+        .replace(/\bwebshop banner\b/i, "")
+        .replace(/\bfrontbanner\b/i, "")
+        .replace(/\s?Q(\d)/i, "Q$1")
+        .trim();
+    if (mainPart.includes("5710 ALSO Finland Oy")) {
+        mainPart = mainPart.replace("5710 ALSO Finland Oy", "5710");
+    }
+
     const tokens = mainPart.split(/\s+/);
 
     const codeToken = tokens.find((token) => /^\d{4}$/.test(token));
     const langCode = getLangFromSalesOrg(codeToken);
 
     const codeIndex = tokens.indexOf(codeToken);
-    const quarterIndex = tokens.findIndex((token) => /Q\d/i.test(token));
+    const quarterIndex = tokens.findIndex((token) => /\d{2}\s?Q\d/i.test(token));
 
     let vendor = "";
     let campaign = "";
@@ -1190,13 +1444,23 @@ function parseCampaignInfo(rawCampaign) {
         vendor = findBestMatchingVendor(possibleVendor);
     }
 
+    if (vendor) {
+        const vendorPattern = new RegExp(`\\b${vendor}\\b`, "i");
+        mainPart = mainPart.replace(vendorPattern, "").trim();
+    }
+
     if (quarterIndex !== -1) {
         const campaignTokens = tokens.slice(quarterIndex + 1);
         campaign = campaignTokens.join(" ");
     }
 
+    if (campaign.toLowerCase().includes(vendor.toLowerCase())) {
+        campaign = campaign.replace(new RegExp(`\\b${vendor}\\b`, "i"), "").trim();
+    }
+
     campaign = campaign
         .split(/\s+/)
+        // .filter(word => !/W\d+/i.test(word) && word.toLowerCase() !== 'frontbanner')
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
         .join(" ")
         .trim();
@@ -1259,24 +1523,29 @@ function generateNames(_, __) {
     generatePositionBannerName(langCode, salesOrgsToRender[0]);
 }
 
-document.getElementById("bannerPosition").addEventListener("change", function () {
-    const selectedPosition = this.value;
-    const bannerSizeSelect = document.getElementById("bannerSize");
+document
+    .getElementById("bannerPosition")
+    .addEventListener("change", function () {
+        const selectedPosition = this.value;
+        const bannerSizeSelect = document.getElementById("bannerSize");
 
-    bannerSizeSelect.innerHTML = `<option value="">-- Select Size --</option>`;
+        bannerSizeSelect.innerHTML = `<option value="">-- Select Size --</option>`;
 
-    if (bannerToSizeMapping[selectedPosition]) {
-        bannerToSizeMapping[selectedPosition].forEach((size) => {
-            const option = document.createElement("option");
-            option.value = size;
-            option.textContent = size;
-            bannerSizeSelect.appendChild(option);
-        });
-    }
-});
+        if (bannerToSizeMapping[selectedPosition]) {
+            bannerToSizeMapping[selectedPosition].forEach((size) => {
+                const option = document.createElement("option");
+                option.value = size;
+                option.textContent = size;
+                bannerSizeSelect.appendChild(option);
+            });
+        }
+    });
 
 document.getElementById("bannerSize").addEventListener("change", () => {
-    const lang = document.getElementById("languageInput").value.trim().toUpperCase();
+    const lang = document
+        .getElementById("languageInput")
+        .value.trim()
+        .toUpperCase();
     if (lang && languageOptions.includes(lang)) {
         const salesOrgs = salesOrgMap[lang] || [];
         if (salesOrgs.length > 0) {
@@ -1300,7 +1569,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (typeBannerInput) {
         typeBannerInput.addEventListener("input", () => {
-            const lang = document.getElementById("languageInput").value.trim().toUpperCase();
+            const lang = document
+                .getElementById("languageInput")
+                .value.trim()
+                .toUpperCase();
             const salesOrgs = salesOrgMap[lang] || [];
             const selectedCode = salesOrgs.length === 1 ? salesOrgs[0] : "";
 
