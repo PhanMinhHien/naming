@@ -1338,9 +1338,10 @@ function getLangFromSalesOrg(code) {
 
 function autoParseCampaignInfo() {
     const raw = document.getElementById("campaignName").value;
-    const { langCode, vendor, campaign } = parseCampaignInfo(raw);
+    const { langCode, vendor, campaign, campaignID } = parseCampaignInfo(raw);
 
     if (campaign) document.getElementById("campaignName").value = campaign;
+    if (campaignID) document.getElementById("campaignID").value = campaignID;
 
     if (vendor) document.getElementById("vendor").value = vendor;
 
@@ -1414,6 +1415,9 @@ function getRenderedVendor(vendor) {
 }
 
 function parseCampaignInfo(rawCampaign) {
+
+     const campaignIdMatch = rawCampaign.match(/\*(.*?)\*/);
+    const campaignID = campaignIdMatch ? campaignIdMatch[1].trim() : "";
     let mainPart = rawCampaign.split("-").slice(1).join("-").split("*")[0].trim();
 
     mainPart = mainPart
@@ -1469,6 +1473,8 @@ function parseCampaignInfo(rawCampaign) {
         langCode: langCode || "",
         vendor,
         campaign,
+                campaignID,
+
     };
 }
 
