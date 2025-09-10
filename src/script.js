@@ -1263,7 +1263,6 @@ function generateProofName(lang, selectedCode) {
         .getElementById("campaignName")
         .value.trim()
         .replace(/\s+/g, "_");
-    const project = document.getElementById("campaignID").value.trim();
     const idTicket = document.getElementById("idTicket").value.trim();
 
     typeBanner = document.getElementById("typeBanner").value;
@@ -1479,7 +1478,7 @@ function parseCampaignInfo(rawCampaign) {
 }
 
 function generateNames(_, __) {
-    const rawCampaign = document.getElementById("campaignName").value;
+const rawCampaign = document.getElementById("campaignName").value.replace(/\s+/g, "");
     const parsed = parseCampaignInfo(rawCampaign);
 
     if (parsed.campaign) {
@@ -1493,7 +1492,7 @@ function generateNames(_, __) {
     }
 
     const vendor = document.getElementById("vendor").value.toLowerCase();
-    const campaign = document.getElementById("campaignName").value;
+     const campaign = document.getElementById("campaignName").value.replace(/\s+/g, ""); 
     const langCode = document.getElementById("languageInput").value;
 
     const project = document.getElementById("campaignID").value.trim();
