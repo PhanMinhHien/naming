@@ -970,6 +970,16 @@ const dataMap = {
         },
     },
 };
+for (const country in dataMap) {
+    for (const code in dataMap[country]) {
+        const original = dataMap[country][code].ctaText;
+        const lower = original.toLowerCase();
+        const formatted = lower.charAt(0).toUpperCase() + lower.slice(1);
+        dataMap[country][code].ctaText = formatted;
+    }
+}
+
+console.log(dataMap);
 
 function capitalizeCTA(text) {
     return text
