@@ -1439,7 +1439,7 @@ function parseCampaignInfo(rawCampaign) {
     if (mainPart.includes("5710 ALSO Finland Oy")) {
         mainPart = mainPart.replace("5710 ALSO Finland Oy", "5710");
     }
-
+console.log("Main part after cleaning:", mainPart);
     const tokens = mainPart.split(/\s+/);
 
     const codeToken = tokens.find((token) => /^\d{4}$/.test(token));
@@ -1456,27 +1456,34 @@ function parseCampaignInfo(rawCampaign) {
         const possibleVendor = vendorTokens.join(" ");
         vendor = findBestMatchingVendor(possibleVendor);
     }
+if (vendor) {
+    const vendorPattern = new RegExp(`\\b${vendor}\\b`, "i");  
+    mainPart = mainPart.replace(vendorPattern, "").trim();
 
-    if (vendor) {
-        const vendorPattern = new RegExp(`\\b${vendor}\\b`, "i");
-        mainPart = mainPart.replace(vendorPattern, "").trim();
-    }
+    mainPart = mainPart.replace(/\s{2,}/g, " ");
+}
+    // if (vendor) {
+    //     const vendorPattern = new RegExp(`\\b${vendor}\\b`, "i");
+    //     mainPart = mainPart.replace(vendorPattern, "").trim();
+    // }
 
     if (quarterIndex !== -1) {
         const campaignTokens = tokens.slice(quarterIndex + 1);
         campaign = campaignTokens.join(" ");
     }
 
-    if (campaign.toLowerCase().includes(vendor.toLowerCase())) {
-        campaign = campaign.replace(new RegExp(`\\b${vendor}\\b`, "i"), "").trim();
-    }
-
-    campaign = campaign
-        .split(/\s+/)
-        // .filter(word => !/W\d+/i.test(word) && word.toLowerCase() !== 'frontbanner')
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(" ")
-        .trim();
+//   if (campaign.toLowerCase().includes(vendor.toLowerCase())) {
+//     campaign = campaign.replace(new RegExp(`\\b${vendor}\\b`, "i"), "").trim();
+// }
+const vendorLower = vendor.toLowerCase();
+campaign = campaign
+    .split(/\s+/)
+    .map(word => {
+        if (word.toLowerCase() === vendorLower) return vendor; 
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ")
+    .trim();
 
     return {
         langCode: langCode || "",
