@@ -1345,6 +1345,7 @@ function getLangFromSalesOrg(code) {
     return "";
 }
 
+
 function autoParseCampaignInfo() {
     const raw = document.getElementById("campaignName").value;
     const { langCode, vendor, campaign, campaignID } = parseCampaignInfo(raw);
@@ -1422,77 +1423,86 @@ function getRenderedVendor(vendor) {
     }
     return vendor.replace(/\s+/g, "-");
 }
+function findQuarterToken(tokens) {
+        const quarterRegexes = [
+          /^Q[1-4]$/,             // Q3
+          /^\d{2}Q[1-4]$/,        // 25Q3
+          /^Q[1-4]\d{2}$/,        // Q325
+          /^FY\d{2}Q[1-4]$/,      // FY25Q3
+          /^Q[1-4]FY\d{2}$/,      // Q3FY25
+          /^FYQ[1-4]\d{2}$/,      // FYQ325
+        ];
 
+        for (let i = 0; i < tokens.length; i++) {
+          if (quarterRegexes.some(rx => rx.test(tokens[i].toUpperCase()))) {
+            return i;
+          }
+        }
+
+        return -1;
+      }
 function parseCampaignInfo(rawCampaign) {
+        rawCampaign = rawCampaign.replace(
+          /(\b[A-Z]{2}\d{6,}\b)(?=\s+\d{4}-\d{2}-\d{2})/,
+          (match) => `*${match}*`
+        );
+        const campaignIdMatch = rawCampaign.match(/\*(.*?)\*/);
+        const campaignID = campaignIdMatch ? campaignIdMatch[1].trim() : "";
+        let mainPart = rawCampaign.split("-").slice(1).join("-").split("*")[0].trim();
+        mainPart = mainPart
+          .replace(/-/g, " ")
+          .replace(/_/g, " ")
+          .replace(/\bwebshop banner\b/i, "")
+          .replace(/\bfrontbanner\b/i, "")
+          .replace(/\bfront banner\b/i, "")
+          .replace(/\s?Q(\d)/i, "Q$1")
+          .trim();
+        if (mainPart.includes("5710 ALSO Finland Oy")) {
+          mainPart = mainPart.replace("5710 ALSO Finland Oy", "5710");
+        }
+        console.log("Main part after cleaning:", mainPart);
 
-     const campaignIdMatch = rawCampaign.match(/\*(.*?)\*/);
-    const campaignID = campaignIdMatch ? campaignIdMatch[1].trim() : "";
-    let mainPart = rawCampaign.split("-").slice(1).join("-").split("*")[0].trim();
+        const tokens = mainPart.split(/\s+/);
+        const codeToken = tokens.find((token) => /^\d{4}$/.test(token));
+        const langCode = getLangFromSalesOrg(codeToken);
+        const codeIndex = tokens.indexOf(codeToken);
+        const quarterIndex = findQuarterToken(tokens);
+        let vendor = "";
+        let campaign = "";
+        if (codeIndex !== -1 && quarterIndex !== -1 && quarterIndex > codeIndex) {
+          const vendorTokens = tokens.slice(codeIndex + 1, quarterIndex);
+          const possibleVendor = vendorTokens.join(" ");
+          vendor = findBestMatchingVendor(possibleVendor);
+        }
+        if (vendor) {
+          const vendorPattern = new RegExp(`\\b${vendor}\\b`, "i");
+          console.log("vendorPattern", vendorPattern)
+            mainPart = mainPart.replace(vendorPattern, '').replace(/\s{2,}/g, ' ').trim();
 
-    mainPart = mainPart
-        .replace(/-/g, " ")
-        .replace(/_/g, " ")
-        .replace(/\bwebshop banner\b/i, "")
-        .replace(/\bfrontbanner\b/i, "")
-        .replace(/\s?Q(\d)/i, "Q$1")
-        .trim();
-    if (mainPart.includes("5710 ALSO Finland Oy")) {
-        mainPart = mainPart.replace("5710 ALSO Finland Oy", "5710");
-    }
-console.log("Main part after cleaning:", mainPart);
-    const tokens = mainPart.split(/\s+/);
+          // mainPart = mainPart.replace(vendorPattern, "").trim();
+          // mainPart = mainPart.replace(/\s{2,}/g, " ");
+        }
+        if (quarterIndex !== -1) {
+          const campaignTokens = tokens.slice(quarterIndex + 1);
+          campaign = campaignTokens.join(" ");
+        }
+        const vendorLower = vendor.toLowerCase();
+        campaign = campaign
+          .split(/\s+/)
+          .map(word => {
+            if (word.toLowerCase() === vendorLower) return vendor;
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+          })
+          .join(" ")
+          .trim();
+        return {
+          langCode: langCode || "",
+          vendor,
+          campaign,
+          campaignID,
+        };
+      }
 
-    const codeToken = tokens.find((token) => /^\d{4}$/.test(token));
-    const langCode = getLangFromSalesOrg(codeToken);
-
-    const codeIndex = tokens.indexOf(codeToken);
-    const quarterIndex = tokens.findIndex((token) => /\d{2}\s?Q\d/i.test(token));
-
-    let vendor = "";
-    let campaign = "";
-
-    if (codeIndex !== -1 && quarterIndex !== -1 && quarterIndex > codeIndex) {
-        const vendorTokens = tokens.slice(codeIndex + 1, quarterIndex);
-        const possibleVendor = vendorTokens.join(" ");
-        vendor = findBestMatchingVendor(possibleVendor);
-    }
-if (vendor) {
-    const vendorPattern = new RegExp(`\\b${vendor}\\b`, "i");  
-    mainPart = mainPart.replace(vendorPattern, "").trim();
-
-    mainPart = mainPart.replace(/\s{2,}/g, " ");
-}
-    // if (vendor) {
-    //     const vendorPattern = new RegExp(`\\b${vendor}\\b`, "i");
-    //     mainPart = mainPart.replace(vendorPattern, "").trim();
-    // }
-
-    if (quarterIndex !== -1) {
-        const campaignTokens = tokens.slice(quarterIndex + 1);
-        campaign = campaignTokens.join(" ");
-    }
-
-//   if (campaign.toLowerCase().includes(vendor.toLowerCase())) {
-//     campaign = campaign.replace(new RegExp(`\\b${vendor}\\b`, "i"), "").trim();
-// }
-const vendorLower = vendor.toLowerCase();
-campaign = campaign
-    .split(/\s+/)
-    .map(word => {
-        if (word.toLowerCase() === vendorLower) return vendor; 
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join(" ")
-    .trim();
-
-    return {
-        langCode: langCode || "",
-        vendor,
-        campaign,
-                campaignID,
-
-    };
-}
 
 function generateNames(_, __) {
 const rawCampaign = document.getElementById("campaignName").value.replace(/\s+/g, "");
