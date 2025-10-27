@@ -140,7 +140,7 @@ const vendorList = [
   "IBM-SOFTWARE",
   "KASPERKY LAB",
   "ZYXEL",
-  "POLYCOM",
+  "POLY",
   "NORTONLIFELOCK",
   "LEXMARK",
   "ESET",
@@ -1133,14 +1133,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
   });
-  // const outputTextarea = document.getElementById("outputHTML");
-  // outputTextarea.addEventListener("click", function () {
-  //     outputTextarea.select();
-  //     outputTextarea.setSelectionRange(0, 99999);
-  //     navigator.clipboard.writeText(outputTextarea.value).then(() => {
-  //         showTooltip(outputTextarea.parentElement);
-  //     });
-  // });
 
   const bannerPositionInput = document.getElementById("bannerPosition");
   const bannerSizeSelect = document.getElementById("bannerSize");
@@ -1425,12 +1417,12 @@ function getRenderedVendor(vendor) {
 
 function findQuarterToken(tokens) {
   const quarterRegexes = [
-    /^Q[1-4]$/, // Q3
-    /^\d{2}Q[1-4]$/, // 25Q3
-    /^Q[1-4]\d{2}$/, // Q325
-    /^FY\d{2}Q[1-4]$/, // FY25Q3
-    /^Q[1-4]FY\d{2}$/, // Q3FY25
-    /^FYQ[1-4]\d{2}$/, // FYQ325
+    /^Q[1-4]$/,
+    /^\d{2}Q[1-4]$/,
+    /^Q[1-4]\d{2}$/,
+    /^FY\d{2}Q[1-4]$/,
+    /^Q[1-4]FY\d{2}$/,
+    /^FYQ[1-4]\d{2}$/,
   ];
 
   for (let i = 0; i < tokens.length; i++) {
@@ -1441,15 +1433,16 @@ function findQuarterToken(tokens) {
 
   return -1;
 }
-
 function parseCampaignInfo(rawCampaign) {
   rawCampaign = rawCampaign.replace(
     /(\b[A-Z]{2}\d{6,}\b)(?=\s+\d{4}-\d{2}-\d{2})/,
     (match) => `*${match}*`
   );
   rawCampaign = rawCampaign.replace(/(\d+\/\d+)\s+(\d{4})/, "$1 - $2");
+
   const campaignIdMatch = rawCampaign.match(/\*(.*?)\*/);
   const campaignID = campaignIdMatch ? campaignIdMatch[1].trim() : "";
+
   let mainPart = rawCampaign.split("-").slice(1).join("-").split("*")[0].trim();
   mainPart = mainPart
     .replace(/-/g, " ")
@@ -1457,11 +1450,12 @@ function parseCampaignInfo(rawCampaign) {
     .replace(/\bwebshop banner\b/i, "")
     .replace(/\bfrontbanner\b/i, "")
     .replace(/\bfront banner\b/i, "")
-    // .replace(/\s?Q(\d)/i, "Q$1")
     .trim();
+
   if (mainPart.includes("5710 ALSO Finland Oy")) {
     mainPart = mainPart.replace("5710 ALSO Finland Oy", "5710");
   }
+
   console.log("Main part after cleaning:", mainPart);
 
   const tokens = mainPart.split(/\s+/);
@@ -1469,29 +1463,71 @@ function parseCampaignInfo(rawCampaign) {
   const langCode = getLangFromSalesOrg(codeToken);
   const codeIndex = tokens.indexOf(codeToken);
   const quarterIndex = findQuarterToken(tokens);
+
   let vendor = "";
   let campaign = "";
+
   if (codeIndex !== -1 && quarterIndex !== -1 && quarterIndex > codeIndex) {
     const vendorTokens = tokens.slice(codeIndex + 1, quarterIndex);
     const possibleVendor = vendorTokens.join(" ");
     vendor = findBestMatchingVendor(possibleVendor);
   }
+
+  if (!vendor) {
+    const possibleVendor = findBestMatchingVendor(mainPart);
+    if (possibleVendor) {
+      vendor = possibleVendor;
+      console.log("Vendor found via fallback:", vendor);
+    }
+  }
+
   if (vendor) {
-    const vendorPattern = new RegExp(`\\b${vendor}\\b`, "i");
-    console.log("vendorPattern", vendorPattern);
+    const vendorClean = vendor.replace(/[-_]/g, " ").trim().toLowerCase();
+    const vendorParts = vendorClean.split(/\s+/);
+    const firstWord = vendorParts[0];
+    const rest = vendorParts.slice(1).join("[-\\s_]*");
+
+    const vendorPattern = rest
+      ? new RegExp(`\\b${firstWord}(?:[-\\s_]*${rest})?\\b`, "i")
+      : new RegExp(`\\b${firstWord}\\b`, "i");
+
+    const beforeRemove = mainPart;
     mainPart = mainPart
       .replace(vendorPattern, "")
       .replace(/\s{2,}/g, " ")
       .trim();
 
-    // mainPart = mainPart.replace(vendorPattern, "").trim();
-    // mainPart = mainPart.replace(/\s{2,}/g, " ");
+    if (mainPart === beforeRemove) {
+      const words = mainPart.split(/\s+/);
+      const cleaned = words.filter((w) => {
+        const wNorm = w.toLowerCase().replace(/[-_]/g, "");
+        const vNorm = vendorClean.replace(/\s+/g, "");
+        return !isCloseMatch(wNorm, vNorm, 0.8);
+      });
+      mainPart = cleaned
+        .join(" ")
+        .replace(/\s{2,}/g, " ")
+        .trim();
+    }
+
+    console.log("Main part after removing vendor:", mainPart);
   }
 
   if (quarterIndex !== -1) {
-    const campaignTokens = tokens.slice(quarterIndex + 1);
-    campaign = campaignTokens.join(" ");
+    const cleanedTokens = mainPart.split(/\s+/);
+    const newQuarterIndex = cleanedTokens.findIndex((t) =>
+      /^Q\d{3,4}$/i.test(t)
+    );
+
+    if (newQuarterIndex !== -1) {
+      campaign = cleanedTokens.slice(newQuarterIndex + 1).join(" ");
+    } else {
+      campaign = cleanedTokens.join(" ");
+    }
+  } else {
+    campaign = mainPart;
   }
+
   const vendorLower = vendor.toLowerCase();
   campaign = campaign
     .split(/\s+/)
@@ -1501,12 +1537,27 @@ function parseCampaignInfo(rawCampaign) {
     })
     .join(" ")
     .trim();
+
   return {
     langCode: langCode || "",
     vendor,
     campaign,
     campaignID,
   };
+}
+
+function isCloseMatch(a, b, threshold = 0.85) {
+  a = a.toLowerCase();
+  b = b.toLowerCase();
+  const len = Math.max(a.length, b.length);
+  if (len === 0) return false;
+
+  let matches = 0;
+  for (let i = 0; i < Math.min(a.length, b.length); i++) {
+    if (a[i] === b[i]) matches++;
+  }
+  const similarity = matches / len;
+  return similarity >= threshold;
 }
 
 function generateNames(_, __) {
@@ -1621,16 +1672,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-// const inputEl = document.getElementById("inputHTML");
-// const outputEl = document.getElementById("outputHTML");
-// function convertUnicodeToHTMLEntities(text) {
-//     const cleanText = text.replace(/[\n\r]/g, "");
-//     let result = "";
-//     for (let char of cleanText) {
-//         result += `&#${char.codePointAt(0)};`;
-//     }
-//     return result;
-// }
-// inputEl.addEventListener("input", () => {
-//     outputEl.value = convertUnicodeToHTMLEntities(inputEl.value);
-// });
