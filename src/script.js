@@ -694,6 +694,7 @@ const dataMap = {
       text3: "info@also.com",
       email: "germany-proofs@also.com",
       ctaText: "MEHR ERFAHREN",
+      ctaText2: "",
     },
     2200: {
       text1: "ALSO Newsletter",
@@ -701,6 +702,7 @@ const dataMap = {
       text3: "oedataadminreturns-at@also.com",
       email: "gaustria-proofs@also.com",
       ctaText: "MEHR ERFAHREN",
+      ctaText2: "",
     },
     6110: {
       text1: "ALSO News",
@@ -708,6 +710,7 @@ const dataMap = {
       text3: "alsonews-ch@news.also.com",
       email: "switzerland-proofs@also.com",
       ctaText: "MEHR ERFAHREN",
+      ctaText2: "",
     },
   },
   FR: {
@@ -717,6 +720,7 @@ const dataMap = {
       text3: "noreply-fr@also.com",
       email: "france-proofs@also.com",
       ctaText: "VOIR LE PRODUIT",
+      ctaText2: "",
     },
     2320: {
       text1: "ALSO Belgium",
@@ -724,6 +728,7 @@ const dataMap = {
       text3: "newsletter.be@also.com",
       email: "belgiumFR-proofs@also.com",
       ctaText: "VOIR LE PRODUIT",
+      ctaText2: "",
     },
     6110: {
       text1: "ALSO News",
@@ -731,6 +736,7 @@ const dataMap = {
       text3: "alsonews-ch@news.also.com",
       email: "switzerlandFR-proofs@also.com",
       ctaText: "VOIR LE PRODUIT",
+      ctaText2: "",
     },
   },
   NL: {
@@ -740,6 +746,7 @@ const dataMap = {
       text3: "newsletter.be@also.com",
       email: "belgium-proofs@also.com",
       ctaText: "BESTEL NU",
+      ctaText2: "",
     },
     2420: {
       text1: "ALSO Nederland B.V.",
@@ -747,6 +754,7 @@ const dataMap = {
       text3: "info.nl@also.com",
       email: "netherlands-proofs@also.com",
       ctaText: "BESTEL NU",
+      ctaText2: "",
     },
   },
   EN: {
@@ -756,6 +764,7 @@ const dataMap = {
       text3: "info@also.com",
       email: "europe-proofs@also.com",
       ctaText: "LEARN MORE",
+      ctaText2: "Buy Now",
     },
     2510: {
       text1: "ALSO Newsletter",
@@ -763,6 +772,7 @@ const dataMap = {
       text3: "info@also.com",
       email: "uk-proofs@also.com",
       ctaText: "LEARN MORE",
+      ctaText2: "Buy Now",
     },
     2320: {
       text1: "ALSO Belgium",
@@ -770,6 +780,7 @@ const dataMap = {
       text3: "newsletter.be@also.com",
       email: "newsletter.be@also.com",
       ctaText: "LEARN MORE",
+      ctaText2: "Buy Now",
     },
   },
   ES: {
@@ -779,6 +790,7 @@ const dataMap = {
       text3: "info.es@also.com",
       email: "spain-proofs@also.com",
       ctaText: "APRENDE MÁS",
+      ctaText2: "",
     },
   },
   IT: {
@@ -788,6 +800,7 @@ const dataMap = {
       text3: "no-reply@also.com",
       email: "italy-proofs@also.com",
       ctaText: "MAGGIORI INFORMAZIONI",
+      ctaText2: "",
     },
   },
   DK: {
@@ -797,6 +810,7 @@ const dataMap = {
       text3: "marketing.danmark@also.com",
       email: "denmark-proofs@also.com",
       ctaText: "LÆR MERE",
+      ctaText2: "KØB HER",
     },
   },
   NO: {
@@ -805,7 +819,8 @@ const dataMap = {
       text2: "info@email.also.com",
       text3: "marketing.norge@also.com",
       email: "norway-proofs@also.com",
-      ctaText: "KJØP",
+      ctaText: "LÆR MER",
+      ctaText2: "KJØP HER",
     },
   },
   SE: {
@@ -815,6 +830,7 @@ const dataMap = {
       text3: "Marketing.Sverige@also.com",
       email: "sweden-proofs@also.com",
       ctaText: "LÄR MER",
+      ctaText2: "KÖP HÄR ",
     },
   },
   EE: {
@@ -824,6 +840,7 @@ const dataMap = {
       text3: "ee-mailserver@also.com",
       email: "estonia-proofs@also.com",
       ctaText: "UURI LISAKS",
+      ctaText2: "",
     },
   },
   LV: {
@@ -833,6 +850,7 @@ const dataMap = {
       text3: "LV-marketing@also.com",
       email: "latvia-proofs@also.com",
       ctaText: "PIRKT",
+      ctaText2: "",
     },
   },
   LT: {
@@ -842,6 +860,7 @@ const dataMap = {
       text3: "info@also.com",
       email: "slithuania-proofs@also.com",
       ctaText: "SUŽINOKITE DAUGIAU",
+      ctaText2: "",
     },
   },
   PL: {
@@ -851,6 +870,7 @@ const dataMap = {
       text3: "newsletter@alsopolska.pl",
       email: "poland-proofs@also.com",
       ctaText: "DOWIEDZ SIȨ WIȨCEJ",
+      ctaText2: "",
     },
   },
   FI: {
@@ -860,6 +880,7 @@ const dataMap = {
       text3: "FI-mailserver@also.com",
       email: "finland-proofs@also.com",
       ctaText: "LUE LISÄÄ",
+      ctaText2: "OSTA TÄSTÄ",
     },
   },
   SI: {
@@ -869,6 +890,7 @@ const dataMap = {
       text3: "Info.si@also.com",
       email: "slovenia-proofs@also.com",
       ctaText: "VEČ INFORMACIJ",
+      ctaText2: "",
     },
   },
   HR: {
@@ -878,6 +900,7 @@ const dataMap = {
       text3: "Info.ALSOCroatia@also.com",
       email: "croatia-proofs@also.com",
       ctaText: "SAZNAJTE VIŠE",
+      ctaText2: "",
     },
   },
   SK: {
@@ -887,6 +910,7 @@ const dataMap = {
       text3: "info-sk@also.com",
       email: "slovakia-proofs@also.com",
       ctaText: "UČ SA VIAC",
+      ctaText2: "",
     },
   },
   CZ: {
@@ -896,6 +920,7 @@ const dataMap = {
       text3: "info-cz@also.com",
       email: "czechia-proofs@also.com",
       ctaText: "DALŠÍ INFORMACE",
+      ctaText2: "",
     },
   },
   HU: {
@@ -905,6 +930,7 @@ const dataMap = {
       text3: "info@also.com",
       email: "hungary-proofs@also.com",
       ctaText: "TUDJON MEG TÖBBET",
+      ctaText2: "",
     },
   },
   RO: {
@@ -914,6 +940,7 @@ const dataMap = {
       text3: "info@email.also.com",
       email: "romania-proofs@also.com",
       ctaText: "AFLAȚI MAI MULTE",
+      ctaText2: "",
     },
   },
   BG: {
@@ -923,6 +950,7 @@ const dataMap = {
       text3: "office.bg@also.com",
       email: "bulgaria-proofs@also.com",
       ctaText: "НАУЧЕТЕ ПОВЕЧЕ",
+      ctaText2: "",
     },
   },
   SER: {
@@ -932,6 +960,7 @@ const dataMap = {
       text3: "info@also.com",
       email: "info@also.com",
       ctaText: "LEARN MORE",
+      ctaText2: "",
     },
   },
   ME: {
@@ -941,6 +970,7 @@ const dataMap = {
       text3: "info@also.com",
       email: "info@also.com",
       ctaText: "LEARN MORE",
+      ctaText2: "",
     },
   },
   PT: {
@@ -950,17 +980,26 @@ const dataMap = {
       text3: "info@also.com",
       email: "portugal-proofs@also.com",
       ctaText: "Comprar",
+      ctaText2: "",
     },
   },
 };
 for (const country in dataMap) {
   for (const code in dataMap[country]) {
-    const original = dataMap[country][code].ctaText;
-    const lower = original.toLowerCase();
-    const formatted = lower.charAt(0).toUpperCase() + lower.slice(1);
-    dataMap[country][code].ctaText = formatted;
+    const entry = dataMap[country][code];
+
+    if (entry.ctaText) {
+      const lower = entry.ctaText.toLowerCase();
+      entry.ctaText = lower.charAt(0).toUpperCase() + lower.slice(1);
+    }
+
+    if (entry.ctaText2) {
+      const lower2 = entry.ctaText2.toLowerCase();
+      entry.ctaText2 = lower2.charAt(0).toUpperCase() + lower2.slice(1);
+    }
   }
 }
+
 console.log(dataMap);
 function capitalizeCTA(text) {
   return text
@@ -973,6 +1012,9 @@ Object.values(dataMap).forEach((country) => {
   Object.values(country).forEach((entry) => {
     if (entry.ctaText) {
       entry.ctaText = capitalizeCTA(entry.ctaText);
+    }
+    if (entry.ctaText2) {
+      entry.ctaText2 = capitalizeCTA(entry.ctaText2);
     }
   });
 });
@@ -992,6 +1034,8 @@ function renderTableByLanguageAndCode(lang, code) {
                 <td>${data.text3}</td>
                 <td>${data.email}</td>
                 <td><strong>${data.ctaText}</strong></td>
+                                <td><strong>${data.ctaText2}</strong></td>
+
             </tr>
         `;
     resultTable.style.display = "table";
@@ -1017,6 +1061,7 @@ function renderTableByLanguage(lang) {
               <td>${data.text3}</td>
               <td>${data.email}</td>
               <td><strong>${data.ctaText}</strong></td>
+              <td><strong>${data.ctaText2}</strong></td>
             </tr>
           `;
     }
