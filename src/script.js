@@ -1440,44 +1440,44 @@ function autoParseCampaignInfo() {
 //   };
 // }
 function parseTodayInfo(raw) {
-  // Tách ngày từ chuỗi (định dạng YYYY-MM-DD)
+  // --- 1️⃣ Tìm ngày ---
   const dateMatch = raw.match(/\d{4}-\d{2}-\d{2}/);
   const date = dateMatch
     ? dateMatch[0]
-    : new Date().toISOString().split("T")[0]; // Nếu không có ngày, dùng ngày hiện tại
+    : new Date().toISOString().split("T")[0];
 
-  // Tách Project ID sau "PO-" (ví dụ: 3100SE234110)
-  const poMatch = raw.match(/PO-(\S+)/); // \S+ để lấy tất cả ký tự không phải khoảng trắng sau PO-
-  const campaignID = poMatch ? poMatch[1] : "";
+  // --- 2️⃣ Tìm campaignID ngay trước ngày ---
+  // Lấy phần ngay trước ngày, bỏ các dấu cách hoặc gạch
+  const campaignIdMatch = raw.match(/([A-Z0-9]+)[\s-]*\d{4}-\d{2}-\d{2}/i);
+  const campaignID = campaignIdMatch ? campaignIdMatch[1].trim() : "";
 
-  // Tách các phần còn lại (bỏ "Today:" ở đầu)
+  // --- 3️⃣ Tách các phần còn lại ---
   const parts = raw.replace("Today:", "").trim().split("-");
 
-  // Phân tách các phần:
-  const langToken = parts[0]; // Lấy phần đầu (Ví dụ: 3100 hoặc 25CW44)
-  const programCode = parts[1]; // Phần tiếp theo là Program Code (Ví dụ: NL)
-  const vendor = parts[4]; // Vendor, phần cuối trước "Today" (Ví dụ: MultiVendor)
+  const langToken = parts[0]; // 5710
+  const programCode = parts[1]; // NL
+  const vendor = parts.find((p) => /vendor/i.test(p)) || parts[4] || ""; // linh hoạt hơn
 
-  // Tạo langCode chính xác từ langToken (gọi getLangFromSalesOrg)
+  // --- 4️⃣ Xác định mã ngôn ngữ ---
   const langCode = getLangFromSalesOrg(langToken);
 
-  // Campaign cố định là 'Today'
+  // --- 5️⃣ Campaign cố định là Today ---
   const campaign = "Today";
 
-  // In ra để kiểm tra
-  console.log("langToken", langToken);
-  console.log("programCode", programCode);
-  console.log("vendor", vendor);
-  console.log("campaignID", campaignID);
-  console.log("date", date);
+  // --- Debug log ---
+  console.log("langToken:", langToken);
+  console.log("programCode:", programCode);
+  console.log("vendor:", vendor);
+  console.log("campaignID:", campaignID);
+  console.log("date:", date);
 
   return {
-    langCode: langCode, // Lấy langCode từ SalesOrg
-    programCode: programCode, // NL hoặc ES
-    vendor: vendor, // MultiVendor
-    campaign: campaign, // Always "Today"
-    campaignID: campaignID, // Project ID, ví dụ: 3100SE234110
-    date: date, // Ngày, ví dụ: 2025-11-30
+    langCode,
+    programCode,
+    vendor,
+    campaign,
+    campaignID,
+    date,
   };
 }
 
@@ -1572,6 +1572,7 @@ function parseCampaignInfo(rawCampaign) {
     .replace(/-/g, " ")
     .replace(/_/g, " ")
     .replace(/\bwebshop banner\b/i, "")
+    .replace(/\bmegabanner\b/i, "")
     .replace(/\bfrontbanner\b/i, "")
     .replace(/\bfront banner\b/i, "")
     .replace(/\s?Q(\d)/i, "Q$1")
@@ -1831,6 +1832,9 @@ function generateNames(_, __) {
   }
 
   // Áp dụng thông tin đã phân tích vào các input fields
+  if (parsed.campaignID) {
+    document.getElementById("campaignID").value = parsed.campaignID;
+  }
   if (parsed.campaign) {
     document.getElementById("campaignName").value = parsed.campaign;
   }
