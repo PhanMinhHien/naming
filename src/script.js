@@ -1284,7 +1284,7 @@ function generateProofName(lang, selectedCode) {
     document.getElementById("proofNameResult").innerHTML = "";
     return;
   }
-  const proofName = `${countryCode}_${week}_${typeBanner}_${vendor}_${campaign}_${idTicket}`;
+  const proofName = `${countryCode}_W${week}_${typeBanner}_${vendor}_${campaign}_${idTicket}`;
   document.getElementById("proofNameResult").innerHTML = `
        <div class="copy-text">
             <p>${proofName}</p>
