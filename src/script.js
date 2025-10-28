@@ -401,17 +401,13 @@ const vendorList = [
   "G.SKILL",
   "Nuvoo",
 ];
-
 let reverseVendorMap = new Map();
-
 function renderVendorList(value) {
   vendorListDiv.innerHTML = "";
   reverseVendorMap.clear();
-
   const filtered = vendorList.filter((vendor) =>
     vendor.toLowerCase().startsWith(value.toLowerCase())
   );
-
   if (!value.trim()) {
     vendorListDiv.style.display = "none";
     return;
@@ -420,28 +416,21 @@ function renderVendorList(value) {
     vendorListDiv.style.display = "none";
     return;
   }
-
   filtered.forEach((vendor) => {
     const div = document.createElement("div");
     div.className = "autocomplete-item";
-
     const vendorWithDash = vendor.replace(/\s+/g, "-");
     div.textContent = vendorWithDash;
-
     reverseVendorMap.set(vendorWithDash, vendor);
-
     div.addEventListener("click", () => {
       vendorInput.value = vendorWithDash;
       vendorListDiv.style.display = "none";
       checkAndGenerate();
     });
-
     vendorListDiv.appendChild(div);
   });
-
   vendorListDiv.style.display = "block";
 }
-
 function removeVendorActive(items) {
   items.forEach((item) => item.classList.remove("active"));
 }
@@ -467,11 +456,9 @@ vendorInput.addEventListener("blur", () => {
     const renderedVendor = findBestMatchingVendor(inputValue);
     vendorInput.value = renderedVendor;
     vendorListDiv.style.display = "none";
-
     checkAndGenerate();
   }, 200);
 });
-
 document.addEventListener("click", function (e) {
   if (!vendorListDiv.contains(e.target) && e.target !== vendorInput) {
     vendorListDiv.style.display = "none";
@@ -512,7 +499,6 @@ const languageOptions = [
   "SER",
   "ME",
 ];
-
 function handleSingleSalesOrg(lang) {
   const codes = salesOrgMap[lang] || [];
   if (codes.length === 1) {
@@ -624,7 +610,6 @@ function renderEmailLanguageList(val) {
   });
   emailLanguageList.style.display = "block";
 }
-
 function showEmailSalesOrgPopup(lang) {
   const salesOrgs = salesOrgMap[lang] || [];
   if (salesOrgs.length === 1) {
@@ -646,7 +631,6 @@ function showEmailSalesOrgPopup(lang) {
   });
   emailSalesOrgPopup.style.display = "block";
 }
-
 function handleSingleEmailSalesOrg(lang) {
   const codes = emailSalesOrgPopup[lang] || [];
   if (codes.length === 1) {
@@ -673,7 +657,6 @@ emailLanguageInput.addEventListener("input", function () {
   }
   renderEmailLanguageList(val);
 });
-
 emailLanguageInput.addEventListener("focus", () => {
   const val = emailLanguageInput.value.trim().toUpperCase();
   if (!val) return;
@@ -978,9 +961,7 @@ for (const country in dataMap) {
     dataMap[country][code].ctaText = formatted;
   }
 }
-
 console.log(dataMap);
-
 function capitalizeCTA(text) {
   return text
     .toLowerCase()
@@ -988,7 +969,6 @@ function capitalizeCTA(text) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
-
 Object.values(dataMap).forEach((country) => {
   Object.values(country).forEach((entry) => {
     if (entry.ctaText) {
@@ -996,7 +976,6 @@ Object.values(dataMap).forEach((country) => {
     }
   });
 });
-
 const languageSelect = document.getElementById("languageInput");
 const codeInput = document.getElementById("codeInput");
 const submitBtn = document.getElementById("submitBtn");
@@ -1133,21 +1112,17 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
   });
-
   const bannerPositionInput = document.getElementById("bannerPosition");
   const bannerSizeSelect = document.getElementById("bannerSize");
   const datalist = document.getElementById("bannerPositions");
-
   const bannerPositionSelect = document.getElementById("bannerPosition");
   bannerPositionSelect.innerHTML = `<option value="">-- Select Position --</option>`;
-
   Object.keys(bannerToSizeMapping).forEach((position) => {
     const option = document.createElement("option");
     option.value = position;
     option.textContent = position;
     bannerPositionSelect.appendChild(option);
   });
-
   bannerPositionInput.addEventListener("input", () => {
     const val = bannerPositionInput.value;
     const sizes = bannerToSizeMapping[val] || [];
@@ -1160,7 +1135,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-
 function checkAndGenerate() {
   const fields = ["vendor", "campaignName", "programCode", "customDate"];
   const langInput = document.getElementById("languageInput");
@@ -1168,32 +1142,25 @@ function checkAndGenerate() {
   const campaignIDEl = document.getElementById("campaignID");
   const bannerProofSection = document.getElementById("bannerProofSection");
   const marketoSection = document.querySelector(".marketoSection");
-
   const bannerSize = document.getElementById("bannerSize");
   const typeBanner = document.getElementById("typeBanner");
   const bannerPositionSection = document.getElementById("bannerPositonSection");
-
   const typeBannerVal = typeBanner?.value.trim();
   const idTicketVal = idTicketEl?.value.trim();
   const campaignIDVal = campaignIDEl?.value.trim();
   const langVal = langInput.value.trim().toUpperCase();
   const isLangValid = langVal && languageOptions.includes(langVal);
-
   const allFilled = fields.every((id) => {
     const el = document.getElementById(id);
     return el && el.value.trim() !== "";
   });
-
   const showProof = typeBannerVal !== "" && idTicketVal !== "" && isLangValid;
   bannerProofSection.style.display = showProof ? "block" : "none";
-
   bannerPositionSection.style.display =
     bannerSize && bannerSize.value.trim() !== "" && isLangValid
       ? "block"
       : "none";
-
   marketoSection.style.display = campaignIDVal ? "block" : "none";
-
   if (allFilled) {
     langInput.classList.remove("disabled");
     langInput.disabled = false;
@@ -1209,7 +1176,6 @@ function checkAndGenerate() {
     langInput.disabled = true;
   }
 }
-
 document.addEventListener("DOMContentLoaded", () => {
   const fields = [
     "vendor",
@@ -1222,7 +1188,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "customDate",
     "languageInput",
   ];
-
   fields.forEach((id) => {
     const el = document.getElementById(id);
     if (el) {
@@ -1230,10 +1195,8 @@ document.addEventListener("DOMContentLoaded", () => {
       el.addEventListener("change", checkAndGenerate);
     }
   });
-
   checkAndGenerate();
 });
-
 var bannerToSizeMapping = {
   "acmp-dashboard-banner": ["510x170", "1150x170", "1150x360"],
   "email-banner": ["640x90", "620x180"],
@@ -1266,11 +1229,9 @@ function generateProofName(lang, selectedCode) {
     .value.trim()
     .replace(/\s+/g, "_");
   const idTicket = document.getElementById("idTicket").value.trim();
-
   typeBanner = document.getElementById("typeBanner").value;
   const selectedDate = document.getElementById("customDate").value;
   const dateObj = selectedDate ? new Date(selectedDate) : new Date();
-
   const countryCode =
     languageInput.value.trim().toUpperCase() || selectedCode || lang;
   const week = getWeekNumber(dateObj);
@@ -1279,7 +1240,6 @@ function generateProofName(lang, selectedCode) {
     return;
   }
   const proofName = `${countryCode}_${week}_${typeBanner}_${vendor}_${campaign}_${idTicket}`;
-
   document.getElementById("proofNameResult").innerHTML = `
        <div class="copy-text">
             <p>${proofName}</p>
@@ -1309,19 +1269,14 @@ function generatePositionBannerName(lang, selectedCode) {
   const project = document.getElementById("campaignID").value.trim();
   const bannerPosition = document.getElementById("bannerPosition").value.trim();
   const bannerSize = document.getElementById("bannerSize").value.trim();
-
   const selectedDate = document.getElementById("customDate").value;
   const dateObj = selectedDate ? new Date(selectedDate) : new Date();
-
   const year = dateObj.getFullYear().toString().slice(-2);
   const week = getWeekNumber(dateObj);
   const yycw = `${year}CW${week}`;
-
   const code =
     selectedCode || (salesOrgMap[lang] && salesOrgMap[lang][0]) || "0000";
-
   const name = `${code}_${vendor}_${yycw}_${lang}${campaign}_${project}_${bannerPosition}_${bannerSize}`;
-
   document.getElementById("bannerPositionResult").innerHTML = `
         <div class="copy-text">
             <p>${name}</p>
@@ -1336,32 +1291,12 @@ function getLangFromSalesOrg(code) {
   }
   return "";
 }
-
-// function autoParseCampaignInfo() {
-//   const raw = document.getElementById("campaignName").value;
-//   const { langCode, vendor, campaign, campaignID } = parseCampaignInfo(raw);
-
-//   if (campaign) document.getElementById("campaignName").value = campaign;
-//   if (campaignID) document.getElementById("campaignID").value = campaignID;
-
-//   if (vendor) document.getElementById("vendor").value = vendor;
-
-//   if (langCode) {
-//     const langInput = document.getElementById("languageInput");
-//     langInput.value = langCode;
-
-//     langInput.dispatchEvent(new Event("input", { bubbles: true }));
-//   }
-// }
 function autoParseCampaignInfo() {
-  const raw = document.getElementById("campaignName").value;
-
-  // Kiểm tra nếu tên có định dạng 'Today'
+  const raw = document.getElementById("campaignName").value.trim();
+  console.log("raw", raw);
+  if (!raw) return;
   if (raw.startsWith("Today:")) {
-    // Tách các thành phần từ chuỗi 'Today'
     const parsed = parseTodayInfo(raw);
-
-    // Điền các giá trị vào các fields tương ứng
     if (parsed.campaign)
       document.getElementById("campaignName").value = parsed.campaign;
     if (parsed.campaignID)
@@ -1372,105 +1307,53 @@ function autoParseCampaignInfo() {
       langInput.value = parsed.langCode;
       langInput.dispatchEvent(new Event("input", { bubbles: true }));
     }
-
     if (parsed.programCode) {
       const programCodeInput = document.getElementById("programCode");
       programCodeInput.value = parsed.programCode;
     }
-
-    // Điền ngày vào trường customDate, đảm bảo ngày có dấu '-'
     if (parsed.date) {
       const dateInput = document.getElementById("customDate");
-      const formattedDate = new Date(parsed.date).toISOString().split("T")[0]; // Đảm bảo định dạng là YYYY-MM-DD
-      dateInput.value = formattedDate; // Cập nhật giá trị vào input
-
-      // Trigger lại sự kiện để đảm bảo date picker nhận diện ngày
-      const event = new Event("input"); // Hoặc 'change', tùy vào trường hợp
-      dateInput.dispatchEvent(event); // Gọi lại sự kiện để UI nhận diện
+      dateInput.value = new Date(parsed.date).toISOString().split("T")[0];
+      dateInput.dispatchEvent(new Event("input"));
     }
-
-    // Cập nhật trường "todayName" (nếu có)
     const todayNameField = document.getElementById("todayName");
-    if (todayNameField) {
-      todayNameField.value = raw; // Điền nguyên văn tên vào trường todayName
-    }
+    if (todayNameField) todayNameField.value = raw;
   } else {
-    // Nếu không phải tên 'Today', xử lý như bình thường
-    const { langCode, vendor, campaign, campaignID } = parseCampaignInfo(raw);
-
-    if (campaign) document.getElementById("campaignName").value = campaign;
-    if (campaignID) document.getElementById("campaignID").value = campaignID;
-    if (vendor) document.getElementById("vendor").value = vendor;
-    if (langCode) {
+    const parsed = parseCampaignInfo(raw);
+    if (parsed.campaign)
+      document.getElementById("campaignName").value = parsed.campaign;
+    if (parsed.campaignID)
+      document.getElementById("campaignID").value = parsed.campaignID;
+    if (parsed.vendor) document.getElementById("vendor").value = parsed.vendor;
+    if (parsed.langCode) {
       const langInput = document.getElementById("languageInput");
-      langInput.value = langCode;
+      langInput.value = parsed.langCode;
       langInput.dispatchEvent(new Event("input", { bubbles: true }));
     }
   }
 }
-// function parseTodayInfo(raw) {
-//   // Tách ngày từ chuỗi
-//   const dateMatch = raw.match(/\d{4}-\d{2}-\d{2}/);
-//   const date = dateMatch ? dateMatch[0] : "";
-
-//   // Tách Project ID sau PO-
-//   const poMatch = raw.match(/PO-(\S+)/); // \S+ lấy tất cả kí tự sau PO-
-//   const campaignID = poMatch ? poMatch[1] : "";
-
-//   // Tách các phần còn lại (bỏ Today: ở đầu)
-//   const parts = raw.replace("Today:", "").trim().split("-");
-
-//   // const projectNumber = parts[0]; // 3100
-//   const programCode = parts[1]; // NL
-//   const langToken = parts[0]; // 25CW44 (hoặc phần giữa khác)
-//   const vendor = parts[4]; // MultiVendor
-//   const campaign = "Today"; // Campaign
-//   console.log("langToken", langToken);
-//   // Lấy langCode chính xác từ hàm getLangFromSalesOrg
-//   const langCode = getLangFromSalesOrg(langToken);
-
-//   return {
-//     // projectNumber: projectNumber, // 3100
-//     langCode: langCode, // SE hoặc tương ứng từ hàm
-//     programCode: programCode, // NL
-//     vendor: vendor, // MultiVendor
-//     campaign: campaign, // Today
-//     campaignID: campaignID, // 3100SE234110
-//     date: date, // 2025-10-28
-//   };
-// }
+document.getElementById("campaignName").addEventListener("input", (e) => {
+  const raw = e.target.value;
+  autoParseCampaignInfo(raw);
+});
 function parseTodayInfo(raw) {
-  // --- 1️⃣ Tìm ngày ---
   const dateMatch = raw.match(/\d{4}-\d{2}-\d{2}/);
   const date = dateMatch
     ? dateMatch[0]
     : new Date().toISOString().split("T")[0];
-
-  // --- 2️⃣ Tìm campaignID ngay trước ngày ---
-  // Lấy phần ngay trước ngày, bỏ các dấu cách hoặc gạch
   const campaignIdMatch = raw.match(/([A-Z0-9]+)[\s-]*\d{4}-\d{2}-\d{2}/i);
   const campaignID = campaignIdMatch ? campaignIdMatch[1].trim() : "";
-
-  // --- 3️⃣ Tách các phần còn lại ---
   const parts = raw.replace("Today:", "").trim().split("-");
-
-  const langToken = parts[0]; // 5710
-  const programCode = parts[1]; // NL
-  const vendor = parts.find((p) => /vendor/i.test(p)) || parts[4] || ""; // linh hoạt hơn
-
-  // --- 4️⃣ Xác định mã ngôn ngữ ---
+  const langToken = parts[0];
+  const programCode = parts[1];
+  const vendor = parts.find((p) => /vendor/i.test(p)) || parts[4] || "";
   const langCode = getLangFromSalesOrg(langToken);
-
-  // --- 5️⃣ Campaign cố định là Today ---
   const campaign = "Today";
-
-  // --- Debug log ---
   console.log("langToken:", langToken);
   console.log("programCode:", programCode);
   console.log("vendor:", vendor);
   console.log("campaignID:", campaignID);
   console.log("date:", date);
-
   return {
     langCode,
     programCode,
@@ -1480,20 +1363,15 @@ function parseTodayInfo(raw) {
     date,
   };
 }
-
 function normalize(str) {
   return str.toLowerCase();
 }
-
 function findBestMatchingVendor(possibleVendor) {
   if (!possibleVendor.trim()) return "";
-
   const normalizedInput = possibleVendor.toLowerCase();
-
   const candidates = vendorList.map((vendor) => {
     const normalizedVendor = vendor.toLowerCase();
     let score = 0;
-
     if (normalizedInput === normalizedVendor) {
       score = 100;
     } else if (normalizedInput.includes(normalizedVendor)) {
@@ -1508,18 +1386,14 @@ function findBestMatchingVendor(possibleVendor) {
         }
       });
     }
-
     return { original: vendor, score };
   });
-
   const sorted = candidates
     .filter((c) => c.score > 0)
     .sort((a, b) => b.score - a.score);
   if (!sorted.length) return "";
-
   const bestScore = sorted[0].score;
   const bestMatches = sorted.filter((c) => c.score === bestScore);
-
   if (bestMatches.length === 1) {
     const bestMatch = bestMatches[0].original;
     renderVendorList(bestMatch);
@@ -1534,14 +1408,12 @@ function findBestMatchingVendor(possibleVendor) {
     return "";
   }
 }
-
 function getRenderedVendor(vendor) {
   for (const [withDash, original] of vendorMap.entries()) {
     if (original === vendor) return withDash;
   }
   return vendor.replace(/\s+/g, "-");
 }
-
 function findQuarterToken(tokens) {
   const quarterRegexes = [
     /^Q[1-4]$/,
@@ -1551,13 +1423,11 @@ function findQuarterToken(tokens) {
     /^Q[1-4]FY\d{2}$/,
     /^FYQ[1-4]\d{2}$/,
   ];
-
   for (let i = 0; i < tokens.length; i++) {
     if (quarterRegexes.some((rx) => rx.test(tokens[i].toUpperCase()))) {
       return i;
     }
   }
-
   return -1;
 }
 function parseCampaignInfo(rawCampaign) {
@@ -1569,21 +1439,15 @@ function parseCampaignInfo(rawCampaign) {
   const campaignID = campaignIdMatch ? campaignIdMatch[1].trim() : "";
   let mainPart = rawCampaign.split("-").slice(1).join("-").split("*")[0].trim();
   mainPart = mainPart
-    .replace(/-/g, " ")
-    .replace(/_/g, " ")
-    .replace(/\bwebshop banner\b/i, "")
-    .replace(/\bmegabanner\b/i, "")
-    .replace(/\bfrontbanner\b/i, "")
-    .replace(/\bfront banner\b/i, "")
-    .replace(/\s?Q(\d)/i, "Q$1")
+    .replace(/[-_]/g, " ")
+    .replace(/\b(webshop banner|megabanner|frontbanner|front banner)\b/gi, "")
+    .replace(/\s?Q(\d)/gi, " Q$1")
+    .replace(/\b5710 ALSO Finland Oy\b/i, "5710")
+    .replace(/\s{2,}/g, " ")
     .trim();
-  if (mainPart.includes("5710 ALSO Finland Oy")) {
-    mainPart = mainPart.replace("5710 ALSO Finland Oy", "5710");
-  }
-  console.log("Main part after cleaning:", mainPart);
-
-  const tokens = mainPart.split(/\s+/);
-  const codeToken = tokens.find((token) => /^\d{4}$/.test(token));
+  console.log("🧹 Main part after cleaning:", mainPart);
+  let tokens = mainPart.split(/\s+/);
+  const codeToken = tokens.find((t) => /^\d{4}$/.test(t));
   const langCode = getLangFromSalesOrg(codeToken);
   const codeIndex = tokens.indexOf(codeToken);
   const quarterIndex = findQuarterToken(tokens);
@@ -1594,20 +1458,30 @@ function parseCampaignInfo(rawCampaign) {
     const possibleVendor = vendorTokens.join(" ");
     vendor = findBestMatchingVendor(possibleVendor);
   }
+  if (!vendor) {
+    const possibleVendor = findBestMatchingVendor(mainPart);
+    if (possibleVendor) {
+      vendor = possibleVendor;
+      console.log("🔍 Fallback vendor found:", vendor);
+    }
+  }
   if (vendor) {
-    const vendorPattern = new RegExp(`\\b${vendor}\\b`, "i");
-    console.log("vendorPattern", vendorPattern);
-    mainPart = mainPart
-      .replace(vendorPattern, "")
+    const vendorRegex = new RegExp(`\\b${vendor}\\b`, "gi");
+    mainPart = mainPart.replace(vendorRegex, "").trim();
+    const words = mainPart.split(/\s+/);
+    mainPart = words
+      .filter((w) => !isCloseMatch(w.toLowerCase(), vendor.toLowerCase(), 0.5))
+      .join(" ")
       .replace(/\s{2,}/g, " ")
       .trim();
-
-    // mainPart = mainPart.replace(vendorPattern, "").trim();
-    // mainPart = mainPart.replace(/\s{2,}/g, " ");
+    console.log("🧹 Main part after removing vendor:", mainPart);
   }
-  if (quarterIndex !== -1) {
-    const campaignTokens = tokens.slice(quarterIndex + 1);
-    campaign = campaignTokens.join(" ");
+  tokens = mainPart.split(/\s+/);
+  const newQuarterIndex = findQuarterToken(tokens);
+  if (newQuarterIndex !== -1) {
+    campaign = tokens.slice(newQuarterIndex + 1).join(" ");
+  } else {
+    campaign = tokens.slice(codeIndex !== -1 ? codeIndex + 1 : 0).join(" ");
   }
   const vendorLower = vendor.toLowerCase();
   campaign = campaign
@@ -1618,6 +1492,7 @@ function parseCampaignInfo(rawCampaign) {
     })
     .join(" ")
     .trim();
+  console.log("🎯 Final:", { vendor, campaign });
   return {
     langCode: langCode || "",
     vendor,
@@ -1625,126 +1500,11 @@ function parseCampaignInfo(rawCampaign) {
     campaignID,
   };
 }
-
-// function parseCampaignInfo(rawCampaign) {
-//   rawCampaign = rawCampaign.replace(
-//     /(\b[A-Z]{2}\d{6,}\b)(?=\s+\d{4}-\d{2}-\d{2})/,
-//     (match) => `*${match}*`
-//   );
-//   rawCampaign = rawCampaign.replace(/(\d+\/\d+)\s+(\d{4})/, "$1 - $2");
-
-//   const campaignIdMatch = rawCampaign.match(/\*(.*?)\*/);
-//   const campaignID = campaignIdMatch ? campaignIdMatch[1].trim() : "";
-
-//   let mainPart = rawCampaign.split("-").slice(1).join("-").split("*")[0].trim();
-//   mainPart = mainPart
-//     .replace(/-/g, " ")
-//     .replace(/_/g, " ")
-//     .replace(/\bwebshop banner\b/i, "")
-//     .replace(/\bfrontbanner\b/i, "")
-//     .replace(/\bfront banner\b/i, "")
-//     .trim();
-
-//   if (mainPart.includes("5710 ALSO Finland Oy")) {
-//     mainPart = mainPart.replace("5710 ALSO Finland Oy", "5710");
-//   }
-
-//   console.log("Main part after cleaning:", mainPart);
-
-//   const tokens = mainPart.split(/\s+/);
-//   const codeToken = tokens.find((token) => /^\d{4}$/.test(token));
-//   const langCode = getLangFromSalesOrg(codeToken);
-//   const codeIndex = tokens.indexOf(codeToken);
-//   const quarterIndex = findQuarterToken(tokens);
-
-//   let vendor = "";
-//   let campaign = "";
-
-//   if (codeIndex !== -1 && quarterIndex !== -1 && quarterIndex > codeIndex) {
-//     const vendorTokens = tokens.slice(codeIndex + 1, quarterIndex);
-//     const possibleVendor = vendorTokens.join(" ");
-//     vendor = findBestMatchingVendor(possibleVendor);
-//   }
-
-//   if (!vendor) {
-//     const possibleVendor = findBestMatchingVendor(mainPart);
-//     if (possibleVendor) {
-//       vendor = possibleVendor;
-//       console.log("Vendor found via fallback:", vendor);
-//     }
-//   }
-
-//   if (vendor) {
-//     const vendorClean = vendor.replace(/[-_]/g, " ").trim().toLowerCase();
-//     const vendorParts = vendorClean.split(/\s+/);
-//     const firstWord = vendorParts[0];
-//     const rest = vendorParts.slice(1).join("[-\\s_]*");
-
-//     const vendorPattern = rest
-//       ? new RegExp(`\\b${firstWord}(?:[-\\s_]*${rest})?\\b`, "i")
-//       : new RegExp(`\\b${firstWord}\\b`, "i");
-
-//     const beforeRemove = mainPart;
-//     mainPart = mainPart
-//       .replace(vendorPattern, "")
-//       .replace(/\s{2,}/g, " ")
-//       .trim();
-
-//     if (mainPart === beforeRemove) {
-//       const words = mainPart.split(/\s+/);
-//       const cleaned = words.filter((w) => {
-//         const wNorm = w.toLowerCase().replace(/[-_]/g, "");
-//         const vNorm = vendorClean.replace(/\s+/g, "");
-//         return !isCloseMatch(wNorm, vNorm, 0.8);
-//       });
-//       mainPart = cleaned
-//         .join(" ")
-//         .replace(/\s{2,}/g, " ")
-//         .trim();
-//     }
-
-//     console.log("Main part after removing vendor:", mainPart);
-//   }
-
-//   if (quarterIndex !== -1) {
-//     const cleanedTokens = mainPart.split(/\s+/);
-//     const newQuarterIndex = cleanedTokens.findIndex((t) =>
-//       /^Q\d{3,4}$/i.test(t)
-//     );
-
-//     if (newQuarterIndex !== -1) {
-//       campaign = cleanedTokens.slice(newQuarterIndex + 1).join(" ");
-//     } else {
-//       campaign = cleanedTokens.join(" ");
-//     }
-//   } else {
-//     campaign = mainPart;
-//   }
-
-//   const vendorLower = vendor.toLowerCase();
-//   campaign = campaign
-//     .split(/\s+/)
-//     .map((word) => {
-//       if (word.toLowerCase() === vendorLower) return vendor;
-//       return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-//     })
-//     .join(" ")
-//     .trim();
-
-//   return {
-//     langCode: langCode || "",
-//     vendor,
-//     campaign,
-//     campaignID,
-//   };
-// }
-
 function isCloseMatch(a, b, threshold = 0.85) {
   a = a.toLowerCase();
   b = b.toLowerCase();
   const len = Math.max(a.length, b.length);
   if (len === 0) return false;
-
   let matches = 0;
   for (let i = 0; i < Math.min(a.length, b.length); i++) {
     if (a[i] === b[i]) matches++;
@@ -1752,86 +1512,16 @@ function isCloseMatch(a, b, threshold = 0.85) {
   const similarity = matches / len;
   return similarity >= threshold;
 }
-
-// function generateNames(_, __) {
-//   const rawCampaign = document
-//     .getElementById("campaignName")
-//     .value.replace(/\s+/g, "");
-//   // Kiểm tra nếu tên bắt đầu bằng 'Today', sử dụng parseTodayInfo
-//   if (rawCampaign.startsWith("Today:")) {
-//     parsed = parseTodayInfo(rawCampaign);
-//   } else {
-//     // Nếu không phải 'Today', sử dụng parseCampaignInfo
-//     parsed = parseCampaignInfo(rawCampaign);
-//   }
-
-//   if (parsed.campaign) {
-//     document.getElementById("campaignName").value = parsed.campaign;
-//   }
-//   if (parsed.vendor) {
-//     document.getElementById("vendor").value = parsed.vendor;
-//   }
-//   if (parsed.langCode) {
-//     document.getElementById("languageInput").value = parsed.langCode;
-//   }
-
-//   if (parsed.date) {
-//     document.getElementById("customDate").value = parsed.date;
-//   }
-
-//   const vendor = document.getElementById("vendor").value.toLowerCase();
-//   const campaign = document
-//     .getElementById("campaignName")
-//     .value.replace(/\s+/g, "");
-//   const langCode = document.getElementById("languageInput").value;
-
-//   const project = document.getElementById("campaignID").value.trim();
-//   const programCode = document.getElementById("programCode").value;
-//   const selectedDate = document.getElementById("customDate").value;
-//   const dateObj = selectedDate ? new Date(selectedDate) : new Date();
-//   const year = dateObj.getFullYear().toString().slice(-2);
-//   const mm = String(dateObj.getMonth() + 1).padStart(2, "0");
-//   const dd = String(dateObj.getDate()).padStart(2, "0");
-//   const mmdd = `${mm}${dd}`;
-//   const week = getWeekNumber(dateObj);
-//   const yycw = `${year}CW${week}`;
-
-//   const tableBodyName = document.getElementById("tableBodyName");
-//   tableBodyName.innerHTML = "";
-
-//   const salesOrgsToRender = salesOrgMap[langCode] || [];
-//   salesOrgsToRender.forEach((code) => {
-//     const org = salesOrgs.find((item) => item.code === code);
-//     const countryName = org ? org.countryName : "Unknown";
-
-//     const fullName = `${code}-${programCode}-${yycw}-${mmdd}-${vendor}-${langCode}${campaign}-${project}`;
-//     const row = document.createElement("tr");
-//     row.innerHTML = `
-//             <td>${code}_${langCode}</td>
-//             <td>${countryName}</td>
-//             <td><span class="email-name">${fullName}</span></td>
-//         `;
-//     tableBodyName.appendChild(row);
-//   });
-
-//   generateProofName(langCode, salesOrgsToRender[0]);
-//   generatePositionBannerName(langCode, salesOrgsToRender[0]);
-// }
 function generateNames(_, __) {
   const rawCampaign = document
     .getElementById("campaignName")
     .value.replace(/\s+/g, "");
   let parsed;
-
-  // Kiểm tra nếu tên bắt đầu bằng 'Today:', sử dụng parseTodayInfo
   if (rawCampaign.startsWith("Today:")) {
     parsed = parseTodayInfo(rawCampaign);
   } else {
-    // Nếu không phải 'Today', sử dụng parseCampaignInfo
     parsed = parseCampaignInfo(rawCampaign);
   }
-
-  // Áp dụng thông tin đã phân tích vào các input fields
   if (parsed.campaignID) {
     document.getElementById("campaignID").value = parsed.campaignID;
   }
@@ -1845,25 +1535,17 @@ function generateNames(_, __) {
     document.getElementById("languageInput").value = parsed.langCode;
   }
   if (parsed.date) {
-    // Nếu có ngày từ parseTodayInfo, điền vào trường date input
-    const formattedDate = new Date(parsed.date).toISOString().split("T")[0]; // Đảm bảo định dạng đúng
+    const formattedDate = new Date(parsed.date).toISOString().split("T")[0];
     const dateInput = document.getElementById("customDate");
-
-    // Cập nhật ngày vào input
     dateInput.value = formattedDate;
-
-    // Trigger sự kiện change nếu cần
     const event = new Event("change");
-    dateInput.dispatchEvent(event); // Gọi lại sự kiện change
+    dateInput.dispatchEvent(event);
   }
-
-  // Lấy các giá trị từ các trường input
   const vendor = document.getElementById("vendor").value.toLowerCase();
   const campaign = document
     .getElementById("campaignName")
     .value.replace(/\s+/g, "");
   const langCode = document.getElementById("languageInput").value;
-
   const project = document.getElementById("campaignID").value.trim();
   const programCode = document.getElementById("programCode").value;
   const selectedDate = document.getElementById("customDate").value;
@@ -1874,15 +1556,12 @@ function generateNames(_, __) {
   const mmdd = `${mm}${dd}`;
   const week = getWeekNumber(dateObj);
   const yycw = `${year}CW${week}`;
-
   const tableBodyName = document.getElementById("tableBodyName");
   tableBodyName.innerHTML = "";
-
   const salesOrgsToRender = salesOrgMap[langCode] || [];
   salesOrgsToRender.forEach((code) => {
     const org = salesOrgs.find((item) => item.code === code);
     const countryName = org ? org.countryName : "Unknown";
-
     const fullName = `${code}-${programCode}-${yycw}-${mmdd}-${vendor}-${langCode}${campaign}-${project}`;
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -1892,20 +1571,15 @@ function generateNames(_, __) {
         `;
     tableBodyName.appendChild(row);
   });
-
-  // Gọi các hàm để tạo tên và banner
   generateProofName(langCode, salesOrgsToRender[0]);
   generatePositionBannerName(langCode, salesOrgsToRender[0]);
 }
-
 document
   .getElementById("bannerPosition")
   .addEventListener("change", function () {
     const selectedPosition = this.value;
     const bannerSizeSelect = document.getElementById("bannerSize");
-
     bannerSizeSelect.innerHTML = `<option value="">-- Select Size --</option>`;
-
     if (bannerToSizeMapping[selectedPosition]) {
       bannerToSizeMapping[selectedPosition].forEach((size) => {
         const option = document.createElement("option");
@@ -1915,7 +1589,6 @@ document
       });
     }
   });
-
 document.getElementById("bannerSize").addEventListener("change", () => {
   const lang = document
     .getElementById("languageInput")
@@ -1928,7 +1601,6 @@ document.getElementById("bannerSize").addEventListener("change", () => {
     }
   }
 });
-
 function getWeekNumber(d) {
   d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
   d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
@@ -1939,9 +1611,7 @@ function getWeekNumber(d) {
 document.addEventListener("DOMContentLoaded", () => {
   const today = new Date().toISOString().split("T")[0];
   document.getElementById("customDate").value = today;
-
   const typeBannerInput = document.getElementById("typeBanner");
-
   if (typeBannerInput) {
     typeBannerInput.addEventListener("input", () => {
       const lang = document
@@ -1950,7 +1620,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .toUpperCase();
       const salesOrgs = salesOrgMap[lang] || [];
       const selectedCode = salesOrgs.length === 1 ? salesOrgs[0] : "";
-
       generateProofName(lang, selectedCode);
     });
   }
