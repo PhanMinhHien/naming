@@ -700,7 +700,7 @@ const dataMap = {
       text1: "ALSO Newsletter",
       text2: "info@email.also.com",
       text3: "oedataadminreturns-at@also.com",
-      email: "gaustria-proofs@also.com",
+      email: "austria-proofs@also.com",
       ctaText: "MEHR ERFAHREN",
       ctaText2: "",
     },
