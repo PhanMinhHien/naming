@@ -513,6 +513,10 @@ function showSalesOrgPopup(lang) {
   const codes = salesOrgMap[lang] || [];
   if (codes.length <= 1) {
     salesOrgPopup.style.display = "none";
+    if (codes.length === 1) {
+      renderTableByLanguageAndCode(lang, codes[0]);
+      generateNames(lang, codes[0]);
+    }
     return;
   }
   salesOrgPopup.innerHTML = "";
@@ -529,6 +533,26 @@ function showSalesOrgPopup(lang) {
   });
   salesOrgPopup.style.display = "block";
 }
+// function showSalesOrgPopup(lang) {
+//   const codes = salesOrgMap[lang] || [];
+//   if (codes.length <= 1) {
+//     salesOrgPopup.style.display = "none";
+//     return;
+//   }
+//   salesOrgPopup.innerHTML = "";
+//   codes.forEach((code) => {
+//     const div = document.createElement("div");
+//     div.className = "autocomplete-item";
+//     div.textContent = code;
+//     div.addEventListener("click", () => {
+//       salesOrgPopup.style.display = "none";
+//       renderTableByLanguageAndCode(lang, code);
+//       generateNames(lang, code);
+//     });
+//     salesOrgPopup.appendChild(div);
+//   });
+//   salesOrgPopup.style.display = "block";
+// }
 function renderLanguageList(inputVal) {
   languageList.innerHTML = "";
   const filtered = languageOptions.filter((l) => l.startsWith(inputVal));
@@ -858,7 +882,7 @@ const dataMap = {
       text1: "ALSO Newsletter",
       text2: "info@email.also.com",
       text3: "info@also.com",
-      email: "slithuania-proofs@also.com",
+      email: "lithuania-proofs@also.com",
       ctaText: "SUŽINOKITE DAUGIAU",
       ctaText2: "",
     },
@@ -1557,7 +1581,8 @@ function isCloseMatch(a, b, threshold = 0.85) {
   const similarity = matches / len;
   return similarity >= threshold;
 }
-function generateNames(_, __) {
+
+function generateNames(langCode, salesOrgCode) {
   const rawCampaign = document
     .getElementById("campaignName")
     .value.replace(/\s+/g, "");
@@ -1567,6 +1592,7 @@ function generateNames(_, __) {
   } else {
     parsed = parseCampaignInfo(rawCampaign);
   }
+
   if (parsed.campaignID) {
     document.getElementById("campaignID").value = parsed.campaignID;
   }
@@ -1576,9 +1602,6 @@ function generateNames(_, __) {
   if (parsed.vendor) {
     document.getElementById("vendor").value = parsed.vendor;
   }
-  if (parsed.langCode) {
-    document.getElementById("languageInput").value = parsed.langCode;
-  }
   if (parsed.date) {
     const formattedDate = new Date(parsed.date).toISOString().split("T")[0];
     const dateInput = document.getElementById("customDate");
@@ -1586,11 +1609,11 @@ function generateNames(_, __) {
     const event = new Event("change");
     dateInput.dispatchEvent(event);
   }
+
   const vendor = document.getElementById("vendor").value.toLowerCase();
   const campaign = document
     .getElementById("campaignName")
     .value.replace(/\s+/g, "");
-  const langCode = document.getElementById("languageInput").value;
   const project = document.getElementById("campaignID").value.trim();
   const programCode = document.getElementById("programCode").value;
   const selectedDate = document.getElementById("customDate").value;
@@ -1601,24 +1624,90 @@ function generateNames(_, __) {
   const mmdd = `${mm}${dd}`;
   const week = getWeekNumber(dateObj);
   const yycw = `${year}CW${week}`;
+
   const tableBodyName = document.getElementById("tableBodyName");
   tableBodyName.innerHTML = "";
-  const salesOrgsToRender = salesOrgMap[langCode] || [];
-  salesOrgsToRender.forEach((code) => {
-    const org = salesOrgs.find((item) => item.code === code);
+
+  if (langCode && salesOrgCode) {
+    const org = salesOrgs.find((item) => item.code === salesOrgCode);
     const countryName = org ? org.countryName : "Unknown";
-    const fullName = `${code}-${programCode}-${yycw}-${mmdd}-${vendor}-${langCode}${campaign}-${project}`;
+    const fullName = `${salesOrgCode}-${programCode}-${yycw}-${mmdd}-${vendor}-${langCode}${campaign}-${project}`;
+
     const row = document.createElement("tr");
     row.innerHTML = `
-            <td>${code}_${langCode}</td>
-            <td>${countryName}</td>
-            <td><span class="email-name">${fullName}</span></td>
-        `;
+      <td>${salesOrgCode}_${langCode}</td>
+      <td>${countryName}</td>
+      <td><span class="email-name">${fullName}</span></td>
+    `;
     tableBodyName.appendChild(row);
-  });
-  generateProofName(langCode, salesOrgsToRender[0]);
-  generatePositionBannerName(langCode, salesOrgsToRender[0]);
+
+    generateProofName(langCode, salesOrgCode);
+    generatePositionBannerName(langCode, salesOrgCode);
+  }
 }
+
+// function generateNames(_, __) {
+//   const rawCampaign = document
+//     .getElementById("campaignName")
+//     .value.replace(/\s+/g, "");
+//   let parsed;
+//   if (rawCampaign.startsWith("Today:")) {
+//     parsed = parseTodayInfo(rawCampaign);
+//   } else {
+//     parsed = parseCampaignInfo(rawCampaign);
+//   }
+//   if (parsed.campaignID) {
+//     document.getElementById("campaignID").value = parsed.campaignID;
+//   }
+//   if (parsed.campaign) {
+//     document.getElementById("campaignName").value = parsed.campaign;
+//   }
+//   if (parsed.vendor) {
+//     document.getElementById("vendor").value = parsed.vendor;
+//   }
+//   // if (parsed.langCode) {
+//   //   document.getElementById("languageInput").value = parsed.langCode;
+//   // }
+//   if (parsed.date) {
+//     const formattedDate = new Date(parsed.date).toISOString().split("T")[0];
+//     const dateInput = document.getElementById("customDate");
+//     dateInput.value = formattedDate;
+//     const event = new Event("change");
+//     dateInput.dispatchEvent(event);
+//   }
+//   const vendor = document.getElementById("vendor").value.toLowerCase();
+//   const campaign = document
+//     .getElementById("campaignName")
+//     .value.replace(/\s+/g, "");
+//   const langCode = document.getElementById("languageInput").value;
+//   const project = document.getElementById("campaignID").value.trim();
+//   const programCode = document.getElementById("programCode").value;
+//   const selectedDate = document.getElementById("customDate").value;
+//   const dateObj = selectedDate ? new Date(selectedDate) : new Date();
+//   const year = dateObj.getFullYear().toString().slice(-2);
+//   const mm = String(dateObj.getMonth() + 1).padStart(2, "0");
+//   const dd = String(dateObj.getDate()).padStart(2, "0");
+//   const mmdd = `${mm}${dd}`;
+//   const week = getWeekNumber(dateObj);
+//   const yycw = `${year}CW${week}`;
+//   const tableBodyName = document.getElementById("tableBodyName");
+//   tableBodyName.innerHTML = "";
+//   const salesOrgsToRender = salesOrgMap[langCode] || [];
+//   salesOrgsToRender.forEach((code) => {
+//     const org = salesOrgs.find((item) => item.code === code);
+//     const countryName = org ? org.countryName : "Unknown";
+//     const fullName = `${code}-${programCode}-${yycw}-${mmdd}-${vendor}-${langCode}${campaign}-${project}`;
+//     const row = document.createElement("tr");
+//     row.innerHTML = `
+//             <td>${code}_${langCode}</td>
+//             <td>${countryName}</td>
+//             <td><span class="email-name">${fullName}</span></td>
+//         `;
+//     tableBodyName.appendChild(row);
+//   });
+//   generateProofName(langCode, salesOrgsToRender[0]);
+//   generatePositionBannerName(langCode, salesOrgsToRender[0]);
+// }
 document
   .getElementById("bannerPosition")
   .addEventListener("change", function () {
