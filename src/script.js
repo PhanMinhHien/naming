@@ -1136,21 +1136,21 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
-  const proofNameResult = document.getElementById("proofNameResult");
-  proofNameResult.addEventListener("click", function (event) {
-    const span = event.target.closest(".copy-text");
-    if (span) {
-      const text = span.textContent.trim();
-      navigator.clipboard
-        .writeText(text)
-        .then(() => {
-          showTooltip(span);
-        })
-        .catch((err) => {
-          console.error("Copy failed:", err);
-        });
-    }
-  });
+  // const proofNameResult = document.getElementById("proofNameResult");
+  // proofNameResult.addEventListener("click", function (event) {
+  //   const span = event.target.closest(".copy-text");
+  //   if (span) {
+  //     const text = span.textContent.trim();
+  //     navigator.clipboard
+  //       .writeText(text)
+  //       .then(() => {
+  //         showTooltip(span);
+  //       })
+  //       .catch((err) => {
+  //         console.error("Copy failed:", err);
+  //       });
+  //   }
+  // });
   const bannerPositionResult = document.getElementById("bannerPositionResult");
   bannerPositionResult.addEventListener("click", function (event) {
     const span = event.target.closest(".copy-text");
@@ -1209,7 +1209,7 @@ function checkAndGenerate() {
   const langInput = document.getElementById("languageInput");
   const idTicketEl = document.getElementById("idTicket");
   const campaignIDEl = document.getElementById("campaignID");
-  const bannerProofSection = document.getElementById("bannerProofSection");
+  // const bannerProofSection = document.getElementById("bannerProofSection");
   const marketoSection = document.querySelector(".marketoSection");
   const bannerSize = document.getElementById("bannerSize");
   const typeBanner = document.getElementById("typeBanner");
@@ -1223,8 +1223,8 @@ function checkAndGenerate() {
     const el = document.getElementById(id);
     return el && el.value.trim() !== "";
   });
-  const showProof = typeBannerVal !== "" && idTicketVal !== "" && isLangValid;
-  bannerProofSection.style.display = showProof ? "block" : "none";
+  // const showProof = typeBannerVal !== "" && idTicketVal !== "" && isLangValid;
+  // bannerProofSection.style.display = showProof ? "block" : "none";
   bannerPositionSection.style.display =
     bannerSize && bannerSize.value.trim() !== "" && isLangValid
       ? "block"
@@ -1304,16 +1304,16 @@ function generateProofName(lang, selectedCode) {
   const countryCode =
     languageInput.value.trim().toUpperCase() || selectedCode || lang;
   const week = getWeekNumber(dateObj);
-  if (!typeBanner) {
-    document.getElementById("proofNameResult").innerHTML = "";
-    return;
-  }
-  const proofName = `${countryCode}_W${week}_${typeBanner}_${vendor}_${campaign}_${idTicket}`;
-  document.getElementById("proofNameResult").innerHTML = `
-       <div class="copy-text">
-            <p>${proofName}</p>
-        </div>
-    `;
+  // if (!typeBanner) {
+  //   document.getElementById("proofNameResult").innerHTML = "";
+  //   return;
+  // }
+  // const proofName = `${countryCode}_W${week}_${typeBanner}_${vendor}_${campaign}_${idTicket}`;
+  // document.getElementById("proofNameResult").innerHTML = `
+  //      <div class="copy-text">
+  //           <p>${proofName}</p>
+  //       </div>
+  //   `;
   document.getElementById("typeBanner").addEventListener("change", () => {
     const lang = document
       .getElementById("languageInput")
